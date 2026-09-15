@@ -18,7 +18,7 @@ export function Process() {
     <section id="processing" ref={sectionRef} className="bg-ivory py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 md:mb-24 text-center max-w-xl mx-auto">
-          <span className="label-caps text-[12px] text-crimson">The Journey</span>
+          <span className="label-caps text-[12px] text-forest">The Journey</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-near-black">
             From harvest
             <br />

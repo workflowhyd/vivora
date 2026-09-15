@@ -11,7 +11,7 @@ export function Applications() {
     <section id="applications" className="bg-offwhite py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-14 md:mb-20">
-          <span className="label-caps text-[12px] text-crimson">Where It Goes</span>
+          <span className="label-caps text-[12px] text-forest">Where It Goes</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-near-black max-w-2xl">
             Made for what
             <br />

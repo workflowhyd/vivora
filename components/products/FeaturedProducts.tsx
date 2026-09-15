@@ -20,7 +20,7 @@ export function FeaturedProducts() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="flex items-end justify-between gap-6 mb-10 md:mb-14">
           <Reveal className="max-w-2xl">
-            <span className="label-caps text-[12px] text-crimson">Our Range</span>
+            <span className="label-caps text-[12px] text-forest">Our Range</span>
             <h2 className="font-display text-4xl md:text-5xl leading-[1.05] mt-4 text-near-black">
               Featured <span className="italic text-forest">products.</span>
             </h2>

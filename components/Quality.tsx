@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import { qualityPillars } from "@/data/content";
 
 const icons = [Leaf, ShieldCheck, Sparkles, Globe2];
-const accentClasses = ["text-leaf", "text-orange", "text-yellow", "text-crimson"];
+const accentClasses = ["text-leaf", "text-orange", "text-yellow", "text-ivory"];
 
 export function Quality() {
   return (

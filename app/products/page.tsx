@@ -17,7 +17,7 @@ export default function ProductsPage() {
       <main className="pt-28 md:pt-36 pb-24 md:pb-32 bg-offwhite min-h-screen">
         <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           <div className="max-w-2xl mb-10 md:mb-14">
-            <span className="label-caps text-[12px] text-crimson">Our Range</span>
+            <span className="label-caps text-[12px] text-forest">Our Range</span>
             <h1 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-near-black">
               The full <span className="italic text-forest">catalogue.</span>
             </h1>

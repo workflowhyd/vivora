@@ -14,7 +14,7 @@ export function Hero() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10 grid md:grid-cols-12 gap-10 md:gap-12 items-center">
         <div className="md:col-span-7">
           <motion.span
-            className="label-caps text-[12px] text-crimson block"
+            className="label-caps text-[12px] text-forest block"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}

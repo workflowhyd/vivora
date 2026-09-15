@@ -59,8 +59,8 @@ export function GlobalReach() {
             className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2"
             style={{ left: `${origin.x}%`, top: `${origin.y}%` }}
           >
-            <span className="absolute inset-0 rounded-full bg-crimson animate-ping opacity-60" />
-            <span className="relative block h-3.5 w-3.5 rounded-full bg-crimson border-2 border-ivory" />
+            <span className="absolute inset-0 rounded-full bg-orange animate-ping opacity-60" />
+            <span className="relative block h-3.5 w-3.5 rounded-full bg-orange border-2 border-ivory" />
             <span className="absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap label-caps text-[10px] md:text-[11px] text-ivory">
               {origin.name}
             </span>

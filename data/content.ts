@@ -24,7 +24,7 @@ export const applications = [
     title: "Retail & Snacking",
     description: "Shelf-ready packs and blends made for everyday, on-the-go snacking.",
     image: images.applications.retail,
-    accent: "#8A5A2C",
+    accent: "#16244A",
   },
   {
     number: "03",
@@ -38,7 +38,7 @@ export const applications = [
     title: "HoReCa & Bulk",
     description: "Reliable, export-grade supply for hotels, caterers and food service partners.",
     image: images.applications.horeca,
-    accent: "#8A2A3F",
+    accent: "#C1922F",
   },
 ];
 
