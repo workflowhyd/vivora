@@ -56,7 +56,7 @@ export function Header() {
           </nav>
 
           <Link
-            href="/#contact"
+            href="/contact"
             className="hidden lg:inline-flex items-center gap-2 text-[13px] label-caps text-ivory border border-ivory/40 rounded-full px-5 py-2.5 hover:bg-ivory hover:text-forest transition-all duration-300 group"
           >
             Request a Quote
@@ -126,7 +126,7 @@ export function Header() {
 
               <div className="mt-auto px-6 pb-10 pt-6">
                 <Link
-                  href="/#contact"
+                  href="/contact"
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center justify-center gap-2 w-full text-[13px] label-caps text-forest bg-yellow rounded-full px-5 py-3.5"
                 >

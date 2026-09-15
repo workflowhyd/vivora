@@ -55,12 +55,12 @@ export function Hero() {
               View Products
               <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
-            <a
-              href="#contact"
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-2 text-forest text-[13px] label-caps px-7 py-4 rounded-full border border-forest/30 hover:border-forest transition-colors duration-300"
             >
               Request a Quote
-            </a>
+            </Link>
           </motion.div>
         </div>
 

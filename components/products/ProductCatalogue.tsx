@@ -6,6 +6,9 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { api } from "@/convex/_generated/api";
 import { ProductGrid } from "./ProductGrid";
 import { ProductFilters, type SortOption } from "./ProductFilters";
+import { Pagination } from "./Pagination";
+
+const PAGE_SIZE = 12;
 
 export function ProductCatalogue() {
   const products = useQuery(api.products.list, { activeOnly: true });
@@ -18,8 +21,9 @@ export function ProductCatalogue() {
   const search = searchParams.get("q") ?? "";
   const sort = (searchParams.get("sort") as SortOption) || "featured";
   const featuredOnly = searchParams.get("featured") === "1";
+  const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
 
-  const updateParams = (updates: Record<string, string | null>) => {
+  const updateParams = (updates: Record<string, string | null>, resetPage = false) => {
     const params = new URLSearchParams(searchParams.toString());
     for (const [key, value] of Object.entries(updates)) {
       if (value === null || value === "") {
@@ -28,6 +32,7 @@ export function ProductCatalogue() {
         params.set(key, value);
       }
     }
+    if (resetPage) params.delete("page");
     const query = params.toString();
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   };
@@ -67,6 +72,10 @@ export function ProductCatalogue() {
     return sorted;
   }, [products, categories, activeCategory, featuredOnly, search, sort]);
 
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+
   if (!products || !categories) {
     return <div className="py-16 text-center text-charcoal/50">Loading products…</div>;
   }
@@ -79,10 +88,10 @@ export function ProductCatalogue() {
         search={search}
         sort={sort}
         featuredOnly={featuredOnly}
-        onCategoryChange={(slug) => updateParams({ category: slug })}
-        onSearchChange={(value) => updateParams({ q: value || null })}
-        onSortChange={(value) => updateParams({ sort: value === "featured" ? null : value })}
-        onFeaturedOnlyChange={(value) => updateParams({ featured: value ? "1" : null })}
+        onCategoryChange={(slug) => updateParams({ category: slug }, true)}
+        onSearchChange={(value) => updateParams({ q: value || null }, true)}
+        onSortChange={(value) => updateParams({ sort: value === "featured" ? null : value }, true)}
+        onFeaturedOnlyChange={(value) => updateParams({ featured: value ? "1" : null }, true)}
       />
 
       <p className="text-charcoal/50 text-sm mt-6 mb-6">
@@ -90,7 +99,7 @@ export function ProductCatalogue() {
       </p>
 
       <ProductGrid
-        products={filtered.map((p) => ({
+        products={paged.map((p) => ({
           slug: p.slug,
           name: p.name,
           thumbnail: p.thumbnail,
@@ -98,6 +107,12 @@ export function ProductCatalogue() {
           categoryName: categoryNameById.get(p.categoryId),
         }))}
         emptyState="No products match your filters — try clearing the search or category."
+      />
+
+      <Pagination
+        page={currentPage}
+        totalPages={totalPages}
+        onPageChange={(p) => updateParams({ page: p === 1 ? null : String(p) })}
       />
     </div>
   );

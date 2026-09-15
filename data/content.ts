@@ -2,12 +2,13 @@ import { images } from "./images";
 
 export const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/#about" },
+  { label: "About", href: "/about" },
   { label: "Products", href: "/products" },
-  { label: "Applications", href: "/#applications" },
-  { label: "Quality", href: "/#quality" },
-  { label: "Global Reach", href: "/#global-reach" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Applications", href: "/applications" },
+  { label: "Quality", href: "/quality" },
+  { label: "Processing", href: "/processing" },
+  { label: "Global Reach", href: "/global-reach" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const applications = [

@@ -2,13 +2,9 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ProductCategories } from "@/components/ProductCategories";
 import { FeaturedProducts } from "@/components/products/FeaturedProducts";
-import { Applications } from "@/components/Applications";
-import { Process } from "@/components/Process";
-import { Quality } from "@/components/Quality";
 import { Statistics } from "@/components/Statistics";
-import { GlobalReach } from "@/components/GlobalReach";
-import { About } from "@/components/About";
-import { CTA } from "@/components/CTA";
+import { ExploreLinks } from "@/components/ExploreLinks";
+import { ContactBanner } from "@/components/ContactBanner";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -19,13 +15,9 @@ export default function Home() {
         <Hero />
         <ProductCategories />
         <FeaturedProducts />
-        <Applications />
-        <Process />
-        <Quality />
         <Statistics />
-        <GlobalReach />
-        <About />
-        <CTA />
+        <ExploreLinks />
+        <ContactBanner />
       </main>
       <Footer />
     </>

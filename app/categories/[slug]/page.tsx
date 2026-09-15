@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fetchQuery } from "convex/nextjs";
@@ -55,7 +56,9 @@ export default async function CategoryPage({
               {category.description}
             </p>
           </div>
-          <CategoryProductGrid categoryId={category._id} />
+          <Suspense fallback={<div className="py-16 text-center text-charcoal/50">Loading products…</div>}>
+            <CategoryProductGrid categoryId={category._id} />
+          </Suspense>
         </div>
       </main>
       <Footer />

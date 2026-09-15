@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "./Reveal";
 import { images } from "@/data/images";
@@ -22,13 +23,13 @@ export function About() {
               through to hygienic packing, we build a transparent, export-ready
               supply chain that food brands and distributors can rely on.
             </p>
-            <a
-              href="#quality"
+            <Link
+              href="/quality"
               className="group inline-flex items-center gap-2 mt-6 text-[13px] label-caps text-forest border-b-2 border-orange pb-1 hover:text-orange transition-colors duration-300"
             >
               Discover Our Story
               <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </a>
+            </Link>
           </Reveal>
         </div>
 
