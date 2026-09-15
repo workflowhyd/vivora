@@ -26,18 +26,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Vivora Foods | Dry Delicious. Nature Goodness.",
   description:
-    "Vivora Foods supplies premium dry fruits, nuts and dehydrated snacks — carefully sourced, graded and packed for global markets.",
+    "Vivora Foods supplies premium dehydrated vegetables, fruits, powders and ready-to-cook products — export-grade quality from India for B2B buyers, distributors and retailers worldwide.",
   keywords: [
-    "dry fruits exporter India",
-    "premium nuts supplier",
-    "cashew almond walnut exporter",
-    "dried fruit manufacturer",
-    "natural snacking ingredients",
+    "dehydrated vegetables exporter India",
+    "vegetable powder supplier",
+    "fruit powder manufacturer",
+    "ready to cook food export",
+    "spice powder exporter India",
+    "dehydrated food manufacturer",
   ],
   openGraph: {
     title: "Vivora Foods | Dry Delicious. Nature Goodness.",
     description:
-      "Premium dry fruits and nuts crafted from carefully selected natural ingredients for retail, gifting and food service.",
+      "Premium dehydrated vegetables, fruits, powders and ready-to-cook products, export-grade quality from India.",
     url: siteUrl,
     siteName: "Vivora Foods",
     type: "website",
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vivora Foods | Dry Delicious. Nature Goodness.",
     description:
-      "Premium dry fruits and nuts crafted from carefully selected natural ingredients for retail, gifting and food service.",
+      "Premium dehydrated vegetables, fruits, powders and ready-to-cook products, export-grade quality from India.",
   },
   robots: {
     index: true,

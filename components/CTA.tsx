@@ -2,7 +2,6 @@
 
 import { FormEvent, useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
 import { useMutation, useQuery } from "convex/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal } from "./Reveal";
@@ -14,7 +13,7 @@ const inputClasses =
   "w-full bg-transparent border-b border-forest/20 pb-2.5 text-near-black placeholder:text-charcoal/40 focus:outline-none focus:border-forest transition-colors duration-300";
 
 export function CTA() {
-  const products = useQuery(api.products.list);
+  const products = useQuery(api.products.list, { activeOnly: true });
   const createInquiry = useMutation(api.inquiries.create);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
@@ -41,38 +40,22 @@ export function CTA() {
 
   return (
     <section id="contact" className="relative w-full overflow-hidden">
-      <div className="relative h-[52vh] min-h-[380px] w-full overflow-hidden">
-        <motion.div
-          className="absolute inset-0"
-          initial={{ scale: 1.1 }}
-          whileInView={{ scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Image
-            src={images.cta}
-            alt="A bowl of mixed nuts and dried fruit — the finished character of every Vivora Foods product"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        </motion.div>
+      <div className="relative h-[22vh] min-h-[160px] w-full overflow-hidden">
+        <Image
+          src={images.cta}
+          alt="Dehydrated food products — the finished character of every Vivora Foods product"
+          fill
+          sizes="100vw"
+          className="object-cover"
+        />
         <div className="absolute inset-0 bg-near-black/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-near-black via-near-black/40 to-near-black/50" />
-
-        <div className="relative h-full flex flex-col items-center justify-center text-center px-6">
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <Reveal>
-            <h2 className="font-display text-4xl md:text-6xl leading-[1.05] text-ivory max-w-4xl">
+            <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-ivory max-w-3xl">
               Let&apos;s create something
               <br />
               <span className="italic text-orange">naturally exceptional.</span>
             </h2>
-          </Reveal>
-          <Reveal delay={0.15}>
-            <p className="text-ivory/75 font-light text-base md:text-lg mt-7 max-w-md">
-              Looking for reliable, export-grade dry fruits and nuts for your
-              next order?
-            </p>
           </Reveal>
         </div>
       </div>

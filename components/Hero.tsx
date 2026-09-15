@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { images } from "@/data/images";
 
@@ -9,101 +10,76 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Hero() {
   return (
-    <section
-      id="home"
-      className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-near-black"
-    >
-      <motion.div
-        className="absolute inset-0"
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 2.4, ease: EASE }}
-      >
-        <Image
-          src={images.hero}
-          alt="A heap of premium roasted cashews — a Vivora Foods dry fruit"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-      </motion.div>
+    <section id="home" className="relative w-full bg-offwhite pt-32 md:pt-40 pb-14 md:pb-20">
+      <div className="mx-auto max-w-[1440px] px-6 md:px-10 grid md:grid-cols-12 gap-10 md:gap-12 items-center">
+        <div className="md:col-span-7">
+          <motion.span
+            className="label-caps text-[12px] text-crimson block"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            Dehydrated Foods, Powders &amp; Ready-to-Cook — Export Quality
+          </motion.span>
 
-      <div className="absolute inset-0 bg-gradient-to-b from-near-black/70 via-near-black/45 to-near-black/85" />
-      <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-transparent to-transparent" />
-
-      <div className="relative z-10 h-full flex flex-col justify-end md:justify-center px-6 md:px-10 pb-28 md:pb-0 max-w-[1440px] mx-auto">
-        <motion.span
-          className="label-caps text-[12px] md:text-[13px] text-yellow mb-5 md:mb-6 block"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: EASE }}
-        >
-          Premium Dry Fruits &amp; Nuts
-        </motion.span>
-
-        <h1 className="font-display text-ivory text-[13vw] leading-[0.98] md:text-[6.4vw] md:leading-[0.96] max-w-4xl overflow-hidden">
-          {["Dry Delicious.", "Nature", "Goodness."].map((line, i) => (
-            <span key={line} className="block overflow-hidden">
-              <motion.span
-                className={i === 2 ? "italic text-orange inline-block" : "inline-block"}
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{ duration: 1, delay: 0.5 + i * 0.14, ease: EASE }}
-              >
-                {line}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
-
-        <motion.p
-          className="text-ivory/80 text-base md:text-lg max-w-md md:max-w-lg mt-6 md:mt-8 font-light"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 1.05, ease: EASE }}
-        >
-          Premium dry fruits, nuts and dehydrated snacks crafted from
-          carefully selected natural ingredients — dry delicious, nature
-          goodness.
-        </motion.p>
-
-        <div className="flex flex-wrap items-center gap-4 mt-9 md:mt-10">
-          <motion.a
-            href="#products"
+          <motion.h1
+            className="font-display text-near-black text-[11vw] leading-[1.02] md:text-6xl md:leading-[1.05] mt-4 max-w-xl"
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.25, ease: EASE }}
-            className="group inline-flex items-center gap-2 bg-ivory text-forest text-[13px] label-caps px-7 py-4 rounded-full hover:bg-yellow transition-colors duration-300"
+            transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
           >
-            Explore Products
-            <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
-          </motion.a>
-          <motion.a
-            href="#contact"
-            initial={{ opacity: 0, y: 16 }}
+            Dry Delicious. <span className="italic text-forest">Nature Goodness.</span>
+          </motion.h1>
+
+          <motion.p
+            className="text-charcoal/70 text-base md:text-lg max-w-md mt-6 font-light leading-relaxed"
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.4, ease: EASE }}
-            className="inline-flex items-center gap-2 text-ivory text-[13px] label-caps px-7 py-4 rounded-full border border-ivory/40 hover:border-ivory transition-colors duration-300"
+            transition={{ duration: 0.8, delay: 0.2, ease: EASE }}
           >
-            Talk to Us
-          </motion.a>
+            Vivora Foods supplies premium dehydrated vegetables, fruits, powders and
+            ready-to-cook products from India — sourced, processed and packed for
+            B2B buyers, distributors and retailers worldwide.
+          </motion.p>
+
+          <motion.div
+            className="flex flex-wrap items-center gap-4 mt-8"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+          >
+            <Link
+              href="/products"
+              className="group inline-flex items-center gap-2 bg-forest text-ivory text-[13px] label-caps px-7 py-4 rounded-full hover:bg-near-black transition-colors duration-300"
+            >
+              View Products
+              <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 text-forest text-[13px] label-caps px-7 py-4 rounded-full border border-forest/30 hover:border-forest transition-colors duration-300"
+            >
+              Request a Quote
+            </a>
+          </motion.div>
         </div>
+
+        <motion.div
+          className="md:col-span-5 relative h-[32vh] md:h-[42vh] max-h-[420px] rounded-md overflow-hidden"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.15, ease: EASE }}
+        >
+          <Image
+            src={images.hero}
+            alt="Dehydrated vegetables and spice powders — Vivora Foods products"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 40vw"
+            className="object-cover"
+          />
+        </motion.div>
       </div>
-
-      <motion.div
-        className="absolute bottom-8 inset-x-0 px-6 md:px-10 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.8 }}
-      >
-        <div className="max-w-[1440px] mx-auto flex items-center justify-center md:justify-start">
-          <p className="label-caps text-[10px] md:text-[11px] text-ivory/60 tracking-[0.3em] text-center md:text-left">
-            India <span className="text-orange mx-2">•</span> Natural Ingredients{" "}
-            <span className="text-orange mx-2">•</span> Global Quality
-          </p>
-        </div>
-      </motion.div>
     </section>
   );
 }

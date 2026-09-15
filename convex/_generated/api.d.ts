@@ -8,12 +8,17 @@
  * @module
  */
 
+import type * as adminAllowlist from "../adminAllowlist.js";
 import type * as auth from "../auth.js";
 import type * as categories from "../categories.js";
 import type * as http from "../http.js";
 import type * as inquiries from "../inquiries.js";
+import type * as lib_authz from "../lib/authz.js";
 import type * as products from "../products.js";
 import type * as seed from "../seed.js";
+import type * as seedData_categories from "../seedData/categories.js";
+import type * as seedData_images from "../seedData/images.js";
+import type * as seedData_products from "../seedData/products.js";
 
 import type {
   ApiFromModules,
@@ -22,12 +27,17 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  adminAllowlist: typeof adminAllowlist;
   auth: typeof auth;
   categories: typeof categories;
   http: typeof http;
   inquiries: typeof inquiries;
+  "lib/authz": typeof lib_authz;
   products: typeof products;
   seed: typeof seed;
+  "seedData/categories": typeof seedData_categories;
+  "seedData/images": typeof seedData_images;
+  "seedData/products": typeof seedData_products;
 }>;
 
 /**

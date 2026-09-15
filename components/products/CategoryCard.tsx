@@ -1,0 +1,43 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+
+export interface CategoryCardData {
+  slug: string;
+  name: string;
+  description: string;
+  image: string;
+}
+
+export function CategoryCard({ category }: { category: CategoryCardData }) {
+  return (
+    <Link
+      href={`/categories/${category.slug}`}
+      className="group block rounded-md overflow-hidden border border-charcoal/10 hover:border-forest/30 transition-colors duration-300"
+    >
+      <div className="relative aspect-[16/10] overflow-hidden bg-charcoal/5">
+        <Image
+          src={category.image}
+          alt={category.name}
+          fill
+          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+      </div>
+      <div className="p-5 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-display text-lg md:text-xl text-near-black leading-snug">
+            {category.name}
+          </h3>
+          <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
+            {category.description}
+          </p>
+        </div>
+        <ArrowUpRight
+          size={18}
+          className="text-forest shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
+        />
+      </div>
+    </Link>
+  );
+}

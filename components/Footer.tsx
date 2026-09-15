@@ -1,15 +1,12 @@
+import Link from "next/link";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";
 
-const columns = [
-  {
-    title: "Company",
-    links: ["About", "Quality", "Processing", "Global Reach"],
-  },
-  {
-    title: "Products",
-    links: ["Dried Fruits", "Nuts & Kernels", "Gifting & Specialty"],
-  },
+const companyLinks = [
+  { label: "About", href: "/#about" },
+  { label: "Quality", href: "/#quality" },
+  { label: "Processing", href: "/#processing" },
+  { label: "Global Reach", href: "/#global-reach" },
 ];
 
 export function Footer() {
@@ -20,27 +17,56 @@ export function Footer() {
           <div className="md:col-span-5">
             <Logo variant="light" />
             <p className="text-ivory/55 font-light mt-6 max-w-xs leading-relaxed">
-              Premium dry fruits &amp; nuts. Dry delicious. Nature goodness.
+              Premium dehydrated foods, powders &amp; ready-to-cook products. Dry
+              delicious. Nature goodness.
             </p>
           </div>
 
-          {columns.map((col) => (
-            <div key={col.title} className="md:col-span-2 md:col-start-auto">
-              <h4 className="label-caps text-[11px] text-ivory/40">{col.title}</h4>
-              <ul className="mt-5 space-y-3">
-                {col.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
-                      className="text-ivory/70 hover:text-yellow transition-colors duration-300 font-light"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="md:col-span-2">
+            <h4 className="label-caps text-[11px] text-ivory/40">Company</h4>
+            <ul className="mt-5 space-y-3">
+              {companyLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-ivory/70 hover:text-yellow transition-colors duration-300 font-light"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="md:col-span-2">
+            <h4 className="label-caps text-[11px] text-ivory/40">Products</h4>
+            <ul className="mt-5 space-y-3">
+              <li>
+                <Link
+                  href="/products"
+                  className="text-ivory/70 hover:text-yellow transition-colors duration-300 font-light"
+                >
+                  All Products
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/categories/dehydrated-vegetables"
+                  className="text-ivory/70 hover:text-yellow transition-colors duration-300 font-light"
+                >
+                  Dehydrated Vegetables
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/categories/spice-ingredient-powders"
+                  className="text-ivory/70 hover:text-yellow transition-colors duration-300 font-light"
+                >
+                  Spice Powders
+                </Link>
+              </li>
+            </ul>
+          </div>
 
           <div className="md:col-span-3">
             <h4 className="label-caps text-[11px] text-ivory/40">Contact</h4>

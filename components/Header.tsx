@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
 import { navLinks } from "@/data/content";
 import { cn } from "@/lib/utils";
+
+const MotionLink = motion.create(Link);
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,24 +39,24 @@ export function Header() {
         )}
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-10 flex items-center justify-between">
-          <a href="#home" aria-label="Vivora Foods home">
+          <Link href="/" aria-label="Vivora Foods home">
             <Logo variant="light" />
-          </a>
+          </Link>
 
           <nav className="hidden lg:flex items-center gap-9">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-[13px] label-caps text-ivory/85 hover:text-yellow transition-colors duration-300"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
-          <a
-            href="#contact"
+          <Link
+            href="/#contact"
             className="hidden lg:inline-flex items-center gap-2 text-[13px] label-caps text-ivory border border-ivory/40 rounded-full px-5 py-2.5 hover:bg-ivory hover:text-forest transition-all duration-300 group"
           >
             Request a Quote
@@ -61,7 +64,7 @@ export function Header() {
               size={14}
               className="transition-transform duration-300 group-hover:translate-x-0.5"
             />
-          </a>
+          </Link>
 
           <button
             aria-label="Open menu"
@@ -107,7 +110,7 @@ export function Header() {
 
               <nav className="flex flex-col gap-1 px-6 mt-6">
                 {navLinks.map((link, i) => (
-                  <motion.a
+                  <MotionLink
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
@@ -117,19 +120,19 @@ export function Header() {
                     className="font-display text-3xl text-ivory py-3 border-b border-ivory/10"
                   >
                     {link.label}
-                  </motion.a>
+                  </MotionLink>
                 ))}
               </nav>
 
               <div className="mt-auto px-6 pb-10 pt-6">
-                <a
-                  href="#contact"
+                <Link
+                  href="/#contact"
                   onClick={() => setOpen(false)}
                   className="inline-flex items-center justify-center gap-2 w-full text-[13px] label-caps text-forest bg-yellow rounded-full px-5 py-3.5"
                 >
                   Request a Quote
                   <ArrowRight size={14} />
-                </a>
+                </Link>
               </div>
             </motion.div>
           </motion.div>

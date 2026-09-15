@@ -22,12 +22,12 @@ export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
     setError(null);
     const form = new FormData(event.currentTarget);
     const fields = {
-      number: String(form.get("number")),
+      name: String(form.get("name")),
       slug: String(form.get("slug")),
-      title: String(form.get("title")),
       description: String(form.get("description")),
       image: String(form.get("image")),
-      order: Number(form.get("order")),
+      active: form.get("active") === "on",
+      sortOrder: Number(form.get("sortOrder")),
     };
     try {
       if (category) {
@@ -44,42 +44,29 @@ export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl flex flex-col gap-5 mt-8">
-      <div className="grid sm:grid-cols-3 gap-5">
+      <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="text-sm font-medium" htmlFor="number">
-            Number
+          <label className="text-sm font-medium" htmlFor="name">
+            Name
           </label>
           <input
-            id="number"
-            name="number"
+            id="name"
+            name="name"
             required
-            defaultValue={category?.number}
-            placeholder="01"
+            defaultValue={category?.name}
             className={`${fieldClasses} mt-1.5`}
           />
         </div>
         <div>
-          <label className="text-sm font-medium" htmlFor="title">
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            required
-            defaultValue={category?.title}
-            className={`${fieldClasses} mt-1.5`}
-          />
-        </div>
-        <div>
-          <label className="text-sm font-medium" htmlFor="order">
+          <label className="text-sm font-medium" htmlFor="sortOrder">
             Sort order
           </label>
           <input
-            id="order"
-            name="order"
+            id="sortOrder"
+            name="sortOrder"
             type="number"
             required
-            defaultValue={category?.order ?? 0}
+            defaultValue={category?.sortOrder ?? 0}
             className={`${fieldClasses} mt-1.5`}
           />
         </div>
@@ -125,6 +112,11 @@ export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
           className={`${fieldClasses} mt-1.5`}
         />
       </div>
+
+      <label className="flex items-center gap-2 text-sm font-medium">
+        <input type="checkbox" name="active" defaultChecked={category?.active ?? true} />
+        Active
+      </label>
 
       {error && <p className="text-crimson text-sm">{error}</p>}
 

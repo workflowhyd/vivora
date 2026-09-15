@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type Variants } from "motion/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -18,14 +18,17 @@ export function Reveal({
   y?: number;
   once?: boolean;
 }) {
-  const variants: Variants = {
-    hidden: { opacity: 0, y },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.9, delay, ease: EASE },
-    },
-  };
+  const prefersReducedMotion = useReducedMotion();
+  const variants: Variants = prefersReducedMotion
+    ? { hidden: { opacity: 1, y: 0 }, show: { opacity: 1, y: 0 } }
+    : {
+        hidden: { opacity: 0, y },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.9, delay, ease: EASE },
+        },
+      };
 
   return (
     <motion.div
@@ -51,6 +54,7 @@ export function RevealGroup({
   stagger?: number;
   once?: boolean;
 }) {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <motion.div
       className={className}
@@ -59,7 +63,7 @@ export function RevealGroup({
       viewport={{ once, amount: 0.2 }}
       variants={{
         hidden: {},
-        show: { transition: { staggerChildren: stagger } },
+        show: { transition: { staggerChildren: prefersReducedMotion ? 0 : stagger } },
       }}
     >
       {children}

@@ -7,12 +7,16 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 export default function AdminCategoriesPage() {
-  const categories = useQuery(api.categories.list);
+  const categories = useQuery(api.categories.list, { activeOnly: false });
   const removeCategory = useMutation(api.categories.remove);
 
-  const handleDelete = async (id: Id<"categories">, title: string) => {
-    if (!confirm(`Delete "${title}"? This can't be undone.`)) return;
-    await removeCategory({ id });
+  const handleDelete = async (id: Id<"categories">, name: string) => {
+    if (!confirm(`Delete "${name}"? This can't be undone.`)) return;
+    try {
+      await removeCategory({ id });
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Could not delete category.");
+    }
   };
 
   return (
@@ -35,8 +39,8 @@ export default function AdminCategoriesPage() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-charcoal/10 text-left text-charcoal/50">
-              <th className="px-5 py-3 font-medium">#</th>
-              <th className="px-5 py-3 font-medium">Title</th>
+              <th className="px-5 py-3 font-medium">Name</th>
+              <th className="px-5 py-3 font-medium">Status</th>
               <th className="px-5 py-3 font-medium">Order</th>
               <th className="px-5 py-3 font-medium" />
             </tr>
@@ -44,21 +48,23 @@ export default function AdminCategoriesPage() {
           <tbody>
             {categories?.map((category) => (
               <tr key={category._id} className="border-b border-charcoal/5 last:border-0">
-                <td className="px-5 py-3.5 text-charcoal/60">{category.number}</td>
-                <td className="px-5 py-3.5">{category.title}</td>
-                <td className="px-5 py-3.5 text-charcoal/60">{category.order}</td>
+                <td className="px-5 py-3.5">{category.name}</td>
+                <td className="px-5 py-3.5 text-charcoal/60">
+                  {category.active ? "Active" : "Inactive"}
+                </td>
+                <td className="px-5 py-3.5 text-charcoal/60">{category.sortOrder}</td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center justify-end gap-3">
                     <Link
                       href={`/admin/categories/${category._id}/edit`}
-                      aria-label={`Edit ${category.title}`}
+                      aria-label={`Edit ${category.name}`}
                       className="text-charcoal/50 hover:text-forest"
                     >
                       <Pencil size={16} />
                     </Link>
                     <button
-                      onClick={() => handleDelete(category._id, category.title)}
-                      aria-label={`Delete ${category.title}`}
+                      onClick={() => handleDelete(category._id, category.name)}
+                      aria-label={`Delete ${category.name}`}
                       className="text-charcoal/50 hover:text-crimson"
                     >
                       <Trash2 size={16} />

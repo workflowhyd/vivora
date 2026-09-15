@@ -1,46 +1,13 @@
 import { images } from "./images";
 
 export const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Products", href: "#products" },
-  { label: "Applications", href: "#applications" },
-  { label: "Quality", href: "#quality" },
-  { label: "Global Reach", href: "#global-reach" },
-  { label: "Contact", href: "#contact" },
-];
-
-export const colorSpectrum = [
-  {
-    label: "AMBER",
-    ingredient: "Dried Apricot",
-    color: "#D9822B",
-    image: images.colorSpectrum.apricot,
-  },
-  {
-    label: "GREEN",
-    ingredient: "Pistachio",
-    color: "#7E9A52",
-    image: images.colorSpectrum.pistachio,
-  },
-  {
-    label: "PLUM",
-    ingredient: "Raisin",
-    color: "#5A3E2C",
-    image: images.colorSpectrum.raisin,
-  },
-  {
-    label: "EARTH",
-    ingredient: "Walnut",
-    color: "#A9773F",
-    image: images.colorSpectrum.walnut,
-  },
-  {
-    label: "CARAMEL",
-    ingredient: "Date",
-    color: "#7A4A26",
-    image: images.colorSpectrum.date,
-  },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/#about" },
+  { label: "Products", href: "/products" },
+  { label: "Applications", href: "/#applications" },
+  { label: "Quality", href: "/#quality" },
+  { label: "Global Reach", href: "/#global-reach" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const applications = [
@@ -61,7 +28,7 @@ export const applications = [
   {
     number: "03",
     title: "Bakery & Confectionery",
-    description: "Consistent, food-safe nuts and dried fruit for bakes, chocolates and desserts.",
+    description: "Consistent, food-safe dehydrated ingredients and powders for bakes, mixes and desserts.",
     image: images.applications.bakery,
     accent: "#3C7A45",
   },

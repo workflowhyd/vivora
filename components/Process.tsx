@@ -15,7 +15,7 @@ export function Process() {
   const lineProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 22 });
 
   return (
-    <section ref={sectionRef} className="bg-ivory py-24 md:py-36">
+    <section id="processing" ref={sectionRef} className="bg-ivory py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 md:mb-24 text-center max-w-xl mx-auto">
           <span className="label-caps text-[12px] text-crimson">The Journey</span>

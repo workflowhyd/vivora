@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 export default function AdminProductsPage() {
-  const products = useQuery(api.products.list);
+  const products = useQuery(api.products.listAdmin);
   const removeProduct = useMutation(api.products.remove);
 
   const handleDelete = async (id: Id<"products">, name: string) => {
@@ -37,6 +37,7 @@ export default function AdminProductsPage() {
             <tr className="border-b border-charcoal/10 text-left text-charcoal/50">
               <th className="px-5 py-3 font-medium">Name</th>
               <th className="px-5 py-3 font-medium">Category</th>
+              <th className="px-5 py-3 font-medium">Status</th>
               <th className="px-5 py-3 font-medium">Order</th>
               <th className="px-5 py-3 font-medium" />
             </tr>
@@ -44,9 +45,19 @@ export default function AdminProductsPage() {
           <tbody>
             {products?.map((product) => (
               <tr key={product._id} className="border-b border-charcoal/5 last:border-0">
-                <td className="px-5 py-3.5">{product.name}</td>
-                <td className="px-5 py-3.5 text-charcoal/60">{product.category}</td>
-                <td className="px-5 py-3.5 text-charcoal/60">{product.order}</td>
+                <td className="px-5 py-3.5">
+                  {product.name}
+                  {product.featured && (
+                    <span className="ml-2 label-caps text-[9px] text-yellow bg-forest rounded-full px-2 py-0.5">
+                      Featured
+                    </span>
+                  )}
+                </td>
+                <td className="px-5 py-3.5 text-charcoal/60">{product.categoryName}</td>
+                <td className="px-5 py-3.5 text-charcoal/60">
+                  {product.active ? "Active" : "Inactive"}
+                </td>
+                <td className="px-5 py-3.5 text-charcoal/60">{product.sortOrder}</td>
                 <td className="px-5 py-3.5">
                   <div className="flex items-center justify-end gap-3">
                     <Link
@@ -69,7 +80,7 @@ export default function AdminProductsPage() {
             ))}
             {products?.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-5 py-8 text-center text-charcoal/50">
+                <td colSpan={5} className="px-5 py-8 text-center text-charcoal/50">
                   No products yet.
                 </td>
               </tr>

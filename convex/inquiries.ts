@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { requireAdmin } from "./lib/authz";
 
 // Public — called from the site's contact/quote form. No auth check: this is
 // the one write in the schema anonymous visitors are meant to make. status
@@ -24,7 +25,7 @@ export const create = mutation({
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    if (!(await ctx.auth.getUserIdentity())) throw new Error("Unauthorized");
+    await requireAdmin(ctx);
     return ctx.db.query("inquiries").withIndex("by_createdAt").order("desc").collect();
   },
 });
@@ -35,7 +36,7 @@ export const updateStatus = mutation({
     status: v.union(v.literal("new"), v.literal("contacted"), v.literal("closed")),
   },
   handler: async (ctx, { id, status }) => {
-    if (!(await ctx.auth.getUserIdentity())) throw new Error("Unauthorized");
+    await requireAdmin(ctx);
     await ctx.db.patch(id, { status });
   },
 });
@@ -43,7 +44,7 @@ export const updateStatus = mutation({
 export const remove = mutation({
   args: { id: v.id("inquiries") },
   handler: async (ctx, { id }) => {
-    if (!(await ctx.auth.getUserIdentity())) throw new Error("Unauthorized");
+    await requireAdmin(ctx);
     await ctx.db.delete(id);
   },
 });

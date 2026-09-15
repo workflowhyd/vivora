@@ -5,8 +5,8 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 export default function AdminDashboardPage() {
-  const products = useQuery(api.products.list);
-  const categories = useQuery(api.categories.list);
+  const products = useQuery(api.products.list, {});
+  const categories = useQuery(api.categories.list, {});
   const inquiries = useQuery(api.inquiries.list);
 
   const newInquiries = inquiries?.filter((inquiry) => inquiry.status === "new").length;
