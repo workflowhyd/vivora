@@ -4,49 +4,50 @@
  * directly — see convex/seedData/images.ts). Demo imagery is sourced from
  * Wikimedia Commons (freely licensed for this kind of use); swap for final
  * commercial photography later without touching component code.
+ *
+ * Chosen specifically to depict Indian vegetables, dehydration and
+ * powder-making — NOT dry fruits/nuts/orchards, which don't represent
+ * Vivora's actual product line.
  */
 
 const wiki = (path: string) => `https://i0.wp.com/upload.wikimedia.org/wikipedia/commons/${path}?w=1600`;
 
-const driedVegSpiceBazaar = wiki("c/c0/Dried_vegetables_on_Spice_bazaar_in_Istanbul_03.jpg");
-const giftHamper = wiki("a/aa/Hawthorn_Lodge_Gift_Hampers_%2825359652560%29.jpg");
-const dryingTrays = wiki("c/c0/Sundrying_Curry_leaves_and_Indian_Gooseberry.jpg");
-const spicePowderBowls = wiki("9/90/Kunyit_Bubuk.jpg");
-const readyToCook = wiki("4/49/Vermicelli_Upma.jpg");
+const vegetableMarketAhmedabad = wiki("e/eb/Vegetable_market%2C_Ahmedabad.jpg");
+const vegetablesRoadsideStall = wiki("7/7d/Vegetables_arranged_at_a_roadside_stall_in_India.jpg");
+const dehydratedVegetablesJV = wiki("7/7d/Joint_venture_dehydrated_dried_vegetables.jpg");
+const dehydratedVegetablesJV2 = wiki("9/9a/Joint_venture_dehydrated_dried_vegetables_%281%29.jpg");
+const vegetableStallOoty = wiki("7/74/Potato_Bean_Tomato_Veg_Stall_Ooty_Market_Nilgiris_Aug25_A7CR_07103.jpg");
+const turmericPowder = wiki("3/3e/Turmeric_Powder_Spelled_Out.jpg");
+const northIndianThali = wiki("8/8b/North_Indian_Vegetarian_Thali-MB51.jpg");
 const warehouseBoxes = wiki(
   "6/64/EFTA00002251_-_White_door_with_a_window_and_handle_stands_in_a_warehouse_next_to_stacked_cardboard_boxes_on_a_pallet.jpg"
 );
+const readyToCookUpma = wiki("4/49/Vermicelli_Upma.jpg");
+const giftHamper = wiki("a/aa/Hawthorn_Lodge_Gift_Hampers_%2825359652560%29.jpg");
 const freshBread = wiki("a/a1/Fresh_made_bread_06.jpg");
-const dehydratedTomatoes = wiki("c/cf/Sun-dried_tomatoes.jpg");
-const dehydratedMango = wiki("d/d5/Heap_of_Sun-dried_mango_slices.jpg");
-const turmericPowder = wiki("3/3e/Turmeric_Powder_Spelled_Out.jpg");
-const papad = wiki("1/1f/Papad_%28roasted%29.jpg");
 
 export const images = {
-  hero: driedVegSpiceBazaar,
+  hero: dehydratedVegetablesJV,
 
   applications: {
     gifting: giftHamper,
-    retail: readyToCook,
+    retail: readyToCookUpma,
     bakery: freshBread,
     horeca: warehouseBoxes,
   },
 
   process: {
-    select: dehydratedTomatoes,
-    clean: dryingTrays,
-    sort: spicePowderBowls,
-    dry: dehydratedMango,
+    select: vegetableMarketAhmedabad,
+    clean: vegetablesRoadsideStall,
+    sort: vegetableStallOoty,
+    dry: dehydratedVegetablesJV2,
     roast: turmericPowder,
-    pack: papad,
+    pack: warehouseBoxes,
   },
 
   about: {
-    farm: dryingTrays,
-    orchard: dehydratedTomatoes,
-    processing: turmericPowder,
-    finished: spicePowderBowls,
+    farm: vegetablesRoadsideStall,
   },
 
-  cta: readyToCook,
+  cta: northIndianThali,
 } as const;

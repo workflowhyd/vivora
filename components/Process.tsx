@@ -20,7 +20,7 @@ export function Process() {
         <Reveal className="mb-16 md:mb-24 text-center max-w-xl mx-auto">
           <span className="label-caps text-[12px] text-crimson">The Journey</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-near-black">
-            From orchard
+            From harvest
             <br />
             <span className="italic text-forest">to pack.</span>
           </h2>

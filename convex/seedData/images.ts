@@ -4,13 +4,16 @@
  * the old `data/images.ts`. Swap these for real product photography later;
  * nothing else in the codebase needs to change since products/categories
  * store their own image URLs directly.
+ *
+ * Chosen to depict actual Indian vegetables, dehydration and powder-making
+ * rather than generic/unrelated stock photography.
  */
 const wiki = (path: string) => `https://i0.wp.com/upload.wikimedia.org/wikipedia/commons/${path}?w=1600`;
 
 export const categoryImages = {
-  dehydratedVegetables: wiki("d/d5/A_Plate_of_Hometown_Dried_Vegetables_at_outside_the_market.jpg"),
+  dehydratedVegetables: wiki("7/7d/Joint_venture_dehydrated_dried_vegetables.jpg"),
   dehydratedFruits: wiki("4/45/Dried_Mango_Slices.JPG"),
-  vegetablePowders: wiki("d/d4/Red_Chili_Powder_%28Lall_Mirch%29_%2849695826571%29.jpg"),
+  vegetablePowders: wiki("d/df/Joint_venture_dehydrated_dried_vegetables_%282%29.jpg"),
   fruitPowders: wiki("f/f8/Aamchur_Chutney.jpg"),
   leafPowders: wiki("0/07/Moringa_leaves_powder.jpg"),
   readyToCook: wiki("4/49/Vermicelli_Upma.jpg"),
@@ -21,12 +24,12 @@ export const categoryImages = {
 
 export const productImages = {
   dehydratedVegetables: [
-    wiki("7/7d/Dried_vegetables_on_Spice_bazaar_in_Istanbul_02.jpg"),
-    wiki("c/c0/Dried_vegetables_on_Spice_bazaar_in_Istanbul_03.jpg"),
+    wiki("7/7d/Joint_venture_dehydrated_dried_vegetables.jpg"),
+    wiki("9/9a/Joint_venture_dehydrated_dried_vegetables_%281%29.jpg"),
+    wiki("d/df/Joint_venture_dehydrated_dried_vegetables_%282%29.jpg"),
     wiki("c/cf/Sun-dried_tomatoes.jpg"),
     wiki("6/6a/Packaging_Sun_dried_tomatoes_and_peppers.jpg"),
     wiki("6/6e/Dried_Green_Peas.jpg"),
-    wiki("d/d5/A_Plate_of_Hometown_Dried_Vegetables_at_outside_the_market.jpg"),
   ],
   dehydratedFruits: [
     wiki("4/45/Dried_Mango_Slices.JPG"),
@@ -37,9 +40,9 @@ export const productImages = {
     wiki("3/39/Banana_chips.JPG"),
   ],
   vegetablePowders: [
+    wiki("d/df/Joint_venture_dehydrated_dried_vegetables_%282%29.jpg"),
     wiki("d/d4/Red_Chili_Powder_%28Lall_Mirch%29_%2849695826571%29.jpg"),
     wiki("9/9d/Chili_powder_at_Valencia_Market.jpg"),
-    wiki("5/57/Sev_Tomato_1.jpg"),
     wiki("9/90/Kunyit_Bubuk.jpg"),
   ],
   fruitPowders: [
@@ -51,9 +54,9 @@ export const productImages = {
     wiki("0/07/Moringa_leaves_powder.jpg"),
     wiki("6/66/Moringa_oleifera_powder.jpg"),
     wiki("6/6f/Turmeric_and_Moringa_oleifera_powder_CNE_02.jpg"),
+    wiki("9/96/Fresh_curry_leaves.jpg"),
     wiki("c/c0/Sundrying_Curry_leaves_and_Indian_Gooseberry.jpg"),
     wiki("7/74/Mint_dried.jpg"),
-    wiki("b/ba/Dried_mint_leaves_tea.jpg"),
   ],
   readyToCook: [
     wiki("4/49/Vermicelli_Upma.jpg"),

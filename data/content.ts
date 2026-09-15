@@ -45,7 +45,7 @@ export const processStages = [
   {
     number: "01",
     title: "Source",
-    description: "Nuts and fruit are sourced directly from trusted growers and orchards.",
+    description: "Vegetables and fruit are sourced directly from trusted farms and growers.",
     image: images.process.select,
   },
   {
@@ -68,8 +68,8 @@ export const processStages = [
   },
   {
     number: "05",
-    title: "Roast & Season",
-    description: "Select ranges are gently roasted and seasoned to order.",
+    title: "Grind & Blend",
+    description: "Dried ingredients are finely ground into consistent, natural powders.",
     image: images.process.roast,
   },
   {
@@ -83,7 +83,7 @@ export const processStages = [
 export const qualityPillars = [
   {
     title: "Carefully Sourced",
-    description: "Nuts and fruit selected from trusted growers for consistent quality.",
+    description: "Vegetables and fruit selected from trusted farms for consistent quality.",
   },
   {
     title: "Rigorous Grading",

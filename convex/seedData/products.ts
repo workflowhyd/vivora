@@ -34,7 +34,7 @@ export const products: SeedProduct[] = [
     description:
       "Our dehydrated tomato flakes are made from vine-ripened tomatoes, sliced and dried to preserve their natural sweetness and deep colour. Ideal for rehydration in sauces, soups, and instant meal bases.",
     images: productImages.dehydratedVegetables,
-    thumbnail: productImages.dehydratedVegetables[2],
+    thumbnail: productImages.dehydratedVegetables[3],
     ingredients: ["100% dehydrated tomato"],
     benefits: ["No added preservatives", "Long shelf life", "Retains natural colour and flavour"],
     applications: ["Instant soups", "Sauces and ketchups", "Snack seasoning", "Ready meals"],
@@ -58,7 +58,7 @@ export const products: SeedProduct[] = [
     description:
       "Grown and processed in India, our dehydrated onion flakes deliver consistent pungency and aroma batch after batch, making them a reliable base ingredient for seasoning blends and snack manufacturing.",
     images: productImages.dehydratedVegetables,
-    thumbnail: productImages.dehydratedVegetables[4],
+    thumbnail: productImages.dehydratedVegetables[1],
     ingredients: ["100% dehydrated onion"],
     benefits: ["Consistent pungency", "Reduces prep time", "Extended shelf life"],
     applications: ["Seasoning blends", "Snack coatings", "Ready-to-cook mixes"],
@@ -81,7 +81,7 @@ export const products: SeedProduct[] = [
     description:
       "Harvested at peak sweetness and dried using controlled processes that preserve colour and texture, our dehydrated green peas rehydrate quickly for use in pulao, soups, and ready-to-cook meal kits.",
     images: productImages.dehydratedVegetables,
-    thumbnail: productImages.dehydratedVegetables[3],
+    thumbnail: productImages.dehydratedVegetables[5],
     benefits: ["Retains natural sweetness", "Quick rehydration", "Year-round availability"],
     applications: ["Ready-to-cook meal kits", "Soups", "Rice dishes"],
     packSizes: STANDARD_PACK_SIZES,
@@ -179,7 +179,7 @@ export const products: SeedProduct[] = [
     description:
       "Our tomato powder is processed to retain the tang and colour of fresh tomatoes, making it a versatile ingredient for seasoning blends, soup bases, and snack coatings.",
     images: productImages.vegetablePowders,
-    thumbnail: productImages.vegetablePowders[0],
+    thumbnail: productImages.vegetablePowders[1],
     benefits: ["Vibrant natural colour", "Concentrated flavour", "Long shelf life"],
     applications: ["Snack seasoning", "Soup bases", "Sauces"],
     packSizes: STANDARD_PACK_SIZES,
@@ -216,7 +216,7 @@ export const products: SeedProduct[] = [
     description:
       "Ground from premium dehydrated onion, this powder offers convenient dosing and consistent flavour for seasoning manufacturers.",
     images: productImages.vegetablePowders,
-    thumbnail: productImages.vegetablePowders[3],
+    thumbnail: productImages.vegetablePowders[0],
     applications: ["Seasoning blends", "Instant noodles", "Snack coatings"],
     packSizes: STANDARD_PACK_SIZES,
     shelfLife: "18 months from date of manufacture",
@@ -308,7 +308,7 @@ export const products: SeedProduct[] = [
     description:
       "Dried and milled at low temperature to preserve its essential oils, our mint leaf powder brings a fresh, cooling flavour to chutneys, beverages, and confectionery.",
     images: productImages.leafPowders,
-    thumbnail: productImages.leafPowders[4],
+    thumbnail: productImages.leafPowders[5],
     applications: ["Chutneys", "Beverages", "Confectionery"],
     packSizes: STANDARD_PACK_SIZES,
     shelfLife: "18 months from date of manufacture",
@@ -485,8 +485,8 @@ export const products: SeedProduct[] = [
   // Specialty Products
   {
     categorySlug: "specialty-products",
-    name: "Premium Dry Fruit Gift Hamper",
-    slug: "premium-dry-fruit-gift-hamper",
+    name: "Premium Vivora Gift Hamper",
+    slug: "premium-vivora-gift-hamper",
     shortDescription: "A curated assortment of dehydrated fruits and spice powders in a gift-ready box.",
     description:
       "Thoughtfully curated for corporate gifting and festive retail, this hamper combines our best-selling dehydrated fruits and specialty powders in premium, export-ready packaging.",

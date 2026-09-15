@@ -15,7 +15,7 @@ export function ProductCategories() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-10 md:mb-14 max-w-2xl">
           <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-near-black">
-            From orchard
+            From harvest
             <br />
             <span className="italic text-forest">to dry delicious.</span>
           </h2>
