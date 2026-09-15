@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand — primary (navy) & secondary (leaf green) */
+  --color-forest: #16244a;
+  --color-forest-light: #223766;
+  --color-leaf: #3c7a45;
+
+  /* Brand — accents (used sparingly) */
+  --color-orange: #c1922f;
+  --color-yellow: #dcb35a;
+  --color-crimson: #8a2a3f;
+  --color-brown: #8a5a2c;
+
+  /* Neutrals */
+  --color-ivory: #fbf6ea;
+  --color-cream: #f3ead4;
+  --color-offwhite: #fdfaf2;
+  --color-charcoal: #241f18;
+  --color-near-black: #0d1224;
+
+  --background: var(--color-offwhite);
+  --foreground: var(--color-near-black);
 }
 
 @theme inline {
+  --color-forest: var(--color-forest);
+  --color-forest-light: var(--color-forest-light);
+  --color-leaf: var(--color-leaf);
+  --color-orange: var(--color-orange);
+  --color-yellow: var(--color-yellow);
+  --color-crimson: var(--color-crimson);
+  --color-brown: var(--color-brown);
+  --color-ivory: var(--color-ivory);
+  --color-cream: var(--color-cream);
+  --color-offwhite: var(--color-offwhite);
+  --color-charcoal: var(--color-charcoal);
+  --color-near-black: var(--color-near-black);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  --font-display: var(--font-playfair);
+  --font-body: var(--font-manrope);
+
+  --animate-marquee: marquee 40s linear infinite;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-offwhite);
+    --foreground: var(--color-near-black);
   }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display), serif;
+}
+
+::selection {
+  background: var(--color-crimson);
+  color: var(--color-offwhite);
+}
+
+.label-caps {
+  font-family: var(--font-body), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

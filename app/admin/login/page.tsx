@@ -1,0 +1,94 @@
+"use client";
+
+import { FormEvent, useState } from "react";
+import { useAuthActions } from "@convex-dev/auth/react";
+
+// There's no public link to this page and everything else under /admin is
+// gated by middleware.ts, so the signUp flow doubles as how the first admin
+// account gets created — that's obscurity, not a real access boundary. Once
+// an account exists, consider removing the signUp toggle below (or gating it
+// behind an env var) to close off self-serve account creation entirely.
+export default function AdminLoginPage() {
+  const { signIn } = useAuthActions();
+  const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSubmitting(true);
+    const formData = new FormData(event.currentTarget);
+    formData.set("flow", flow);
+    try {
+      await signIn("password", formData);
+    } catch {
+      setError(
+        flow === "signIn"
+          ? "Invalid email or password."
+          : "Couldn't create that account — try a different email."
+      );
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-forest flex items-center justify-center px-6">
+      <div className="w-full max-w-sm">
+        <h1 className="font-display text-3xl text-ivory text-center">Vivora Admin</h1>
+        <p className="label-caps text-[11px] text-ivory/50 text-center mt-2">
+          {flow === "signIn" ? "Sign in to continue" : "Create the admin account"}
+        </p>
+
+        <form onSubmit={handleSubmit} className="bg-ivory rounded-md p-8 mt-8 flex flex-col gap-5">
+          <div>
+            <label className="label-caps text-[10px] text-forest/70" htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className="w-full bg-transparent border-b border-forest/20 pb-2.5 mt-2 text-near-black focus:outline-none focus:border-forest"
+            />
+          </div>
+          <div>
+            <label className="label-caps text-[10px] text-forest/70" htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              minLength={8}
+              className="w-full bg-transparent border-b border-forest/20 pb-2.5 mt-2 text-near-black focus:outline-none focus:border-forest"
+            />
+          </div>
+
+          {error && <p className="text-crimson text-sm">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="mt-2 bg-forest text-ivory text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-near-black transition-colors duration-300 disabled:opacity-60"
+          >
+            {submitting ? "Please wait…" : flow === "signIn" ? "Sign in" : "Create account"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setError(null);
+              setFlow(flow === "signIn" ? "signUp" : "signIn");
+            }}
+            className="text-forest/60 text-sm underline underline-offset-2 hover:text-forest"
+          >
+            {flow === "signIn" ? "First time here? Create an account" : "Already have an account? Sign in"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
