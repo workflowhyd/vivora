@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { images } from "@/data/images";
+import { HeroVideo } from "./HeroVideo";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -70,13 +70,10 @@ export function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.15, ease: EASE }}
         >
-          <Image
-            src={images.hero}
+          <HeroVideo
+            src={images.heroVideo}
+            poster={images.hero}
             alt="Dehydrated vegetables and spice powders — Vivora Foods products"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 40vw"
-            className="object-cover"
           />
         </motion.div>
       </div>

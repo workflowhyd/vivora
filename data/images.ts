@@ -28,6 +28,11 @@ const freshBread = wiki("a/a1/Fresh_made_bread_06.jpg");
 
 export const images = {
   hero: dehydratedVegetablesJV,
+  // Optional autoplaying hero background video. Set to an external URL
+  // (e.g. your CDN/S3/Cloudinary) or a local path like "/videos/hero.mp4"
+  // for a file placed under public/videos/. Leave undefined to keep
+  // showing the static `hero` image above — nothing else needs to change.
+  heroVideo: undefined as string | undefined,
 
   applications: {
     gifting: giftHamper,
