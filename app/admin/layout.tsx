@@ -22,8 +22,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <div className="min-h-screen flex bg-offwhite text-near-black">
-      <aside className="w-60 shrink-0 bg-forest text-ivory flex flex-col">
+    <div className="min-h-screen flex bg-cream text-blue-dark">
+      <aside className="w-60 shrink-0 bg-green-dark text-cream-light flex flex-col">
         <div className="px-6 py-6">
           <span className="font-display text-xl">Vivora Admin</span>
         </div>
@@ -38,7 +38,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-md text-sm transition-colors duration-200",
-                  active ? "bg-ivory/10 text-ivory" : "text-ivory/60 hover:text-ivory hover:bg-ivory/5"
+                  active ? "bg-cream-light/10 text-cream-light" : "text-cream-light/60 hover:text-cream-light hover:bg-cream-light/5"
                 )}
               >
                 <Icon size={16} />
@@ -50,7 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="px-3 pb-6">
           <button
             onClick={() => signOut()}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-ivory/60 hover:text-ivory hover:bg-ivory/5 w-full transition-colors duration-200"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm text-cream-light/60 hover:text-cream-light hover:bg-cream-light/5 w-full transition-colors duration-200"
           >
             <LogOut size={16} />
             Sign out

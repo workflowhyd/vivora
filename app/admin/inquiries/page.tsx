@@ -10,7 +10,7 @@ const STATUS_OPTIONS = ["new", "contacted", "closed"] as const;
 
 const statusStyles: Record<(typeof STATUS_OPTIONS)[number], string> = {
   new: "bg-crimson/10 text-crimson",
-  contacted: "bg-orange/10 text-orange",
+  contacted: "bg-gold/10 text-gold",
   closed: "bg-charcoal/10 text-charcoal/60",
 };
 
@@ -40,7 +40,7 @@ export default function AdminInquiriesPage() {
                   {inquiry.phone ? ` · ${inquiry.phone}` : ""}
                 </p>
                 {inquiry.productInterest && (
-                  <p className="label-caps text-[10px] text-forest/70 mt-2">
+                  <p className="label-caps text-[10px] text-blue/70 mt-2">
                     {inquiry.productInterest}
                   </p>
                 )}

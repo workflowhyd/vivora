@@ -23,7 +23,7 @@ function StatValue({ value }: { value: string }) {
   }, [inView, numericMatch]);
 
   return (
-    <span ref={ref} className="font-display text-5xl md:text-7xl text-ivory">
+    <span ref={ref} className="font-display text-5xl md:text-7xl text-cream-light">
       {numericMatch ? display : value}
     </span>
   );
@@ -31,7 +31,7 @@ function StatValue({ value }: { value: string }) {
 
 export function Statistics() {
   return (
-    <section className="bg-near-black py-24 md:py-32">
+    <section className="bg-blue-dark py-24 md:py-32">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
           {statistics.map((stat, i) => (
@@ -41,10 +41,10 @@ export function Statistics() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.7, delay: i * 0.08 }}
-              className="text-center lg:text-left border-t border-ivory/10 pt-6"
+              className="text-center lg:text-left border-t border-cream-light/10 pt-6"
             >
               <StatValue value={stat.value} />
-              <p className="label-caps text-[11px] text-ivory/50 mt-3">{stat.label}</p>
+              <p className="label-caps text-[11px] text-cream-light/50 mt-3">{stat.label}</p>
             </motion.div>
           ))}
         </div>

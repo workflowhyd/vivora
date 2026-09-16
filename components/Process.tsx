@@ -15,21 +15,21 @@ export function Process() {
   const lineProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 22 });
 
   return (
-    <section id="processing" ref={sectionRef} className="bg-ivory py-24 md:py-36">
+    <section id="processing" ref={sectionRef} className="bg-cream-light py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 md:mb-24 text-center max-w-xl mx-auto">
-          <span className="label-caps text-[12px] text-forest">The Journey</span>
-          <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-near-black">
+          <span className="label-caps text-[12px] text-blue">The Journey</span>
+          <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-blue-dark">
             From harvest
             <br />
-            <span className="italic text-forest">to pack.</span>
+            <span className="italic text-blue">to pack.</span>
           </h2>
         </Reveal>
 
         <div className="relative">
           <div className="absolute left-[19px] md:left-1/2 top-0 bottom-0 w-px bg-charcoal/12 md:-translate-x-1/2" />
           <motion.div
-            className="absolute left-[19px] md:left-1/2 top-0 w-px bg-forest origin-top md:-translate-x-1/2"
+            className="absolute left-[19px] md:left-1/2 top-0 w-px bg-green origin-top md:-translate-x-1/2"
             style={{ scaleY: lineProgress, height: "100%" }}
           />
 
@@ -42,9 +42,9 @@ export function Process() {
                   className="relative md:grid md:grid-cols-2 md:gap-16 md:py-10 pl-12 md:pl-0"
                 >
                   <motion.span
-                    className="absolute left-0 md:left-1/2 top-0 md:top-1/2 h-10 w-10 md:-translate-x-1/2 md:-translate-y-1/2 rounded-full bg-ivory border-2 border-forest flex items-center justify-center text-forest font-display text-sm z-10"
+                    className="absolute left-0 md:left-1/2 top-0 md:top-1/2 h-10 w-10 md:-translate-x-1/2 md:-translate-y-1/2 rounded-full bg-cream-light border-2 border-green flex items-center justify-center text-green font-display text-sm z-10"
                     initial={{ scale: 0.7, opacity: 0.5 }}
-                    whileInView={{ scale: 1, opacity: 1, backgroundColor: "#16244a", color: "#fbf6ea" }}
+                    whileInView={{ scale: 1, opacity: 1, backgroundColor: "#176b3a", color: "#fcf8ec" }}
                     viewport={{ once: true, amount: 0.7 }}
                     transition={{ duration: 0.5 }}
                   >
@@ -71,7 +71,7 @@ export function Process() {
                         className="object-cover"
                       />
                     </div>
-                    <h3 className="font-display text-2xl md:text-3xl text-near-black mt-5">
+                    <h3 className="font-display text-2xl md:text-3xl text-blue-dark mt-5">
                       {stage.title}
                     </h3>
                     <p className="text-charcoal/65 font-light mt-2 max-w-sm">{stage.description}</p>

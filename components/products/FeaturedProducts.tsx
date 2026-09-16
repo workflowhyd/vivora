@@ -20,14 +20,14 @@ export function FeaturedProducts() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="flex items-end justify-between gap-6 mb-10 md:mb-14">
           <Reveal className="max-w-2xl">
-            <span className="label-caps text-[12px] text-forest">Our Range</span>
-            <h2 className="font-display text-4xl md:text-5xl leading-[1.05] mt-4 text-near-black">
-              Featured <span className="italic text-forest">products.</span>
+            <span className="label-caps text-[12px] text-blue">Our Range</span>
+            <h2 className="font-display text-4xl md:text-5xl leading-[1.05] mt-4 text-blue-dark">
+              Featured <span className="italic text-blue">products.</span>
             </h2>
           </Reveal>
           <Link
             href="/products"
-            className="hidden md:inline-flex items-center gap-2 text-[13px] label-caps text-forest border-b-2 border-orange pb-1 hover:text-orange transition-colors duration-300 shrink-0"
+            className="hidden md:inline-flex items-center gap-2 text-[13px] label-caps text-blue border-b-2 border-gold pb-1 hover:text-gold transition-colors duration-300 shrink-0"
           >
             View all products
             <ArrowRight size={14} />
@@ -47,7 +47,7 @@ export function FeaturedProducts() {
         <div className="mt-10 md:hidden">
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 text-[13px] label-caps text-forest border-b-2 border-orange pb-1"
+            className="inline-flex items-center gap-2 text-[13px] label-caps text-blue border-b-2 border-gold pb-1"
           >
             View all products
             <ArrowRight size={14} />

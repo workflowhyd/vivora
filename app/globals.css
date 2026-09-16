@@ -1,41 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand — primary (navy) & secondary (leaf green) */
-  --color-forest: #16244a;
-  --color-forest-light: #223766;
-  --color-leaf: #3c7a45;
+  /* Vivora brand system — derived from the approved logo.
+     Green = brand/header/footer/nav/CTA. Blue = headings/content/links.
+     Cream = main canvas. Gold = small premium accents only. */
+  --color-green: #176b3a;
+  --color-green-dark: #0d4b2a;
+  --color-green-light: #e8f2e9;
 
-  /* Brand — accents (used sparingly) */
-  --color-orange: #c1922f;
-  --color-yellow: #dcb35a;
+  --color-blue: #123b73;
+  --color-blue-dark: #09284f;
+  --color-blue-light: #eaf0f7;
+
+  --color-cream: #f8f1df;
+  --color-cream-light: #fcf8ec;
+
+  --color-gold: #b88a2a;
+
+  /* Functional (not brand) — form/danger states only */
   --color-crimson: #8a2a3f;
-  --color-brown: #8a5a2c;
 
-  /* Neutrals */
-  --color-ivory: #fbf6ea;
-  --color-cream: #f3ead4;
-  --color-offwhite: #fdfaf2;
-  --color-charcoal: #241f18;
-  --color-near-black: #0d1224;
+  /* Neutral body text/border scale, tinted toward the blue family for
+     tonal cohesion with the brand palette rather than a plain grey/black */
+  --color-charcoal: #2b3a52;
 
-  --background: var(--color-offwhite);
-  --foreground: var(--color-near-black);
+  --background: var(--color-cream);
+  --foreground: var(--color-blue-dark);
 }
 
 @theme inline {
-  --color-forest: var(--color-forest);
-  --color-forest-light: var(--color-forest-light);
-  --color-leaf: var(--color-leaf);
-  --color-orange: var(--color-orange);
-  --color-yellow: var(--color-yellow);
-  --color-crimson: var(--color-crimson);
-  --color-brown: var(--color-brown);
-  --color-ivory: var(--color-ivory);
+  --color-green: var(--color-green);
+  --color-green-dark: var(--color-green-dark);
+  --color-green-light: var(--color-green-light);
+  --color-blue: var(--color-blue);
+  --color-blue-dark: var(--color-blue-dark);
+  --color-blue-light: var(--color-blue-light);
   --color-cream: var(--color-cream);
-  --color-offwhite: var(--color-offwhite);
+  --color-cream-light: var(--color-cream-light);
+  --color-gold: var(--color-gold);
+  --color-crimson: var(--color-crimson);
   --color-charcoal: var(--color-charcoal);
-  --color-near-black: var(--color-near-black);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -48,8 +52,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: var(--color-offwhite);
-    --foreground: var(--color-near-black);
+    --background: var(--color-cream);
+    --foreground: var(--color-blue-dark);
   }
 }
 
@@ -73,8 +77,8 @@ h1, h2, h3, h4 {
 }
 
 ::selection {
-  background: var(--color-crimson);
-  color: var(--color-offwhite);
+  background: var(--color-green);
+  color: var(--color-cream-light);
 }
 
 .label-caps {

@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
 
 const fieldClasses =
-  "w-full border border-charcoal/15 rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:border-forest transition-colors duration-200";
+  "w-full border border-charcoal/15 rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200";
 
 // Optional list-style fields are edited as one-item-per-line text areas and
 // parsed back into string[] on submit — a structured editor is Stage 2 work.
@@ -290,7 +290,7 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
         <button
           type="submit"
           disabled={submitting}
-          className="bg-forest text-ivory text-sm font-medium px-5 py-2.5 rounded-md hover:bg-near-black transition-colors duration-200 disabled:opacity-60"
+          className="bg-green text-cream-light text-sm font-medium px-5 py-2.5 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-60"
         >
           {submitting ? "Saving…" : product ? "Save changes" : "Create product"}
         </button>

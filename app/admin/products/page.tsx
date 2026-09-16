@@ -24,7 +24,7 @@ export default function AdminProductsPage() {
         </div>
         <Link
           href="/admin/products/new"
-          className="inline-flex items-center gap-2 bg-forest text-ivory text-sm font-medium px-4 py-2.5 rounded-md hover:bg-near-black transition-colors duration-200"
+          className="inline-flex items-center gap-2 bg-green text-cream-light text-sm font-medium px-4 py-2.5 rounded-md hover:bg-green-dark transition-colors duration-200"
         >
           <Plus size={16} />
           New product
@@ -48,7 +48,7 @@ export default function AdminProductsPage() {
                 <td className="px-5 py-3.5">
                   {product.name}
                   {product.featured && (
-                    <span className="ml-2 label-caps text-[9px] text-yellow bg-forest rounded-full px-2 py-0.5">
+                    <span className="ml-2 label-caps text-[9px] text-gold bg-green rounded-full px-2 py-0.5">
                       Featured
                     </span>
                   )}
@@ -63,7 +63,7 @@ export default function AdminProductsPage() {
                     <Link
                       href={`/admin/products/${product._id}/edit`}
                       aria-label={`Edit ${product.name}`}
-                      className="text-charcoal/50 hover:text-forest"
+                      className="text-charcoal/50 hover:text-blue"
                     >
                       <Pencil size={16} />
                     </Link>

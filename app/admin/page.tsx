@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
           <Link
             key={card.label}
             href={card.href}
-            className="bg-white border border-charcoal/10 rounded-md p-6 hover:border-forest/30 transition-colors duration-200"
+            className="bg-white border border-charcoal/10 rounded-md p-6 hover:border-blue/30 transition-colors duration-200"
           >
             <p className="label-caps text-[11px] text-charcoal/50">{card.label}</p>
             <p className="font-display text-4xl mt-3">

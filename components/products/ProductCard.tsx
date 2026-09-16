@@ -25,16 +25,16 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
         <span className="absolute inset-0 flex items-end justify-end p-3 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-          <span className="h-9 w-9 rounded-full bg-ivory flex items-center justify-center">
-            <ArrowUpRight size={16} className="text-forest" />
+          <span className="h-9 w-9 rounded-full bg-cream-light flex items-center justify-center">
+            <ArrowUpRight size={16} className="text-blue" />
           </span>
         </span>
       </div>
       <div className="mt-3.5">
         {product.categoryName && (
-          <span className="label-caps text-[10px] text-forest/70">{product.categoryName}</span>
+          <span className="label-caps text-[10px] text-green">{product.categoryName}</span>
         )}
-        <h3 className="font-display text-lg md:text-xl text-near-black mt-1 leading-snug">
+        <h3 className="font-display text-lg md:text-xl text-blue-dark mt-1 leading-snug">
           {product.name}
         </h3>
         <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">

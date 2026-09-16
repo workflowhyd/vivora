@@ -32,10 +32,10 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed top-0 inset-x-0 z-50 transition-all duration-500",
+          "fixed top-0 inset-x-0 z-50 bg-green transition-all duration-500",
           scrolled
-            ? "bg-forest/90 backdrop-blur-md py-3 shadow-[0_8px_30px_-12px_rgba(0,0,0,0.4)]"
-            : "bg-transparent py-6"
+            ? "bg-green-dark py-3 shadow-[0_8px_30px_-12px_rgba(9,40,79,0.45)]"
+            : "py-6"
         )}
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-10 flex items-center justify-between">
@@ -48,7 +48,7 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-[13px] label-caps text-ivory/85 hover:text-yellow transition-colors duration-300"
+                className="text-[13px] label-caps text-cream-light/85 hover:text-gold transition-colors duration-300"
               >
                 {link.label}
               </Link>
@@ -57,7 +57,7 @@ export function Header() {
 
           <Link
             href="/contact"
-            className="hidden lg:inline-flex items-center gap-2 text-[13px] label-caps text-ivory border border-ivory/40 rounded-full px-5 py-2.5 hover:bg-ivory hover:text-forest transition-all duration-300 group"
+            className="hidden lg:inline-flex items-center gap-2 text-[13px] label-caps text-cream-light border border-cream-light/40 rounded-full px-5 py-2.5 hover:bg-cream-light hover:text-green transition-all duration-300 group"
           >
             Request a Quote
             <ArrowRight
@@ -69,7 +69,7 @@ export function Header() {
           <button
             aria-label="Open menu"
             onClick={() => setOpen(true)}
-            className="lg:hidden text-ivory p-2 -mr-2"
+            className="lg:hidden text-cream-light p-2 -mr-2"
           >
             <Menu size={26} />
           </button>
@@ -87,11 +87,11 @@ export function Header() {
           >
             <button
               aria-label="Close menu"
-              className="absolute inset-0 bg-near-black/60 backdrop-blur-sm"
+              className="absolute inset-0 bg-blue-dark/60 backdrop-blur-sm"
               onClick={() => setOpen(false)}
             />
             <motion.div
-              className="absolute right-0 top-0 h-full w-[84%] max-w-sm bg-forest flex flex-col"
+              className="absolute right-0 top-0 h-full w-[84%] max-w-sm bg-green-dark flex flex-col"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
@@ -102,7 +102,7 @@ export function Header() {
                 <button
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}
-                  className="text-ivory p-2"
+                  className="text-cream-light p-2"
                 >
                   <X size={24} />
                 </button>
@@ -117,7 +117,7 @@ export function Header() {
                     initial={{ opacity: 0, x: 24 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + i * 0.06, duration: 0.5 }}
-                    className="font-display text-3xl text-ivory py-3 border-b border-ivory/10"
+                    className="font-display text-3xl text-cream-light py-3 border-b border-cream-light/10"
                   >
                     {link.label}
                   </MotionLink>
@@ -128,7 +128,7 @@ export function Header() {
                 <Link
                   href="/contact"
                   onClick={() => setOpen(false)}
-                  className="inline-flex items-center justify-center gap-2 w-full text-[13px] label-caps text-forest bg-yellow rounded-full px-5 py-3.5"
+                  className="inline-flex items-center justify-center gap-2 w-full text-[13px] label-caps text-green-dark bg-gold rounded-full px-5 py-3.5"
                 >
                   Request a Quote
                   <ArrowRight size={14} />

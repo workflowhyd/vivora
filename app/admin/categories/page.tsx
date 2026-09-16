@@ -28,7 +28,7 @@ export default function AdminCategoriesPage() {
         </div>
         <Link
           href="/admin/categories/new"
-          className="inline-flex items-center gap-2 bg-forest text-ivory text-sm font-medium px-4 py-2.5 rounded-md hover:bg-near-black transition-colors duration-200"
+          className="inline-flex items-center gap-2 bg-green text-cream-light text-sm font-medium px-4 py-2.5 rounded-md hover:bg-green-dark transition-colors duration-200"
         >
           <Plus size={16} />
           New category
@@ -58,7 +58,7 @@ export default function AdminCategoriesPage() {
                     <Link
                       href={`/admin/categories/${category._id}/edit`}
                       aria-label={`Edit ${category.name}`}
-                      className="text-charcoal/50 hover:text-forest"
+                      className="text-charcoal/50 hover:text-blue"
                     >
                       <Pencil size={16} />
                     </Link>

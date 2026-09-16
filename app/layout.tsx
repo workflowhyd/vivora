@@ -62,7 +62,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${playfair.variable} ${manrope.variable}`}>
-      <body className="bg-offwhite text-near-black antialiased">
+      <body className="bg-cream text-blue-dark antialiased">
         <ConvexAuthNextjsServerProvider>
           <ConvexClientProvider>
             <SmoothScroll>{children}</SmoothScroll>

@@ -8,11 +8,11 @@ export function Logo({
   variant?: "light" | "dark";
   className?: string;
 }) {
-  const nameColor = variant === "light" ? "text-ivory" : "text-forest";
-  const foodsColor = variant === "light" ? "text-yellow" : "text-orange";
-  const tagColor = variant === "light" ? "text-ivory/60" : "text-forest/55";
+  const nameColor = variant === "light" ? "text-cream-light" : "text-blue";
+  const foodsColor = "text-gold";
+  const tagColor = variant === "light" ? "text-cream-light/60" : "text-blue/55";
   const iconVariant = variant === "light" ? "mono" : "color";
-  const iconColor = variant === "light" ? "text-ivory" : undefined;
+  const iconColor = variant === "light" ? "text-cream-light" : undefined;
 
   return (
     <div className={cn("flex items-center gap-2.5 leading-none select-none", className)}>

@@ -8,10 +8,10 @@ export function VivoraMark({
   variant?: "color" | "mono";
   className?: string;
 }) {
-  const navy = variant === "color" ? "#16244a" : "currentColor";
-  const gold = variant === "color" ? "#dcb35a" : "currentColor";
-  const leaf = variant === "color" ? "#3c7a45" : "currentColor";
-  const leafDark = variant === "color" ? "#2c5c34" : "currentColor";
+  const navy = variant === "color" ? "#123b73" : "currentColor";
+  const gold = variant === "color" ? "#b88a2a" : "currentColor";
+  const leaf = variant === "color" ? "#176b3a" : "currentColor";
+  const leafDark = variant === "color" ? "#0d4b2a" : "currentColor";
 
   return (
     <svg viewBox="0 0 120 132" className={className} role="img" aria-label="Vivora Foods mark">

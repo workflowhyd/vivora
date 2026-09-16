@@ -47,7 +47,7 @@ export function ProductFilters({
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search products…"
-            className="w-full rounded-full border border-charcoal/15 bg-offwhite pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-forest transition-colors duration-200"
+            className="w-full rounded-full border border-charcoal/15 bg-cream pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200"
           />
         </div>
 
@@ -63,7 +63,7 @@ export function ProductFilters({
           <select
             value={sort}
             onChange={(e) => onSortChange(e.target.value as SortOption)}
-            className="rounded-full border border-charcoal/15 bg-offwhite px-4 py-2.5 text-sm focus:outline-none focus:border-forest transition-colors duration-200"
+            className="rounded-full border border-charcoal/15 bg-cream px-4 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200"
             aria-label="Sort products"
           >
             {SORT_OPTIONS.map((option) => (
@@ -82,8 +82,8 @@ export function ProductFilters({
           className={cn(
             "label-caps text-[11px] px-4 py-2 rounded-full border transition-colors duration-200",
             activeCategory === null
-              ? "bg-forest text-ivory border-forest"
-              : "border-charcoal/15 text-charcoal/70 hover:border-forest/40"
+              ? "bg-green text-cream-light border-green"
+              : "border-charcoal/15 text-charcoal/70 hover:border-green/40"
           )}
         >
           All
@@ -96,8 +96,8 @@ export function ProductFilters({
             className={cn(
               "label-caps text-[11px] px-4 py-2 rounded-full border transition-colors duration-200",
               activeCategory === category.slug
-                ? "bg-forest text-ivory border-forest"
-                : "border-charcoal/15 text-charcoal/70 hover:border-forest/40"
+                ? "bg-green text-cream-light border-green"
+                : "border-charcoal/15 text-charcoal/70 hover:border-green/40"
             )}
           >
             {category.name}

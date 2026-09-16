@@ -17,28 +17,28 @@ export const applications = [
     title: "Gifting & Corporate",
     description: "Curated hampers and festive boxes built for celebrations and corporate gifting.",
     image: images.applications.gifting,
-    accent: "#DCB35A",
+    accent: "#B88A2A",
   },
   {
     number: "02",
     title: "Retail & Snacking",
     description: "Shelf-ready packs and blends made for everyday, on-the-go snacking.",
     image: images.applications.retail,
-    accent: "#16244A",
+    accent: "#123B73",
   },
   {
     number: "03",
     title: "Bakery & Confectionery",
     description: "Consistent, food-safe dehydrated ingredients and powders for bakes, mixes and desserts.",
     image: images.applications.bakery,
-    accent: "#3C7A45",
+    accent: "#176B3A",
   },
   {
     number: "04",
     title: "HoReCa & Bulk",
     description: "Reliable, export-grade supply for hotels, caterers and food service partners.",
     image: images.applications.horeca,
-    accent: "#C1922F",
+    accent: "#0D4B2A",
   },
 ];
 

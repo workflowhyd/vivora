@@ -13,7 +13,7 @@ export function CategoryCard({ category }: { category: CategoryCardData }) {
   return (
     <Link
       href={`/categories/${category.slug}`}
-      className="group block rounded-md overflow-hidden border border-charcoal/10 hover:border-forest/30 transition-colors duration-300"
+      className="group block rounded-md overflow-hidden border border-charcoal/10 hover:border-green/40 transition-colors duration-300"
     >
       <div className="relative aspect-[16/10] overflow-hidden bg-charcoal/5">
         <Image
@@ -26,7 +26,7 @@ export function CategoryCard({ category }: { category: CategoryCardData }) {
       </div>
       <div className="p-5 flex items-start justify-between gap-3">
         <div>
-          <h3 className="font-display text-lg md:text-xl text-near-black leading-snug">
+          <h3 className="font-display text-lg md:text-xl text-blue-dark leading-snug">
             {category.name}
           </h3>
           <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
@@ -35,7 +35,7 @@ export function CategoryCard({ category }: { category: CategoryCardData }) {
         </div>
         <ArrowUpRight
           size={18}
-          className="text-forest shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
+          className="text-green shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
         />
       </div>
     </Link>

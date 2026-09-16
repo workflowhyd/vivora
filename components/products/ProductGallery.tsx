@@ -32,7 +32,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               aria-label={`Show image ${i + 1} of ${images.length}`}
               className={cn(
                 "relative h-16 w-16 md:h-20 md:w-20 shrink-0 rounded-[2px] overflow-hidden border-2 transition-colors duration-200",
-                i === active ? "border-forest" : "border-transparent opacity-70 hover:opacity-100"
+                i === active ? "border-green" : "border-transparent opacity-70 hover:opacity-100"
               )}
             >
               <Image src={image} alt="" fill sizes="80px" className="object-cover" />

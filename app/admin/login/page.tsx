@@ -33,16 +33,16 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-forest flex items-center justify-center px-6">
+    <div className="min-h-screen bg-green flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <h1 className="font-display text-3xl text-ivory text-center">Vivora Admin</h1>
-        <p className="label-caps text-[11px] text-ivory/50 text-center mt-2">
+        <h1 className="font-display text-3xl text-cream-light text-center">Vivora Admin</h1>
+        <p className="label-caps text-[11px] text-cream-light/50 text-center mt-2">
           {flow === "signIn" ? "Sign in to continue" : "Create the admin account"}
         </p>
 
-        <form onSubmit={handleSubmit} className="bg-ivory rounded-md p-8 mt-8 flex flex-col gap-5">
+        <form onSubmit={handleSubmit} className="bg-cream-light rounded-md p-8 mt-8 flex flex-col gap-5">
           <div>
-            <label className="label-caps text-[10px] text-forest/70" htmlFor="email">
+            <label className="label-caps text-[10px] text-blue/70" htmlFor="email">
               Email
             </label>
             <input
@@ -50,11 +50,11 @@ export default function AdminLoginPage() {
               name="email"
               type="email"
               required
-              className="w-full bg-transparent border-b border-forest/20 pb-2.5 mt-2 text-near-black focus:outline-none focus:border-forest"
+              className="w-full bg-transparent border-b border-blue/20 pb-2.5 mt-2 text-blue-dark focus:outline-none focus:border-blue"
             />
           </div>
           <div>
-            <label className="label-caps text-[10px] text-forest/70" htmlFor="password">
+            <label className="label-caps text-[10px] text-blue/70" htmlFor="password">
               Password
             </label>
             <input
@@ -63,7 +63,7 @@ export default function AdminLoginPage() {
               type="password"
               required
               minLength={8}
-              className="w-full bg-transparent border-b border-forest/20 pb-2.5 mt-2 text-near-black focus:outline-none focus:border-forest"
+              className="w-full bg-transparent border-b border-blue/20 pb-2.5 mt-2 text-blue-dark focus:outline-none focus:border-blue"
             />
           </div>
 
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-2 bg-forest text-ivory text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-near-black transition-colors duration-300 disabled:opacity-60"
+            className="mt-2 bg-green text-cream-light text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-green-dark transition-colors duration-300 disabled:opacity-60"
           >
             {submitting ? "Please wait…" : flow === "signIn" ? "Sign in" : "Create account"}
           </button>
@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
               setError(null);
               setFlow(flow === "signIn" ? "signUp" : "signIn");
             }}
-            className="text-forest/60 text-sm underline underline-offset-2 hover:text-forest"
+            className="text-blue/60 text-sm underline underline-offset-2 hover:text-blue"
           >
             {flow === "signIn" ? "First time here? Create an account" : "Already have an account? Sign in"}
           </button>
