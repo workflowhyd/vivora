@@ -72,9 +72,13 @@ export function Footer() {
                 <Phone size={15} className="text-gold shrink-0" />
                 +91 00000 00000
               </li>
-              <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
-                <MapPin size={15} className="text-gold shrink-0" />
-                India
+              <li className="flex items-start gap-2.5 text-cream-light/75 font-light">
+                <MapPin size={15} className="text-gold shrink-0 mt-0.5" />
+                <span>
+                  Sriven Mall, 1st Floor, H No: 1-72, Bollaram Rd, Renuka
+                  Yellamma Colony, Jaya Prakash Narayan Nagar, Bachupally
+                  Road, Miyapur, Hyderabad, Telangana 500049
+                </span>
               </li>
               <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
                 <MessageCircle size={15} className="text-gold shrink-0" />
