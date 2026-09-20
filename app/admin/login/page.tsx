@@ -3,14 +3,11 @@
 import { FormEvent, useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
 
-// There's no public link to this page and everything else under /admin is
-// gated by middleware.ts, so the signUp flow doubles as how the first admin
-// account gets created — that's obscurity, not a real access boundary. Once
-// an account exists, consider removing the signUp toggle below (or gating it
-// behind an env var) to close off self-serve account creation entirely.
+// Sign-in only, by username. Admin accounts are created by the developer
+// (and must be on the allowlist in convex/adminAllowlist.ts); there is no
+// self-serve sign-up here.
 export default function AdminLoginPage() {
   const { signIn } = useAuthActions();
-  const [flow, setFlow] = useState<"signIn" | "signUp">("signIn");
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -19,15 +16,14 @@ export default function AdminLoginPage() {
     setError(null);
     setSubmitting(true);
     const formData = new FormData(event.currentTarget);
-    formData.set("flow", flow);
+    // Usernames are matched exactly, so ignore stray capitals / spaces from
+    // phone keyboards and autofill.
+    formData.set("email", String(formData.get("email") ?? "").trim().toLowerCase());
+    formData.set("flow", "signIn");
     try {
       await signIn("password", formData);
     } catch {
-      setError(
-        flow === "signIn"
-          ? "Invalid username or password."
-          : "Couldn't create that account — try a different username."
-      );
+      setError("Invalid username or password.");
       setSubmitting(false);
     }
   };
@@ -37,20 +33,23 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-sm">
         <h1 className="font-display text-3xl text-cream-light text-center">Vivora Admin</h1>
         <p className="label-caps text-[11px] text-cream-light/50 text-center mt-2">
-          {flow === "signIn" ? "Sign in to continue" : "Create the admin account"}
+          Sign in to continue
         </p>
 
         <form onSubmit={handleSubmit} className="bg-cream-light rounded-md p-8 mt-8 flex flex-col gap-5">
           <div>
-            <label className="label-caps text-[10px] text-blue/70" htmlFor="email">
-              Username or email
+            <label className="label-caps text-[10px] text-blue/70" htmlFor="username">
+              Username
             </label>
             <input
-              id="email"
+              id="username"
               name="email"
               type="text"
-              autoComplete="username"
               required
+              autoComplete="username"
+              autoCapitalize="none"
+              autoCorrect="off"
+              spellCheck={false}
               className="w-full bg-transparent border-b border-blue/20 pb-2.5 mt-2 text-blue-dark focus:outline-none focus:border-blue"
             />
           </div>
@@ -63,7 +62,7 @@ export default function AdminLoginPage() {
               name="password"
               type="password"
               required
-              minLength={8}
+              autoComplete="current-password"
               className="w-full bg-transparent border-b border-blue/20 pb-2.5 mt-2 text-blue-dark focus:outline-none focus:border-blue"
             />
           </div>
@@ -75,18 +74,7 @@ export default function AdminLoginPage() {
             disabled={submitting}
             className="mt-2 bg-green text-cream-light text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-green-dark transition-colors duration-300 disabled:opacity-60"
           >
-            {submitting ? "Please wait…" : flow === "signIn" ? "Sign in" : "Create account"}
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setError(null);
-              setFlow(flow === "signIn" ? "signUp" : "signIn");
-            }}
-            className="text-blue/60 text-sm underline underline-offset-2 hover:text-blue"
-          >
-            {flow === "signIn" ? "First time here? Create an account" : "Already have an account? Sign in"}
+            {submitting ? "Please wait…" : "Sign in"}
           </button>
         </form>
       </div>
