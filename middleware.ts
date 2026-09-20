@@ -17,11 +17,13 @@ const authMiddleware = convexAuthNextjsMiddleware(async (request, { convexAuth }
   }
 });
 
-// Behind the hosting provider's reverse proxy the browser talks https but this
-// app is handed plain http, so Convex Auth's same-origin check (Origin vs the
-// request's own protocol) rejects every sign-in POST with "Invalid origin".
-// When the Origin's host matches the site's public host, treat the request as
-// same-origin by aligning the protocol; a genuinely different host still fails.
+// Behind the hosting provider's reverse proxy the app sees an internal Host
+// (e.g. 10.x.x.x:3000) while the browser's Origin is the public https site, so
+// Convex Auth's same-origin check rejects every sign-in POST with "Invalid
+// origin". When the Origin matches the proxy-reported public host
+// (x-forwarded-host), align the request's Host and protocol to it. A browser
+// on another site can't set that header cross-origin, so real CORS requests
+// still fail.
 export default function middleware(request: NextRequest, event: NextFetchEvent) {
   const origin = request.headers.get("origin");
   if (origin) {
@@ -34,7 +36,12 @@ export default function middleware(request: NextRequest, event: NextFetchEvent) 
       .trim();
     try {
       const originUrl = new URL(origin);
-      if (publicHost && originUrl.host === publicHost && originUrl.protocol !== request.nextUrl.protocol) {
+      const hostMismatch = request.headers.get("host") !== publicHost;
+      if (
+        publicHost &&
+        originUrl.host === publicHost &&
+        (hostMismatch || originUrl.protocol !== request.nextUrl.protocol)
+      ) {
         const url = new URL(request.url);
         url.protocol = originUrl.protocol;
         url.host = publicHost;
