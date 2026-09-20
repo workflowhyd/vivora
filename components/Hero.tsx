@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useContent } from "@/lib/useContent";
+import { HeroBanner } from "./HeroBanner";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -66,23 +67,7 @@ export function Hero() {
 
       </div>
 
-      {(heroVideo || heroImage) && (
-        <div className="mx-auto max-w-[1440px] px-6 md:px-10 mt-12 md:mt-16">
-          {heroVideo ? (
-            <video
-              src={heroVideo}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full max-h-[70vh] object-cover rounded-[2px] bg-blue-dark"
-            />
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImage} alt="" className="w-full max-h-[70vh] object-cover rounded-[2px]" />
-          )}
-        </div>
-      )}
+      <HeroBanner video={heroVideo} image={heroImage} />
     </section>
   );
 }

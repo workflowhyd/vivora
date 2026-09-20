@@ -72,8 +72,8 @@ add(
 );
 add("home", "Hero", "home.hero.cta1", "Primary button text", "text", "View Products");
 add("home", "Hero", "home.hero.cta2", "Secondary button text", "text", "Request a Quote");
-add("home", "Hero", "home.hero.image", "Banner image (shown under the hero, optional)", "image");
-add("home", "Hero", "home.hero.video", "Banner video (replaces the image, optional)", "video");
+add("home", "Hero", "home.hero.image", "Banner image (poster / fallback, optional)", "image");
+add("home", "Hero", "home.hero.video", "Banner video (plays under the hero, optional)", "video");
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "Featured products section", "home.featured", "Our Range", "Featured", "products.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
