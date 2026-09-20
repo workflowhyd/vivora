@@ -48,7 +48,6 @@ export function CategoryProductGrid({ categoryId }: { categoryId: Id<"categories
         products={paged.map((p) => ({
           slug: p.slug,
           name: p.name,
-          thumbnail: p.thumbnail,
           shortDescription: p.shortDescription,
         }))}
         emptyState="No products in this category yet."

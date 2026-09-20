@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
@@ -6,7 +5,6 @@ export interface CategoryCardData {
   slug: string;
   name: string;
   description: string;
-  image: string;
 }
 
 export function CategoryCard({ category }: { category: CategoryCardData }) {
@@ -15,15 +13,6 @@ export function CategoryCard({ category }: { category: CategoryCardData }) {
       href={`/categories/${category.slug}`}
       className="group block rounded-md overflow-hidden border border-charcoal/10 hover:border-green/40 transition-colors duration-300"
     >
-      <div className="relative aspect-[16/10] overflow-hidden bg-charcoal/5">
-        <Image
-          src={category.image}
-          alt={category.name}
-          fill
-          sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-        />
-      </div>
       <div className="p-5 flex items-start justify-between gap-3">
         <div>
           <h3 className="font-display text-lg md:text-xl text-blue-dark leading-snug">

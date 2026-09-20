@@ -17,7 +17,7 @@ export function Footer() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="grid md:grid-cols-12 gap-12 md:gap-8 pb-16 border-b border-cream-light/10">
           <div className="md:col-span-5">
-            <Logo variant="light" />
+            <Logo className="h-24 md:h-28" />
             <p className="text-cream-light/60 font-light mt-6 max-w-xs leading-relaxed">
               Premium dehydrated foods, powders &amp; ready-to-cook products. Dry
               delicious. Nature goodness.

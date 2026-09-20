@@ -38,7 +38,6 @@ export function FeaturedProducts() {
           products={products.slice(0, 8).map((p) => ({
             slug: p.slug,
             name: p.name,
-            thumbnail: p.thumbnail,
             shortDescription: p.shortDescription,
             categoryName: categoryNameById.get(p.categoryId),
           }))}

@@ -1,40 +1,34 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { VivoraMark } from "./VivoraMark";
 
+/**
+ * The approved Vivora Foods logo. The artwork ships on a cream background, so it
+ * is shown as a cream tile that stays legible on the green header/footer and on
+ * light sections alike, on both desktop and mobile. Size it via `className`
+ * (height drives the width).
+ */
 export function Logo({
-  variant = "light",
   className,
 }: {
+  /** Kept for call-site compatibility; the artwork is identical on any background. */
   variant?: "light" | "dark";
   className?: string;
 }) {
-  const nameColor = variant === "light" ? "text-cream-light" : "text-blue";
-  const foodsColor = "text-gold";
-  const tagColor = variant === "light" ? "text-cream-light/60" : "text-blue/55";
-  const iconVariant = variant === "light" ? "mono" : "color";
-  const iconColor = variant === "light" ? "text-cream-light" : undefined;
-
   return (
-    <div className={cn("flex items-center gap-2.5 leading-none select-none", className)}>
-      <VivoraMark variant={iconVariant} className={cn("h-8 w-8 md:h-9 md:w-9 shrink-0", iconColor)} />
-      <div className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-display text-xl md:text-2xl font-semibold tracking-tight",
-            nameColor
-          )}
-        >
-          Vivora <span className={cn("text-[0.62em] label-caps align-middle", foodsColor)}>Foods</span>
-        </span>
-        <span
-          className={cn(
-            "label-caps text-[8px] md:text-[9px] mt-1 tracking-[0.22em]",
-            tagColor
-          )}
-        >
-          Dry Delicious · Nature Goodness
-        </span>
-      </div>
+    <div
+      className={cn(
+        "relative aspect-[5/6] h-16 md:h-20 shrink-0 select-none overflow-hidden rounded-xl bg-[#fff8e8] shadow-[0_2px_12px_-4px_rgba(0,0,0,0.35)] transition-all duration-500",
+        className
+      )}
+    >
+      <Image
+        src="/images/vivora-logo.jpg"
+        alt="Vivora Foods — Dry Delicious, Nature Goodness"
+        fill
+        priority
+        sizes="(min-width: 768px) 80px, 64px"
+        className="object-cover object-center"
+      />
     </div>
   );
 }

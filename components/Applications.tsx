@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
@@ -27,16 +26,8 @@ export function Applications() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.9, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative h-[420px] md:h-[520px] overflow-hidden rounded-[2px]"
+              className="group relative h-[300px] md:h-[360px] overflow-hidden rounded-[2px] bg-blue-dark"
             >
-              <Image
-                src={app.image}
-                alt={`${app.title} — ${app.description}`}
-                fill
-                sizes="(max-width: 640px) 100vw, 50vw"
-                className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-blue-dark/85 via-blue-dark/20 to-transparent" />
 
               <div
                 className="absolute top-0 left-0 h-1 w-full origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100"

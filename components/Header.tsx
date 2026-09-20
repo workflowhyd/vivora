@@ -34,13 +34,13 @@ export function Header() {
         className={cn(
           "fixed top-0 inset-x-0 z-50 bg-green transition-all duration-500",
           scrolled
-            ? "bg-green-dark py-3 shadow-[0_8px_30px_-12px_rgba(9,40,79,0.45)]"
-            : "py-6"
+            ? "bg-green-dark py-2 shadow-[0_8px_30px_-12px_rgba(9,40,79,0.45)]"
+            : "py-4"
         )}
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-10 flex items-center justify-between">
           <Link href="/" aria-label="Vivora Foods home">
-            <Logo variant="light" />
+            <Logo className={scrolled ? "h-14 md:h-16" : "h-16 md:h-20"} />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-9">
@@ -98,7 +98,7 @@ export function Header() {
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="flex items-center justify-between px-6 pt-6 pb-4">
-                <Logo variant="light" />
+                <Logo className="h-16" />
                 <button
                   aria-label="Close menu"
                   onClick={() => setOpen(false)}

@@ -102,7 +102,6 @@ export function ProductCatalogue() {
         products={paged.map((p) => ({
           slug: p.slug,
           name: p.name,
-          thumbnail: p.thumbnail,
           shortDescription: p.shortDescription,
           categoryName: categoryNameById.get(p.categoryId),
         }))}

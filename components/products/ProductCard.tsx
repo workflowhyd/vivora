@@ -1,11 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 export interface ProductCardData {
   slug: string;
   name: string;
-  thumbnail: string;
   shortDescription: string;
   categoryName?: string;
 }
@@ -14,32 +12,24 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group block"
+      className="group block rounded-md border border-charcoal/10 hover:border-green/40 transition-colors duration-300"
     >
-      <div className="relative aspect-[4/3] overflow-hidden rounded-[2px] bg-charcoal/5">
-        <Image
-          src={product.thumbnail}
-          alt={product.name}
-          fill
-          sizes="(max-width: 640px) 48vw, (max-width: 1024px) 30vw, 22vw"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+      <div className="p-5 flex items-start justify-between gap-3">
+        <div>
+          {product.categoryName && (
+            <span className="label-caps text-[10px] text-green">{product.categoryName}</span>
+          )}
+          <h3 className="font-display text-lg md:text-xl text-blue-dark mt-1 leading-snug">
+            {product.name}
+          </h3>
+          <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
+            {product.shortDescription}
+          </p>
+        </div>
+        <ArrowUpRight
+          size={18}
+          className="text-green shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
         />
-        <span className="absolute inset-0 flex items-end justify-end p-3 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-          <span className="h-9 w-9 rounded-full bg-cream-light flex items-center justify-center">
-            <ArrowUpRight size={16} className="text-blue" />
-          </span>
-        </span>
-      </div>
-      <div className="mt-3.5">
-        {product.categoryName && (
-          <span className="label-caps text-[10px] text-green">{product.categoryName}</span>
-        )}
-        <h3 className="font-display text-lg md:text-xl text-blue-dark mt-1 leading-snug">
-          {product.name}
-        </h3>
-        <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
-          {product.shortDescription}
-        </p>
       </div>
     </Link>
   );

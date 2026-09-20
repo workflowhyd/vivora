@@ -3,8 +3,6 @@
 import { motion } from "motion/react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { images } from "@/data/images";
-import { HeroVideo } from "./HeroVideo";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -12,7 +10,7 @@ export function Hero() {
   return (
     <section id="home" className="relative w-full bg-cream pt-32 md:pt-40 pb-14 md:pb-20">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10 grid md:grid-cols-12 gap-10 md:gap-12 items-center">
-        <div className="md:col-span-7">
+        <div className="md:col-span-10 lg:col-span-8">
           <motion.span
             className="label-caps text-[12px] text-green block"
             initial={{ opacity: 0, y: 10 }}
@@ -64,18 +62,6 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <motion.div
-          className="md:col-span-5 relative h-[32vh] md:h-[42vh] max-h-[420px] rounded-md overflow-hidden"
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.15, ease: EASE }}
-        >
-          <HeroVideo
-            src={images.heroVideo}
-            poster={images.hero}
-            alt="Dehydrated vegetables and spice powders — Vivora Foods products"
-          />
-        </motion.div>
       </div>
     </section>
   );

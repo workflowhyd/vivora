@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Reveal } from "./Reveal";
 import { processStages } from "@/data/content";
@@ -58,20 +57,7 @@ export function Process() {
                     viewport={{ once: true, amount: 0.4 }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <div
-                      className={`relative h-56 md:h-72 w-full max-w-md overflow-hidden rounded-[2px] ${
-                        fromLeft ? "" : "md:ml-auto"
-                      }`}
-                    >
-                      <Image
-                        src={stage.image}
-                        alt={`${stage.title} stage of the Vivora Foods production process`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 40vw"
-                        className="object-cover"
-                      />
-                    </div>
-                    <h3 className="font-display text-2xl md:text-3xl text-blue-dark mt-5">
+                    <h3 className="font-display text-2xl md:text-3xl text-blue-dark">
                       {stage.title}
                     </h3>
                     <p className="text-charcoal/65 font-light mt-2 max-w-sm">{stage.description}</p>

@@ -6,7 +6,6 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { ProductGallery } from "@/components/products/ProductGallery";
 import { ProductGrid } from "@/components/products/ProductGrid";
 
 export const revalidate = 3600;
@@ -39,7 +38,6 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      images: product.thumbnail ? [{ url: product.thumbnail }] : undefined,
     },
   };
 }
@@ -77,11 +75,7 @@ export default async function ProductDetailPage({
           )}
 
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 mt-4">
-            <div className="md:col-span-6">
-              <ProductGallery images={product.images} alt={product.name} />
-            </div>
-
-            <div className="md:col-span-6">
+            <div className="md:col-span-10 lg:col-span-8">
               <h1 className="font-display text-3xl md:text-5xl leading-[1.05] text-blue-dark">
                 {product.name}
               </h1>
@@ -189,7 +183,6 @@ export default async function ProductDetailPage({
                 products={related.map((p) => ({
                   slug: p.slug,
                   name: p.name,
-                  thumbnail: p.thumbnail,
                   shortDescription: p.shortDescription,
                 }))}
               />

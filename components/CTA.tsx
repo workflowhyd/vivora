@@ -1,11 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import Image from "next/image";
 import { useMutation, useQuery } from "convex/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal } from "./Reveal";
-import { images } from "@/data/images";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 
@@ -40,15 +38,7 @@ export function CTA() {
 
   return (
     <section id="contact" className="relative w-full overflow-hidden">
-      <div className="relative h-[22vh] min-h-[160px] w-full overflow-hidden">
-        <Image
-          src={images.cta}
-          alt="Dehydrated food products — the finished character of every Vivora Foods product"
-          fill
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-blue-dark/70" />
+      <div className="relative h-[22vh] min-h-[160px] w-full overflow-hidden bg-blue-dark">
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <Reveal>
             <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-cream-light max-w-3xl">
