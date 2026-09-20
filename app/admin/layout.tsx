@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuthActions } from "@convex-dev/auth/react";
-import { LayoutDashboard, Package, LayoutGrid, Inbox, LogOut } from "lucide-react";
+import { LayoutDashboard, FileText, Package, LayoutGrid, Inbox, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/pages", label: "Pages", icon: FileText },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/categories", label: "Categories", icon: LayoutGrid },
   { href: "/admin/inquiries", label: "Inquiries", icon: Inbox },

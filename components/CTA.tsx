@@ -6,11 +6,13 @@ import { ArrowRight, Check } from "lucide-react";
 import { Reveal } from "./Reveal";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
+import { useContent } from "@/lib/useContent";
 
 const inputClasses =
   "w-full bg-transparent border-b border-blue/20 pb-2.5 text-blue-dark placeholder:text-charcoal/40 focus:outline-none focus:border-blue transition-colors duration-300";
 
 export function CTA() {
+  const { t } = useContent();
   const products = useQuery(api.products.list, { activeOnly: true });
   const createInquiry = useMutation(api.inquiries.create);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -42,9 +44,9 @@ export function CTA() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
           <Reveal>
             <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-cream-light max-w-3xl">
-              Let&apos;s create something
+              {t("contact.banner.main")}
               <br />
-              <span className="italic text-gold">naturally exceptional.</span>
+              <span className="italic text-gold">{t("contact.banner.accent")}</span>
             </h2>
           </Reveal>
         </div>
@@ -54,15 +56,14 @@ export function CTA() {
         <div className="mx-auto max-w-[1440px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-4">
             <Reveal>
-              <span className="label-caps text-[12px] text-gold">Request a Quote</span>
+              <span className="label-caps text-[12px] text-gold">{t("contact.eyebrow")}</span>
               <h3 className="font-display text-3xl md:text-4xl leading-[1.1] mt-4 text-cream-light">
-                Tell us what
+                {t("contact.titleMain")}
                 <br />
-                <span className="italic">you&apos;re looking for.</span>
+                <span className="italic">{t("contact.titleAccent")}</span>
               </h3>
               <p className="text-cream-light/60 font-light mt-6 max-w-xs leading-relaxed">
-                Share a few details and our team will get back to you with
-                pricing, samples and lead times.
+                {t("contact.body")}
               </p>
             </Reveal>
           </div>

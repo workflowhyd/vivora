@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useQuery } from "convex/react";
 import { ArrowRight } from "lucide-react";
 import { api } from "@/convex/_generated/api";
+import { useContent } from "@/lib/useContent";
 import { Reveal } from "@/components/Reveal";
 import { ProductGrid } from "./ProductGrid";
 
 export function FeaturedProducts() {
+  const { t } = useContent();
   const products = useQuery(api.products.list, { featured: true, activeOnly: true });
   const categories = useQuery(api.categories.list, { activeOnly: true });
 
@@ -20,9 +22,9 @@ export function FeaturedProducts() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="flex items-end justify-between gap-6 mb-10 md:mb-14">
           <Reveal className="max-w-2xl">
-            <span className="label-caps text-[12px] text-blue">Our Range</span>
+            <span className="label-caps text-[12px] text-blue">{t("home.featured.eyebrow")}</span>
             <h2 className="font-display text-4xl md:text-5xl leading-[1.05] mt-4 text-blue-dark">
-              Featured <span className="italic text-blue">products.</span>
+              {t("home.featured.titleMain")} <span className="italic text-blue">{t("home.featured.titleAccent")}</span>
             </h2>
           </Reveal>
           <Link

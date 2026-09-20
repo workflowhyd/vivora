@@ -4,8 +4,10 @@ import { useQuery } from "convex/react";
 import { Reveal } from "./Reveal";
 import { CategoryCard } from "./products/CategoryCard";
 import { api } from "@/convex/_generated/api";
+import { useContent } from "@/lib/useContent";
 
 export function ProductCategories() {
+  const { t } = useContent();
   const categories = useQuery(api.categories.list, { activeOnly: true });
 
   if (!categories) return null;
@@ -15,9 +17,9 @@ export function ProductCategories() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-10 md:mb-14 max-w-2xl">
           <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-blue-dark">
-            From harvest
+            {t("home.categories.titleMain")}
             <br />
-            <span className="italic text-blue">to dry delicious.</span>
+            <span className="italic text-blue">{t("home.categories.titleAccent")}</span>
           </h2>
         </Reveal>
 

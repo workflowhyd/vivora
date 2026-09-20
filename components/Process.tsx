@@ -3,9 +3,11 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "motion/react";
 import { Reveal } from "./Reveal";
+import { useContent } from "@/lib/useContent";
 import { processStages } from "@/data/content";
 
 export function Process() {
+  const { t } = useContent();
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -17,11 +19,11 @@ export function Process() {
     <section id="processing" ref={sectionRef} className="bg-cream-light py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 md:mb-24 text-center max-w-xl mx-auto">
-          <span className="label-caps text-[12px] text-blue">The Journey</span>
+          <span className="label-caps text-[12px] text-blue">{t("process.eyebrow")}</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-blue-dark">
-            From harvest
+            {t("process.titleMain")}
             <br />
-            <span className="italic text-blue">to pack.</span>
+            <span className="italic text-blue">{t("process.titleAccent")}</span>
           </h2>
         </Reveal>
 
@@ -58,9 +60,9 @@ export function Process() {
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <h3 className="font-display text-2xl md:text-3xl text-blue-dark">
-                      {stage.title}
+                      {t(`process.${i + 1}.title`)}
                     </h3>
-                    <p className="text-charcoal/65 font-light mt-2 max-w-sm">{stage.description}</p>
+                    <p className="text-charcoal/65 font-light mt-2 max-w-sm">{t(`process.${i + 1}.description`)}</p>
                   </motion.div>
 
                   {fromLeft && <div className="hidden md:block" />}

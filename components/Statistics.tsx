@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, animate } from "motion/react";
 import { statistics } from "@/data/content";
+import { useContent } from "@/lib/useContent";
 
 function StatValue({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -30,6 +31,7 @@ function StatValue({ value }: { value: string }) {
 }
 
 export function Statistics() {
+  const { t } = useContent();
   return (
     <section className="bg-blue-dark py-24 md:py-32">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
@@ -43,8 +45,8 @@ export function Statistics() {
               transition={{ duration: 0.7, delay: i * 0.08 }}
               className="text-center lg:text-left border-t border-cream-light/10 pt-6"
             >
-              <StatValue value={stat.value} />
-              <p className="label-caps text-[11px] text-cream-light/50 mt-3">{stat.label}</p>
+              <StatValue value={t(`stats.${i + 1}.value`)} />
+              <p className="label-caps text-[11px] text-cream-light/50 mt-3">{t(`stats.${i + 1}.label`)}</p>
             </motion.div>
           ))}
         </div>

@@ -6,6 +6,7 @@ import { Statistics } from "@/components/Statistics";
 import { ExploreLinks } from "@/components/ExploreLinks";
 import { ContactBanner } from "@/components/ContactBanner";
 import { Footer } from "@/components/Footer";
+import { PageBlocks } from "@/components/PageBlocks";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
         <FeaturedProducts />
         <Statistics />
         <ExploreLinks />
+        <PageBlocks page="home" />
         <ContactBanner />
       </main>
       <Footer />

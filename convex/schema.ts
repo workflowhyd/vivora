@@ -63,4 +63,25 @@ export default defineSchema({
   })
     .index("by_status", ["status"])
     .index("by_createdAt", ["createdAt"]),
+  // Admin overrides for the editable slots defined in lib/contentRegistry.ts.
+  pageContent: defineTable({
+    key: v.string(),
+    kind: v.union(v.literal("text"), v.literal("image"), v.literal("video")),
+    text: v.optional(v.string()),
+    storageId: v.optional(v.id("_storage")),
+    updatedAt: v.number(),
+  }).index("by_key", ["key"]),
+
+  // Extra text / image / video blocks an admin appends to a page.
+  pageBlocks: defineTable({
+    page: v.string(),
+    kind: v.union(v.literal("text"), v.literal("image"), v.literal("video")),
+    heading: v.optional(v.string()),
+    body: v.optional(v.string()),
+    caption: v.optional(v.string()),
+    storageId: v.optional(v.id("_storage")),
+    url: v.optional(v.string()),
+    active: v.boolean(),
+    sortOrder: v.number(),
+  }).index("by_page", ["page", "sortOrder"]),
 });

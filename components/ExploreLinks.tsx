@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal, RevealGroup, revealItem } from "./Reveal";
 import { motion } from "motion/react";
+import { useContent } from "@/lib/useContent";
 
 const links = [
   {
@@ -29,12 +30,13 @@ const links = [
 ];
 
 export function ExploreLinks() {
+  const { t } = useContent();
   return (
     <section className="bg-cream py-16 md:py-24 border-t border-charcoal/10">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-10 md:mb-14 max-w-2xl">
           <h2 className="font-display text-3xl md:text-5xl leading-[1.05] text-blue-dark">
-            More about <span className="italic text-blue">Vivora.</span>
+            {t("home.explore.titleMain")} <span className="italic text-blue">{t("home.explore.titleAccent")}</span>
           </h2>
         </Reveal>
 

@@ -2,6 +2,7 @@
 
 import { motion } from "motion/react";
 import { Reveal } from "./Reveal";
+import { useContent } from "@/lib/useContent";
 import { globalDestinations, origin } from "@/data/content";
 
 function arcPath(x1: number, y1: number, x2: number, y2: number) {
@@ -11,15 +12,16 @@ function arcPath(x1: number, y1: number, x2: number, y2: number) {
 }
 
 export function GlobalReach() {
+  const { t } = useContent();
   return (
     <section id="global-reach" className="bg-blue-dark py-24 md:py-36 overflow-hidden">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="text-center max-w-xl mx-auto mb-16 md:mb-20">
-          <span className="label-caps text-[12px] text-gold">Worldwide</span>
+          <span className="label-caps text-[12px] text-gold">{t("reach.eyebrow")}</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-cream-light">
-            From India
+            {t("reach.titleMain")}
             <br />
-            <span className="italic">to the world.</span>
+            <span className="italic">{t("reach.titleAccent")}</span>
           </h2>
         </Reveal>
 

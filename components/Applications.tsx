@@ -3,18 +3,20 @@
 import { motion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { useContent } from "@/lib/useContent";
 import { applications } from "@/data/content";
 
 export function Applications() {
+  const { t } = useContent();
   return (
     <section id="applications" className="bg-cream py-24 md:py-36">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-14 md:mb-20">
-          <span className="label-caps text-[12px] text-blue">Where It Goes</span>
+          <span className="label-caps text-[12px] text-blue">{t("applications.eyebrow")}</span>
           <h2 className="font-display text-4xl md:text-6xl leading-[1.05] mt-4 text-blue-dark max-w-2xl">
-            Made for what
+            {t("applications.titleMain")}
             <br />
-            <span className="italic text-blue">comes next.</span>
+            <span className="italic text-blue">{t("applications.titleAccent")}</span>
           </h2>
         </Reveal>
 
@@ -44,8 +46,8 @@ export function Applications() {
                   </div>
                 </div>
                 <div>
-                  <h3 className="font-display text-3xl md:text-4xl text-cream-light">{app.title}</h3>
-                  <p className="text-cream-light/75 font-light mt-3 max-w-xs">{app.description}</p>
+                  <h3 className="font-display text-3xl md:text-4xl text-cream-light">{t(`applications.${i + 1}.title`)}</h3>
+                  <p className="text-cream-light/75 font-light mt-3 max-w-xs">{t(`applications.${i + 1}.description`)}</p>
                 </div>
               </div>
             </motion.div>
