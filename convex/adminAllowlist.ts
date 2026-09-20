@@ -1,5 +1,6 @@
-// Emails allowed to hold admin access. Add teammate emails here as needed.
-export const ADMIN_EMAILS = ["nikilbabu3435@gmail.com"] as const;
+// Sign-in identifiers (emails or usernames) allowed to hold admin access.
+// Add teammates here as needed.
+export const ADMIN_EMAILS = ["nikilbabu3435@gmail.com", "admin"] as const;
 
 export function isAllowlistedAdminEmail(email?: string | null): boolean {
   if (!email) return false;

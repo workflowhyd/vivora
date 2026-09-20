@@ -25,8 +25,8 @@ export default function AdminLoginPage() {
     } catch {
       setError(
         flow === "signIn"
-          ? "Invalid email or password."
-          : "Couldn't create that account — try a different email."
+          ? "Invalid username or password."
+          : "Couldn't create that account — try a different username."
       );
       setSubmitting(false);
     }
@@ -43,12 +43,13 @@ export default function AdminLoginPage() {
         <form onSubmit={handleSubmit} className="bg-cream-light rounded-md p-8 mt-8 flex flex-col gap-5">
           <div>
             <label className="label-caps text-[10px] text-blue/70" htmlFor="email">
-              Email
+              Username or email
             </label>
             <input
               id="email"
               name="email"
-              type="email"
+              type="text"
+              autoComplete="username"
               required
               className="w-full bg-transparent border-b border-blue/20 pb-2.5 mt-2 text-blue-dark focus:outline-none focus:border-blue"
             />
