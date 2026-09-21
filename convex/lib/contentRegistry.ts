@@ -159,6 +159,8 @@ add(
   "Share a few details and our team will get back to you with pricing, samples and lead times."
 );
 
+add("contact", "WhatsApp button", "site.whatsapp", "WhatsApp number with country code, digits only (e.g. 919876543210)", "text", "");
+
 export const contentSlots: readonly Slot[] = slots;
 
 export const slotByKey: ReadonlyMap<string, Slot> = new Map(slots.map((s) => [s.key, s]));

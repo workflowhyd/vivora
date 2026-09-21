@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Header } from "@/components/Header";
+import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
 import { PageBlocks } from "@/components/PageBlocks";
 import { Quality } from "@/components/Quality";
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 export default function QualityPage() {
   return (
     <>
-      <Header />
-      <main className="pt-28 md:pt-36">
+      <NavDock />
+      <main>
         <Quality />
         <PageBlocks page="quality" />
       </main>

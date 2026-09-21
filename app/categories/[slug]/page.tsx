@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { fetchQuery } from "convex/nextjs";
 import { api } from "@/convex/_generated/api";
-import { Header } from "@/components/Header";
+import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
 import { CategoryProductGrid } from "@/components/products/CategoryProductGrid";
 
@@ -44,8 +44,8 @@ export default async function CategoryPage({
 
   return (
     <>
-      <Header />
-      <main className="pt-28 md:pt-36 pb-24 md:pb-32 bg-cream min-h-screen">
+      <NavDock />
+      <main className="pt-12 md:pt-20 pb-24 md:pb-32 bg-cream min-h-screen">
         <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           <div className="max-w-2xl mb-10 md:mb-14">
             <span className="label-caps text-[12px] text-green">Category</span>

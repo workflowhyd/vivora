@@ -1,4 +1,4 @@
-import { Header } from "@/components/Header";
+import { NavDock } from "@/components/NavDock";
 import { Hero } from "@/components/Hero";
 import { ProductCategories } from "@/components/ProductCategories";
 import { FeaturedProducts } from "@/components/products/FeaturedProducts";
@@ -11,7 +11,7 @@ import { PageBlocks } from "@/components/PageBlocks";
 export default function Home() {
   return (
     <>
-      <Header />
+      <NavDock />
       <main>
         <Hero />
         <ProductCategories />

@@ -48,7 +48,7 @@ export function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full overflow-hidden bg-cream pt-28 md:pt-32"
+      className="relative w-full overflow-hidden bg-cream pt-12 md:pt-16"
       style={{
         backgroundImage:
           "radial-gradient(ellipse 70% 45% at 50% 0%, rgba(23,107,58,0.07), transparent 70%), radial-gradient(ellipse 60% 40% at 50% 78%, rgba(184,138,42,0.10), transparent 70%)",

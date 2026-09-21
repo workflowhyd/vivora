@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { fetchQuery } from "convex/nextjs";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { api } from "@/convex/_generated/api";
-import { Header } from "@/components/Header";
+import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
 import { ProductGrid } from "@/components/products/ProductGrid";
 
@@ -62,8 +62,8 @@ export default async function ProductDetailPage({
 
   return (
     <>
-      <Header />
-      <main className="pt-28 md:pt-36 pb-24 md:pb-32 bg-cream min-h-screen">
+      <NavDock />
+      <main className="pt-12 md:pt-20 pb-24 md:pb-32 bg-cream min-h-screen">
         <div className="mx-auto max-w-[1440px] px-6 md:px-10">
           {product.category && (
             <Link

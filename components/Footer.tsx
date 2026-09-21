@@ -13,7 +13,7 @@ const companyLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-green-dark pt-20 md:pt-28 pb-8">
+    <footer className="bg-green-dark pt-20 md:pt-28 pb-28">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="grid md:grid-cols-12 gap-12 md:gap-8 pb-16 border-b border-cream-light/10">
           <div className="md:col-span-5">
