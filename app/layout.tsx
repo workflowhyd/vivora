@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Manrope } from "next/font/google";
-import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
-import ConvexClientProvider from "./ConvexClientProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import "./globals.css";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "600"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -16,7 +14,7 @@ const playfair = Playfair_Display({
 const manrope = Manrope({
   variable: "--font-manrope",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
 });
 
@@ -63,11 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${manrope.variable}`}>
       <body className="bg-cream text-blue-dark antialiased">
-        <ConvexAuthNextjsServerProvider>
-          <ConvexClientProvider>
-            <SmoothScroll>{children}</SmoothScroll>
-          </ConvexClientProvider>
-        </ConvexAuthNextjsServerProvider>
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

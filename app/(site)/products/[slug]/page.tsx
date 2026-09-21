@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import { cache } from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { fetchQuery } from "convex/nextjs";
+import { fetchCachedQuery } from "@/lib/convexServer";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { NavDock } from "@/components/NavDock";
@@ -10,12 +11,11 @@ import { ProductGrid } from "@/components/products/ProductGrid";
 
 export const revalidate = 3600;
 
-async function getProduct(slug: string) {
-  return fetchQuery(api.products.getBySlug, { slug });
-}
+// Called from both generateMetadata and the page; cache() makes it one Convex round trip.
+const getProduct = cache((slug: string) => fetchCachedQuery(api.products.getBySlug, { slug }));
 
 export async function generateStaticParams() {
-  const products = await fetchQuery(api.products.list, { activeOnly: true });
+  const products = await fetchCachedQuery(api.products.list, { activeOnly: true });
   return products.map((product) => ({ slug: product.slug }));
 }
 
@@ -52,10 +52,9 @@ export default async function ProductDetailPage({
   if (!product) notFound();
 
   const related = product.category
-    ? (await fetchQuery(api.products.listByCategory, {
-        categoryId: product.category._id,
-        activeOnly: true,
-      })).filter((p) => p.slug !== product.slug).slice(0, 4)
+    ? (await fetchCachedQuery(api.products.listCards, { categoryId: product.category._id }))
+        .filter((p) => p.slug !== product.slug)
+        .slice(0, 4)
     : [];
 
   const whatsappMessage = encodeURIComponent(`Hi, I'm interested in ${product.name}.`);

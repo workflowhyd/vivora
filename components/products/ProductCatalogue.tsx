@@ -7,12 +7,19 @@ import { api } from "@/convex/_generated/api";
 import { ProductGrid } from "./ProductGrid";
 import { ProductFilters, type SortOption } from "./ProductFilters";
 import { Pagination } from "./Pagination";
+import type { ActiveCategories, ProductCards } from "@/lib/types";
 
 const PAGE_SIZE = 12;
 
-export function ProductCatalogue() {
-  const products = useQuery(api.products.list, { activeOnly: true });
-  const categories = useQuery(api.categories.list, { activeOnly: true });
+export function ProductCatalogue({
+  initialProducts,
+  initialCategories,
+}: {
+  initialProducts: ProductCards;
+  initialCategories: ActiveCategories;
+}) {
+  const products = useQuery(api.products.listCards, {}) ?? initialProducts;
+  const categories = useQuery(api.categories.list, { activeOnly: true }) ?? initialCategories;
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -39,12 +46,11 @@ export function ProductCatalogue() {
 
   const categoryNameById = useMemo(() => {
     const map = new Map<string, string>();
-    categories?.forEach((c) => map.set(c._id, c.name));
+    categories.forEach((c) => map.set(c._id, c.name));
     return map;
   }, [categories]);
 
   const filtered = useMemo(() => {
-    if (!products) return [];
     let result = products;
 
     if (activeCategory) {
@@ -75,10 +81,6 @@ export function ProductCatalogue() {
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
   const paged = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-
-  if (!products || !categories) {
-    return <div className="py-16 text-center text-charcoal/50">Loading products…</div>;
-  }
 
   return (
     <div>

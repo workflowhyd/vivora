@@ -4,10 +4,7 @@ import { Logo } from "./Logo";
 
 const companyLinks = [
   { label: "About", href: "/about" },
-  { label: "Applications", href: "/applications" },
-  { label: "Quality", href: "/quality" },
   { label: "Processing", href: "/processing" },
-  { label: "Global Reach", href: "/global-reach" },
   { label: "Contact", href: "/contact" },
 ];
 

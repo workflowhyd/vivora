@@ -22,7 +22,7 @@ export function About() {
               {t("about.body")}
             </p>
             <Link
-              href="/quality"
+              href="/processing"
               className="group inline-flex items-center gap-2 mt-6 text-[13px] label-caps text-blue border-b-2 border-gold pb-1 hover:text-gold transition-colors duration-300"
             >
               {t("about.link")}

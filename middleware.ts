@@ -57,5 +57,6 @@ export default function middleware(request: NextRequest, event: NextFetchEvent) 
 }
 
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  // Only the admin area and the auth proxy need the auth layer; public pages skip it.
+  matcher: ["/admin/:path*", "/api/auth"],
 };

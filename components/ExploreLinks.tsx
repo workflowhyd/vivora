@@ -8,14 +8,9 @@ import { useContent } from "@/lib/useContent";
 
 const links = [
   {
-    href: "/applications",
-    title: "Applications",
-    description: "Where our products go — gifting, retail, bakery and HoReCa.",
-  },
-  {
-    href: "/quality",
-    title: "Quality",
-    description: "Our sourcing, grading and hygiene standards.",
+    href: "/about",
+    title: "About",
+    description: "Our story, standards and where we supply.",
   },
   {
     href: "/processing",
@@ -23,9 +18,14 @@ const links = [
     description: "From harvest to pack — how it's made.",
   },
   {
-    href: "/global-reach",
-    title: "Global Reach",
-    description: "Exporting from India to the world.",
+    href: "/products",
+    title: "Products",
+    description: "Dehydrated vegetables, fruits, powders and more.",
+  },
+  {
+    href: "/contact",
+    title: "Contact",
+    description: "Request a quote or talk to our team.",
   },
 ];
 

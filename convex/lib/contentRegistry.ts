@@ -19,10 +19,7 @@ export const pages = [
   { id: "home", label: "Home", path: "/" },
   { id: "about", label: "About", path: "/about" },
   { id: "products", label: "Products", path: "/products" },
-  { id: "applications", label: "Applications", path: "/applications" },
-  { id: "quality", label: "Quality", path: "/quality" },
   { id: "processing", label: "Processing", path: "/processing" },
-  { id: "global-reach", label: "Global Reach", path: "/global-reach" },
   { id: "contact", label: "Contact", path: "/contact" },
 ] as const;
 
@@ -101,33 +98,15 @@ add(
   "Every Vivora product begins with careful sourcing. From dehydration through to hygienic packing, we build a transparent, export-ready supply chain that food brands and distributors can rely on."
 );
 add("about", "Story section", "about.link", "Link text", "text", "Discover Our Story");
+add("about", "One-line highlights", "about.applications.label", "Applications — label", "text", "Applications");
+add("about", "One-line highlights", "about.applications.line", "Applications — line", "text", "Gifting, retail, bakery and HoReCa — made for what comes next.");
+add("about", "One-line highlights", "about.quality.label", "Quality — label", "text", "Quality");
+add("about", "One-line highlights", "about.quality.line", "Quality — line", "text", "Carefully sourced, rigorously graded, hygienically packed and export ready.");
+add("about", "One-line highlights", "about.reach.label", "Global Reach — label", "text", "Global Reach");
+add("about", "One-line highlights", "about.reach.line", "Global Reach — line", "text", "Exporting from India to the world — UAE, Saudi Arabia, UK, Europe, USA, Canada and Australia.");
 
 // ── Products ──────────────────────────────────────────────────────────
 heading("products", "Page heading", "products", "Our Range", "The full", "catalogue.");
-
-// ── Applications ──────────────────────────────────────────────────────
-heading("applications", "Page heading", "applications", "Where It Goes", "Made for what", "comes next.");
-[
-  ["Gifting & Corporate", "Curated hampers and festive boxes built for celebrations and corporate gifting."],
-  ["Retail & Snacking", "Shelf-ready packs and blends made for everyday, on-the-go snacking."],
-  ["Bakery & Confectionery", "Consistent, food-safe dehydrated ingredients and powders for bakes, mixes and desserts."],
-  ["HoReCa & Bulk", "Reliable, export-grade supply for hotels, caterers and food service partners."],
-].forEach(([title, description], i) => {
-  add("applications", `Card ${i + 1}`, `applications.${i + 1}.title`, "Title", "text", title);
-  add("applications", `Card ${i + 1}`, `applications.${i + 1}.description`, "Description", "textarea", description);
-});
-
-// ── Quality ───────────────────────────────────────────────────────────
-heading("quality", "Page heading", "quality", "Our Standard", "Quality you can", "build a product around.");
-[
-  ["Carefully Sourced", "Vegetables and fruit selected from trusted farms for consistent quality."],
-  ["Rigorous Grading", "Every batch is hand-sorted against defined size and quality parameters."],
-  ["Hygienic Packing", "Facilities designed around food safety and cleanliness standards."],
-  ["Export Ready", "Documentation and packaging built for international markets."],
-].forEach(([title, description], i) => {
-  add("quality", `Pillar ${i + 1}`, `quality.${i + 1}.title`, "Title", "text", title);
-  add("quality", `Pillar ${i + 1}`, `quality.${i + 1}.description`, "Description", "textarea", description);
-});
 
 // ── Processing ────────────────────────────────────────────────────────
 heading("processing", "Page heading", "process", "The Journey", "From harvest", "to pack.");
@@ -142,9 +121,6 @@ heading("processing", "Page heading", "process", "The Journey", "From harvest", 
   add("processing", `Stage ${i + 1}`, `process.${i + 1}.title`, "Title", "text", title);
   add("processing", `Stage ${i + 1}`, `process.${i + 1}.description`, "Description", "textarea", description);
 });
-
-// ── Global reach ──────────────────────────────────────────────────────
-heading("global-reach", "Page heading", "reach", "Worldwide", "From India", "to the world.");
 
 // ── Contact ───────────────────────────────────────────────────────────
 add("contact", "Top banner", "contact.banner.main", "Heading (first line)", "text", "Let's create something");

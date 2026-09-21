@@ -5,12 +5,11 @@ import { Reveal } from "./Reveal";
 import { CategoryCard } from "./products/CategoryCard";
 import { api } from "@/convex/_generated/api";
 import { useContent } from "@/lib/useContent";
+import type { ActiveCategories } from "@/lib/types";
 
-export function ProductCategories() {
+export function ProductCategories({ initial }: { initial: ActiveCategories }) {
   const { t } = useContent();
-  const categories = useQuery(api.categories.list, { activeOnly: true });
-
-  if (!categories) return null;
+  const categories = useQuery(api.categories.list, { activeOnly: true }) ?? initial;
 
   return (
     <section className="bg-cream py-16 md:py-24">

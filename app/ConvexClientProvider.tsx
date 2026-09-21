@@ -1,11 +1,12 @@
 "use client";
 
-import { ConvexAuthNextjsProvider } from "@convex-dev/auth/nextjs";
-import { ConvexReactClient } from "convex/react";
+import { ConvexProvider, ConvexReactClient } from "convex/react";
 import { ReactNode } from "react";
 
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
+// Public site: unauthenticated Convex client. Sign-in only exists under /admin
+// (see app/admin/AdminConvexProvider.tsx), so public pages stay static.
 export default function ConvexClientProvider({ children }: { children: ReactNode }) {
-  return <ConvexAuthNextjsProvider client={convex}>{children}</ConvexAuthNextjsProvider>;
+  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
 }

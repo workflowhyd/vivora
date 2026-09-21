@@ -13,7 +13,7 @@ const inputClasses =
 
 export function CTA() {
   const { t } = useContent();
-  const products = useQuery(api.products.list, { activeOnly: true });
+  const products = useQuery(api.products.listCards, {});
   const createInquiry = useMutation(api.inquiries.create);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 

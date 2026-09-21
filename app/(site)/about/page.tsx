@@ -3,6 +3,7 @@ import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
 import { PageBlocks } from "@/components/PageBlocks";
 import { About } from "@/components/About";
+import { AboutHighlights } from "@/components/AboutHighlights";
 import { Statistics } from "@/components/Statistics";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function AboutPage() {
       <NavDock />
       <main>
         <About />
+        <AboutHighlights />
         <Statistics />
         <PageBlocks page="about" />
       </main>

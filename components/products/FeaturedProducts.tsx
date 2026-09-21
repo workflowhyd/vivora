@@ -7,13 +7,18 @@ import { api } from "@/convex/_generated/api";
 import { useContent } from "@/lib/useContent";
 import { Reveal } from "@/components/Reveal";
 import { ProductGrid } from "./ProductGrid";
+import type { ActiveCategories, ProductCards } from "@/lib/types";
 
-export function FeaturedProducts() {
+export function FeaturedProducts({
+  initialProducts,
+  initialCategories,
+}: {
+  initialProducts: ProductCards;
+  initialCategories: ActiveCategories;
+}) {
   const { t } = useContent();
-  const products = useQuery(api.products.list, { featured: true, activeOnly: true });
-  const categories = useQuery(api.categories.list, { activeOnly: true });
-
-  if (!products || !categories) return null;
+  const products = useQuery(api.products.listCards, { featured: true }) ?? initialProducts;
+  const categories = useQuery(api.categories.list, { activeOnly: true }) ?? initialCategories;
 
   const categoryNameById = new Map(categories.map((c) => [c._id, c.name]));
 

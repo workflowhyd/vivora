@@ -1,7 +1,7 @@
-import { Suspense } from "react";
+import { Suspense, cache } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { fetchQuery } from "convex/nextjs";
+import { fetchCachedQuery } from "@/lib/convexServer";
 import { api } from "@/convex/_generated/api";
 import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
@@ -9,12 +9,10 @@ import { CategoryProductGrid } from "@/components/products/CategoryProductGrid";
 
 export const revalidate = 3600;
 
-async function getCategory(slug: string) {
-  return fetchQuery(api.categories.getBySlug, { slug });
-}
+const getCategory = cache((slug: string) => fetchCachedQuery(api.categories.getBySlug, { slug }));
 
 export async function generateStaticParams() {
-  const categories = await fetchQuery(api.categories.list, { activeOnly: true });
+  const categories = await fetchCachedQuery(api.categories.list, { activeOnly: true });
   return categories.map((category) => ({ slug: category.slug }));
 }
 
@@ -41,6 +39,7 @@ export default async function CategoryPage({
   const { slug } = await params;
   const category = await getCategory(slug);
   if (!category) notFound();
+  const products = await fetchCachedQuery(api.products.listCards, { categoryId: category._id });
 
   return (
     <>
@@ -57,7 +56,7 @@ export default async function CategoryPage({
             </p>
           </div>
           <Suspense fallback={<div className="py-16 text-center text-charcoal/50">Loading products…</div>}>
-            <CategoryProductGrid categoryId={category._id} />
+            <CategoryProductGrid categoryId={category._id} initialProducts={products} />
           </Suspense>
         </div>
       </main>

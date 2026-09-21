@@ -69,18 +69,38 @@ export const list = query({
   },
 });
 
-export const listByCategory = query({
-  args: { categoryId: v.id("categories"), activeOnly: v.optional(v.boolean()) },
-  handler: async (ctx, { categoryId, activeOnly }): Promise<Doc<"products">[]> => {
-    let results = await ctx.db
-      .query("products")
-      .withIndex("by_category", (q) => q.eq("categoryId", categoryId))
-      .order("asc")
-      .collect();
-    if (activeOnly) {
-      results = results.filter((p) => p.active);
-    }
-    return results;
+// Lean projection for the public grids: only the fields a product card and
+// the catalogue filters/sorting need, so the payload stays a fraction of the
+// full documents.
+export const listCards = query({
+  args: { categoryId: v.optional(v.id("categories")), featured: v.optional(v.boolean()) },
+  handler: async (ctx, { categoryId, featured }) => {
+    const products = categoryId
+      ? await ctx.db
+          .query("products")
+          .withIndex("by_category", (q) => q.eq("categoryId", categoryId))
+          .collect()
+      : featured !== undefined
+        ? await ctx.db
+            .query("products")
+            .withIndex("by_featured", (q) => q.eq("featured", featured))
+            .collect()
+        : await ctx.db
+            .query("products")
+            .withIndex("by_active", (q) => q.eq("active", true))
+            .collect();
+    return products
+      .filter((p) => p.active && (featured === undefined || p.featured === featured))
+      .map((p) => ({
+        _id: p._id,
+        slug: p.slug,
+        name: p.name,
+        shortDescription: p.shortDescription,
+        categoryId: p.categoryId,
+        featured: p.featured,
+        sortOrder: p.sortOrder,
+        createdAt: p.createdAt,
+      }));
   },
 });
 

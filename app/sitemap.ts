@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { fetchQuery } from "convex/nextjs";
+import { fetchCachedQuery } from "@/lib/convexServer";
 import { api } from "@/convex/_generated/api";
 
 export const revalidate = 3600;
@@ -8,8 +8,8 @@ const SITE_URL = "https://vivorafoods.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories] = await Promise.all([
-    fetchQuery(api.products.list, { activeOnly: true }),
-    fetchQuery(api.categories.list, { activeOnly: true }),
+    fetchCachedQuery(api.products.list, { activeOnly: true }),
+    fetchCachedQuery(api.categories.list, { activeOnly: true }),
   ]);
 
   return [
@@ -25,7 +25,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "weekly",
       priority: 0.9,
     },
-    ...(["about", "applications", "quality", "processing", "global-reach", "contact"] as const).map(
+    ...(["about", "processing", "contact"] as const).map(
       (path) => ({
         url: `${SITE_URL}/${path}`,
         lastModified: new Date(),
