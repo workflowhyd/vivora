@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
@@ -9,16 +9,20 @@ import { HeroBanner } from "./HeroBanner";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-// The default hero is a full product poster (logo, tagline and products are in
-// the artwork), so the real heading/copy below is visually hidden for search
-// engines and screen readers. The poster's own blurred, enlarged copy fills
-// the space around it so it sits in the page instead of floating on blank cream.
+// The default hero is a product banner (logo, tagline and products are in the
+// artwork), so the real heading/copy below is visually hidden for search
+// engines and screen readers. Art direction: a landscape banner on desktop,
+// the portrait poster on phones and tablets. On phones the poster's own blurred, enlarged
+// copy fills the space around it.
+const BANNER = "/images/hero-banner.jpg";
 const POSTER = "/images/hero-poster.jpg";
 const POSTER_BLUR = "/images/hero-poster-blur.jpg";
+const BANNER_ALT =
+  "Vivora Foods — Dry Delicious. Goodness in every meal. Dehydrated onion, tomato, garlic, carrot and spinach powders and turmeric, chilli and coriander powder jars.";
 
-// Poster height leaves room for the button row and the floating dock.
-const posterSize =
-  "h-auto w-full max-w-md md:h-[calc(100svh-12rem)] md:min-h-[420px] md:w-auto md:max-w-full";
+// Custom (admin-uploaded) images keep their own proportions.
+const customSize =
+  "h-auto w-full max-w-md md:h-[calc(100svh-9.5rem)] md:min-h-[420px] md:w-auto md:max-w-full object-contain";
 
 export function Hero() {
   const { t, media } = useContent();
@@ -26,6 +30,23 @@ export function Hero() {
   const video = media("home.hero.video");
   const customImage = media("home.hero.image");
   const usingPoster = !video && !customImage;
+
+  const { props: bannerProps } = getImageProps({
+    src: BANNER,
+    alt: BANNER_ALT,
+    width: 1536,
+    height: 1024,
+    sizes: "100vw",
+    priority: true,
+  });
+  const { props: posterProps } = getImageProps({
+    src: POSTER,
+    alt: BANNER_ALT,
+    width: 1024,
+    height: 1536,
+    sizes: "100vw",
+    priority: true,
+  });
 
   return (
     <section id="home" className="relative isolate w-full overflow-hidden bg-cream">
@@ -48,35 +69,34 @@ export function Hero() {
         {t("home.hero.eyebrow")} {t("home.hero.body")}
       </p>
 
-      <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 pb-8 pt-4 md:px-10 md:pt-6">
-        <motion.div
-          className="w-full"
-          initial={{ opacity: 0, scale: reduce ? 1 : 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, ease: EASE }}
-        >
-          {video ? (
+      <motion.div
+        className="mx-auto w-full max-w-[2000px] px-4 pt-4 lg:px-0 lg:pt-0"
+        initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.4, ease: EASE }}
+      >
+        {video ? (
+          <div className="mx-auto max-w-[1440px] md:px-10 md:pt-6">
             <HeroBanner video={video} image={customImage} />
-          ) : (
-            <div className="flex justify-center">
-              {usingPoster ? (
-                <Image
-                  src={POSTER}
-                  alt="Vivora Foods — Dry Delicious. Goodness in every meal. Dehydrated onion, tomato, garlic, carrot and spinach powders and turmeric, chilli and coriander powder jars."
-                  width={1024}
-                  height={1536}
-                  priority
-                  sizes="(min-width: 768px) 500px, 100vw"
-                  className={`${posterSize} rounded-[4px] object-contain shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)]`}
-                />
-              ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={customImage} alt="" className={`${posterSize} object-contain`} />
-              )}
-            </div>
-          )}
-        </motion.div>
+          </div>
+        ) : usingPoster ? (
+          <picture>
+            <source media="(min-width: 1024px)" srcSet={bannerProps.srcSet} sizes="100vw" />
+            {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
+            <img
+              {...posterProps}
+              className="mx-auto h-auto w-full max-w-md rounded-[4px] shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)] md:max-w-lg lg:h-[calc(100svh-9.5rem)] lg:min-h-[440px] lg:max-w-none lg:rounded-none lg:object-cover lg:object-[center_12%] lg:shadow-none"
+            />
+          </picture>
+        ) : (
+          <div className="flex justify-center md:pt-6">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={customImage} alt="" className={customSize} />
+          </div>
+        )}
+      </motion.div>
 
+      <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 pb-8 md:px-10">
         <motion.div
           className="mt-6 flex flex-wrap items-center justify-center gap-3 md:gap-4"
           initial={{ opacity: 0, y: reduce ? 0 : 16 }}
