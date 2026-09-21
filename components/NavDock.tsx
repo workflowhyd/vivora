@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ArrowRight, ArrowUpRight, Mail, MapPin, Menu, MessageCircle, Package, X } from "lucide-react";
 import { Logo } from "./Logo";
-import { navLinks } from "@/data/content";
+import { contactEmail, navLinks } from "@/data/content";
 import { useContent } from "@/lib/useContent";
 import { cn } from "@/lib/utils";
 
@@ -131,7 +131,9 @@ export function NavDock() {
                 <ul className="flex flex-col gap-3 text-sm font-light text-cream-light/70">
                   <li className="flex items-center gap-2.5">
                     <Mail size={15} className="shrink-0 text-gold" />
-                    hello@vivorafoods.com
+                    <a href={`mailto:${contactEmail}`} className="transition-colors duration-300 hover:text-gold">
+                      {contactEmail}
+                    </a>
                   </li>
                   <li className="flex items-start gap-2.5">
                     <MapPin size={15} className="mt-0.5 shrink-0 text-gold" />

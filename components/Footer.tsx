@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";
+import { contactEmail } from "@/data/content";
 
 const companyLinks = [
   { label: "About", href: "/about" },
@@ -62,7 +63,9 @@ export function Footer() {
             <ul className="mt-5 space-y-3">
               <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
                 <Mail size={15} className="text-gold shrink-0" />
-                hello@vivorafoods.com
+                <a href={`mailto:${contactEmail}`} className="transition-colors duration-300 hover:text-gold">
+                  {contactEmail}
+                </a>
               </li>
               <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
                 <Phone size={15} className="text-gold shrink-0" />

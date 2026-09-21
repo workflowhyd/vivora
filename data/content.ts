@@ -1,3 +1,5 @@
+export const contactEmail = "vivorafoodspvtltd@gmail.com";
+
 export const navLinks = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },

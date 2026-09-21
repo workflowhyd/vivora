@@ -5,27 +5,33 @@ import { motion, useInView, animate } from "motion/react";
 import { statistics } from "@/data/content";
 import { useContent } from "@/lib/useContent";
 
+// Counts up to numeric values ("30+", "100") the first time they scroll into
+// view. The effect depends only on primitives: depending on a fresh regex match
+// array restarted the animation on every frame's re-render, so the number
+// flickered back to 0. `display` is null whenever the final value should show.
 function StatValue({ value }: { value: string }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
-  const [display, setDisplay] = useState(value);
-  const numericMatch = value.match(/^(\d+)(\+?)$/);
+  const [display, setDisplay] = useState<string | null>(null);
+
+  const match = value.match(/^(\d+)(\+?)$/);
+  const target = match ? parseInt(match[1], 10) : null;
+  const suffix = match?.[2] ?? "";
 
   useEffect(() => {
-    if (!inView || !numericMatch) return;
-    const target = parseInt(numericMatch[1], 10);
-    const suffix = numericMatch[2];
+    if (!inView || target === null) return;
     const controls = animate(0, target, {
       duration: 1.6,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => setDisplay(`${Math.round(v)}${suffix}`),
+      onComplete: () => setDisplay(null),
     });
     return () => controls.stop();
-  }, [inView, numericMatch]);
+  }, [inView, target, suffix]);
 
   return (
     <span ref={ref} className="font-display text-5xl md:text-7xl text-cream-light">
-      {numericMatch ? display : value}
+      {display ?? value}
     </span>
   );
 }
