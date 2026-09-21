@@ -13,11 +13,6 @@ const links = [
     description: "Our story, standards and where we supply.",
   },
   {
-    href: "/processing",
-    title: "Processing",
-    description: "From harvest to pack — how it's made.",
-  },
-  {
     href: "/products",
     title: "Products",
     description: "Dehydrated vegetables, fruits, powders and more.",
@@ -40,7 +35,7 @@ export function ExploreLinks() {
           </h2>
         </Reveal>
 
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {links.map((link) => (
             <motion.div key={link.href} variants={revealItem}>
               <Link

@@ -19,7 +19,6 @@ export const pages = [
   { id: "home", label: "Home", path: "/" },
   { id: "about", label: "About", path: "/about" },
   { id: "products", label: "Products", path: "/products" },
-  { id: "processing", label: "Processing", path: "/processing" },
   { id: "contact", label: "Contact", path: "/contact" },
 ] as const;
 
@@ -123,20 +122,6 @@ heading("about", "Certifications section", "about.certs", "Certifications", "Cer
 
 // ── Products ──────────────────────────────────────────────────────────
 heading("products", "Page heading", "products", "Our Range", "The full", "catalogue.");
-
-// ── Processing ────────────────────────────────────────────────────────
-heading("processing", "Page heading", "process", "The Journey", "From harvest", "to pack.");
-[
-  ["Source", "Vegetables and fruit are sourced directly from trusted farms and growers."],
-  ["Clean", "Thorough cleaning removes impurities while preserving natural integrity."],
-  ["Sort & Grade", "Every batch is hand-sorted and graded for size, colour and quality."],
-  ["Dry & Process", "Controlled drying locks in natural flavour, texture and shelf life."],
-  ["Grind & Blend", "Dried ingredients are finely ground into consistent, natural powders."],
-  ["Pack", "Hygienic, export-ready packing ensures freshness from facility to destination."],
-].forEach(([title, description], i) => {
-  add("processing", `Stage ${i + 1}`, `process.${i + 1}.title`, "Title", "text", title);
-  add("processing", `Stage ${i + 1}`, `process.${i + 1}.description`, "Description", "textarea", description);
-});
 
 // ── Contact ───────────────────────────────────────────────────────────
 add("contact", "Top banner", "contact.banner.main", "Heading (first line)", "text", "Let's create something");

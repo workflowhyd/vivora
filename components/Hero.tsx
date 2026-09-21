@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { useContent } from "@/lib/useContent";
 import { HeroBanner } from "./HeroBanner";
+import { HeroSideLeft, HeroSideRight } from "./HeroSides";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -80,14 +81,18 @@ export function Hero() {
             <HeroBanner video={video} image={customImage} />
           </div>
         ) : usingPoster ? (
-          <picture>
+          <div className="lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-stretch lg:gap-6 lg:px-6">
+            <HeroSideLeft />
+            <picture>
             <source media="(min-width: 1024px)" srcSet={bannerProps.srcSet} sizes="100vw" />
             {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
             <img
               {...posterProps}
-              className="mx-auto h-auto w-full max-w-md rounded-[4px] shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)] md:max-w-lg lg:h-[calc(100svh-11rem)] lg:min-h-[400px] lg:w-auto lg:max-w-[min(100%,1200px)] lg:object-contain"
+              className="mx-auto h-auto w-full max-w-md rounded-[4px] shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)] md:max-w-lg lg:block lg:h-auto lg:w-[min(1200px,calc((100svh-11rem)*1.5))] lg:max-w-none"
             />
           </picture>
+            <HeroSideRight />
+          </div>
         ) : (
           <div className="flex justify-center md:pt-6">
             {/* eslint-disable-next-line @next/next/no-img-element */}
