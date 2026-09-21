@@ -56,21 +56,20 @@ function heading(
 }
 
 // ── Home ──────────────────────────────────────────────────────────────
-add("home", "Hero", "home.hero.eyebrow", "Small label under the logo", "text", "VIVORA FOODS");
-add("home", "Hero", "home.hero.titleMain", "Heading (first line)", "text", "Dehydrated Foods, Powders");
-add("home", "Hero", "home.hero.titleAccent", "Heading (highlighted second line)", "text", "& Ready-to-Cook");
+add("home", "Hero", "home.hero.eyebrow", "Tagline (hidden text for search engines)", "text", "Dry Delicious. Goodness in Every Meal.");
+add("home", "Hero", "home.hero.titleMain", "Heading, first part (hidden text for search engines)", "text", "Dehydrated Foods, Powders");
+add("home", "Hero", "home.hero.titleAccent", "Heading, second part (hidden text for search engines)", "text", "& Ready-to-Cook");
 add(
   "home",
   "Hero",
   "home.hero.body",
-  "Paragraph",
+  "Paragraph (hidden text for search engines)",
   "textarea",
   "Vivora Foods supplies premium dehydrated vegetables, fruits, powders and ready-to-cook products from India — sourced, processed and packed for B2B buyers, distributors and retailers worldwide."
 );
-add("home", "Hero", "home.hero.brandLine", "Brand line (under the buttons)", "text", "Dry Delicious. Nature Goodness.");
 add("home", "Hero", "home.hero.cta1", "Primary button text", "text", "View Products");
 add("home", "Hero", "home.hero.cta2", "Secondary button text", "text", "Request a Quote");
-add("home", "Hero", "home.hero.image", "Hero image (optional — replaces the default product photo)", "image");
+add("home", "Hero", "home.hero.image", "Hero image (optional — replaces the default poster)", "image");
 add("home", "Hero", "home.hero.video", "Hero video (optional — replaces the image)", "video");
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "Featured products section", "home.featured", "Our Range", "Featured", "products.");
