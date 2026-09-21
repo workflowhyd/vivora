@@ -70,7 +70,7 @@ export function Hero() {
       </p>
 
       <motion.div
-        className="mx-auto w-full max-w-[2000px] px-4 pt-4 lg:px-0 lg:pt-0"
+        className="mx-auto w-full max-w-[2000px] px-4 pt-4 lg:pt-6"
         initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.4, ease: EASE }}
@@ -85,7 +85,7 @@ export function Hero() {
             {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
             <img
               {...posterProps}
-              className="mx-auto h-auto w-full max-w-md rounded-[4px] shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)] md:max-w-lg lg:h-[calc(100svh-9.5rem)] lg:min-h-[440px] lg:max-w-none lg:rounded-none lg:object-cover lg:object-[center_12%] lg:shadow-none"
+              className="mx-auto h-auto w-full max-w-md rounded-[4px] shadow-[0_30px_80px_-30px_rgba(9,40,79,0.55)] md:max-w-lg lg:h-[calc(100svh-11rem)] lg:min-h-[400px] lg:w-auto lg:max-w-[min(100%,1200px)] lg:object-contain"
             />
           </picture>
         ) : (

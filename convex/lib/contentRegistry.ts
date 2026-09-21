@@ -72,7 +72,6 @@ add("home", "Hero", "home.hero.cta2", "Secondary button text", "text", "Request 
 add("home", "Hero", "home.hero.image", "Hero image (optional — replaces the default poster)", "image");
 add("home", "Hero", "home.hero.video", "Hero video (optional — replaces the image)", "video");
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
-heading("home", "Featured products section", "home.featured", "Our Range", "Featured", "products.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
 add("home", "Contact banner", "home.banner.title", "Heading", "text", "Looking for reliable, export-grade supply?");
 add("home", "Contact banner", "home.banner.cta", "Button text", "text", "Request a Quote");
@@ -103,6 +102,24 @@ add("about", "One-line highlights", "about.quality.label", "Quality — label", 
 add("about", "One-line highlights", "about.quality.line", "Quality — line", "text", "Carefully sourced, rigorously graded, hygienically packed and export ready.");
 add("about", "One-line highlights", "about.reach.label", "Global Reach — label", "text", "Global Reach");
 add("about", "One-line highlights", "about.reach.line", "Global Reach — line", "text", "Exporting from India to the world — UAE, Saudi Arabia, UK, Europe, USA, Canada and Australia.");
+
+// Certifications: up to six cards on the About page. A card is hidden when its
+// name is empty, so extra ones can be added (or removed) from the admin panel.
+heading("about", "Certifications section", "about.certs", "Certifications", "Certified for", "confidence.");
+[
+  ["FSSAI", "Licensed by the Food Safety and Standards Authority of India."],
+  ["ISO", "ISO-certified quality and food safety management."],
+  ["APEDA", "Registered with APEDA for the export of processed and agricultural food products."],
+  ["Food Safety", "Hygienic processing and packing built around food safety standards."],
+  ["", ""],
+  ["", ""],
+].forEach(([name, description], i) => {
+  const group = `Certification ${i + 1}`;
+  add("about", group, `about.certs.${i + 1}.name`, "Name (leave empty to hide this card)", "text", name);
+  add("about", group, `about.certs.${i + 1}.description`, "Description", "textarea", description);
+  add("about", group, `about.certs.${i + 1}.number`, "Certificate / licence number (optional)", "text", "");
+  add("about", group, `about.certs.${i + 1}.logo`, "Logo or certificate image (optional)", "image");
+});
 
 // ── Products ──────────────────────────────────────────────────────────
 heading("products", "Page heading", "products", "Our Range", "The full", "catalogue.");

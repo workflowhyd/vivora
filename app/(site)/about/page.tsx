@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { PageBlocks } from "@/components/PageBlocks";
 import { About } from "@/components/About";
 import { AboutHighlights } from "@/components/AboutHighlights";
+import { AboutCertifications } from "@/components/AboutCertifications";
 import { Statistics } from "@/components/Statistics";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function AboutPage() {
       <main>
         <About />
         <AboutHighlights />
+        <AboutCertifications />
         <Statistics />
         <PageBlocks page="about" />
       </main>

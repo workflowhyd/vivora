@@ -73,24 +73,19 @@ export const list = query({
 // the catalogue filters/sorting need, so the payload stays a fraction of the
 // full documents.
 export const listCards = query({
-  args: { categoryId: v.optional(v.id("categories")), featured: v.optional(v.boolean()) },
-  handler: async (ctx, { categoryId, featured }) => {
+  args: { categoryId: v.optional(v.id("categories")) },
+  handler: async (ctx, { categoryId }) => {
     const products = categoryId
       ? await ctx.db
           .query("products")
           .withIndex("by_category", (q) => q.eq("categoryId", categoryId))
           .collect()
-      : featured !== undefined
-        ? await ctx.db
-            .query("products")
-            .withIndex("by_featured", (q) => q.eq("featured", featured))
-            .collect()
-        : await ctx.db
-            .query("products")
-            .withIndex("by_active", (q) => q.eq("active", true))
-            .collect();
+      : await ctx.db
+          .query("products")
+          .withIndex("by_active", (q) => q.eq("active", true))
+          .collect();
     return products
-      .filter((p) => p.active && (featured === undefined || p.featured === featured))
+      .filter((p) => p.active)
       .map((p) => ({
         _id: p._id,
         slug: p.slug,
