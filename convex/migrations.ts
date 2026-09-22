@@ -276,3 +276,68 @@ export const setWhatsappNumber = internalMutation({
     else await ctx.db.insert("pageContent", fields);
   },
 });
+
+// Cropped from the two banner photos supplied for the home page (the same
+// Vivora-branded packs), rather than generic stock — an accurate, on-brand
+// photo instead of a mismatched one. Curry Leaf and Mint Leaf Powder have no
+// accurate photo available (the previous ones showed a random wild bush and
+// an unrelated market stall), so they're cleared to the plain placeholder
+// instead. Safe to re-run.
+export const fixMoreProductPhotos = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const set: [string, string][] = [
+      ["tomato-powder", "/images/products/tomato-powder.jpg"],
+      ["turmeric-powder", "/images/products/turmeric-powder.jpg"],
+    ];
+    for (const [slug, url] of set) {
+      const product = await bySlug(slug);
+      if (product) await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+    }
+
+    const clear = ["curry-leaf-powder", "mint-leaf-powder"];
+    for (const slug of clear) {
+      const product = await bySlug(slug);
+      if (product) await ctx.db.patch(product._id, { thumbnail: "", images: [] });
+    }
+
+    return `set ${set.length} accurate photos, cleared ${clear.length} mismatched ones`;
+  },
+});
+
+// Removes categories (and their products) the business doesn't actually
+// stock: Ready-to-Fry and Specialty Products. A category can't be deleted
+// while it still has products (see categories.remove), so its products go
+// first. Safe to re-run — skips whatever's already gone.
+export const removeUnstockedCategories = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const slugs = ["ready-to-fry", "specialty-products"];
+    let removedProducts = 0;
+    let removedCategories = 0;
+    for (const slug of slugs) {
+      const category = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (!category) continue;
+      const products = await ctx.db
+        .query("products")
+        .withIndex("by_category", (q) => q.eq("categoryId", category._id))
+        .collect();
+      for (const product of products) {
+        await ctx.db.delete(product._id);
+        removedProducts++;
+      }
+      await ctx.db.delete(category._id);
+      removedCategories++;
+    }
+    return `removed ${removedCategories} categories and ${removedProducts} products`;
+  },
+});
