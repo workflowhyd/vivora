@@ -84,7 +84,7 @@ export default async function ProductDetailPage({
 
               <div className="flex flex-wrap items-center gap-4 mt-8">
                 <Link
-                  href="/contact"
+                  href="/request-a-quote"
                   className="group inline-flex items-center gap-2 bg-green text-cream-light text-[13px] label-caps px-7 py-4 rounded-full hover:bg-green-dark transition-colors duration-300"
                 >
                   Request Product Quote

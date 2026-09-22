@@ -19,7 +19,7 @@ export const pages = [
   { id: "home", label: "Home", path: "/" },
   { id: "about", label: "About", path: "/about" },
   { id: "products", label: "Products", path: "/products" },
-  { id: "contact", label: "Contact", path: "/contact" },
+  { id: "contact", label: "Request a Quote", path: "/request-a-quote" },
 ] as const;
 
 export type PageId = (typeof pages)[number]["id"];
@@ -55,14 +55,14 @@ function heading(
 }
 
 // ── Home ──────────────────────────────────────────────────────────────
-add("home", "Hero", "home.hero.eyebrow", "Tagline (hidden text for search engines)", "text", "Dry Delicious. Goodness in Every Meal.");
-add("home", "Hero", "home.hero.titleMain", "Heading, first part (hidden text for search engines)", "text", "Dehydrated Foods, Powders");
-add("home", "Hero", "home.hero.titleAccent", "Heading, second part (hidden text for search engines)", "text", "& Ready-to-Cook");
+add("home", "Hero", "home.hero.eyebrow", "Small label above the heading", "text", "VIVORA FOODS");
+add("home", "Hero", "home.hero.titleMain", "Heading, first part", "text", "Dehydrated Foods, Powders");
+add("home", "Hero", "home.hero.titleAccent", "Heading, second part (highlighted)", "text", "& Ready-to-Cook");
 add(
   "home",
   "Hero",
   "home.hero.body",
-  "Paragraph (hidden text for search engines)",
+  "Paragraph",
   "textarea",
   "Vivora Foods supplies premium dehydrated vegetables, fruits, powders and ready-to-cook products from India — sourced, processed and packed for B2B buyers, distributors and retailers worldwide."
 );

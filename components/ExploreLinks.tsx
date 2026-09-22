@@ -18,7 +18,7 @@ const links = [
     description: "Dehydrated vegetables, fruits, powders and more.",
   },
   {
-    href: "/contact",
+    href: "/request-a-quote",
     title: "Contact",
     description: "Request a quote or talk to our team.",
   },

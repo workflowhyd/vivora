@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ArrowRight, ArrowUpRight, Mail, MapPin, Menu, MessageCircle, Package, X } from "lucide-react";
-import { Logo } from "./Logo";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Mail,
+  MapPin,
+  Menu,
+  MessageCircle,
+  Package,
+  X,
+} from "lucide-react";
 import { contactEmail, navLinks } from "@/data/content";
 import { useContent } from "@/lib/useContent";
 import { cn } from "@/lib/utils";
@@ -13,14 +22,23 @@ import { cn } from "@/lib/utils";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 // There is no header. Navigation lives in a floating dock at the bottom of the
-// screen (logo · products · menu · quote) that opens a full-screen index of
-// every page, plus a WhatsApp button in the corner.
+// screen (products · menu · quote) that opens a full-screen index of every
+// page, plus a WhatsApp button in the corner.
 export function NavDock() {
   const pathname = usePathname();
+  const router = useRouter();
   const reduce = useReducedMotion();
   const { t } = useContent();
   const [open, setOpen] = useState(false);
   const [lastPath, setLastPath] = useState(pathname);
+
+  // history.length > 1 means this tab has somewhere to go back to; a page
+  // opened fresh (a shared link, a new tab) doesn't, so fall back to home
+  // instead of leaving the site or doing nothing.
+  const goBack = () => {
+    if (typeof window !== "undefined" && window.history.length > 1) router.back();
+    else router.push("/");
+  };
 
   // Close the menu after navigating (state reset during render, not in an effect).
   if (pathname !== lastPath) {
@@ -44,7 +62,7 @@ export function NavDock() {
   );
 
   const whatsappNumber = t("site.whatsapp").replace(/\D/g, "");
-  const whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}` : "/contact";
+  const whatsappHref = whatsappNumber ? `https://wa.me/${whatsappNumber}` : "/request-a-quote";
   const whatsappExternal = Boolean(whatsappNumber);
 
   return (
@@ -121,7 +139,7 @@ export function NavDock() {
                   Premium dehydrated vegetables, fruits, powders and ready-to-cook products from India.
                 </p>
                 <Link
-                  href="/contact"
+                  href="/request-a-quote"
                   onClick={() => setOpen(false)}
                   className="label-caps group inline-flex w-fit items-center gap-2 rounded-full bg-gold px-7 py-4 text-[13px] text-green-dark transition-colors duration-300 hover:bg-cream-light"
                 >
@@ -155,9 +173,16 @@ export function NavDock() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.8, ease: EASE }}
         >
-          <Link href="/" aria-label="Vivora Foods home" className="shrink-0">
-            <Logo className="h-11! md:h-12! rounded-lg" />
-          </Link>
+          {pathname !== "/" && (
+            <button
+              type="button"
+              onClick={goBack}
+              aria-label="Go back"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-cream-light/85 transition-colors duration-300 hover:bg-cream-light/10 hover:text-gold md:h-12 md:w-12"
+            >
+              <ArrowLeft size={18} />
+            </button>
+          )}
 
           <Link
             href="/products"
@@ -188,7 +213,7 @@ export function NavDock() {
           </button>
 
           <Link
-            href="/contact"
+            href="/request-a-quote"
             className="label-caps hidden h-12 items-center gap-2 rounded-full bg-green px-5 text-[12px] text-cream-light transition-colors duration-300 hover:bg-green-dark md:flex"
           >
             Request a Quote

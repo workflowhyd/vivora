@@ -17,7 +17,7 @@ export function ContactBanner() {
         </Reveal>
         <Reveal delay={0.1}>
           <Link
-            href="/contact"
+            href="/request-a-quote"
             className="group inline-flex items-center gap-2 bg-cream-light text-green text-[13px] label-caps px-7 py-4 rounded-full hover:bg-gold hover:text-green-dark transition-colors duration-300 shrink-0"
           >
             {t("home.banner.cta")}

@@ -10,11 +10,12 @@ import { HeroSideLeft, HeroSideRight } from "./HeroSides";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-// The default hero is a product banner (logo, tagline and products are in the
-// artwork), so the real heading/copy below is visually hidden for search
-// engines and screen readers. Art direction: a landscape banner on desktop,
-// the portrait poster on phones and tablets. On phones the poster's own blurred, enlarged
-// copy fills the space around it.
+// The default banner artwork also has the logo, tagline and products baked
+// in, but the client wants an opening line above it too — so the heading and
+// intro paragraph are shown for everyone, not just screen readers/search
+// engines. Art direction below the text: a landscape banner on desktop, the
+// portrait poster on phones and tablets. On phones the poster's own blurred,
+// enlarged copy fills the space around it.
 const BANNER = "/images/hero-banner.jpg";
 const POSTER = "/images/hero-poster.jpg";
 const POSTER_BLUR = "/images/hero-poster-blur.jpg";
@@ -63,15 +64,35 @@ export function Hero() {
         />
       )}
 
-      <h1 className="sr-only">
-        {t("home.hero.titleMain")} {t("home.hero.titleAccent")}
-      </h1>
-      <p className="sr-only">
-        {t("home.hero.eyebrow")} {t("home.hero.body")}
-      </p>
+      <div className="mx-auto max-w-2xl px-6 pt-8 text-center md:pt-12">
+        <motion.span
+          className="label-caps block text-[12px] text-green"
+          initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
+          {t("home.hero.eyebrow")}
+        </motion.span>
+        <motion.h1
+          className="font-display mt-3 text-3xl leading-[1.1] text-blue-dark md:text-5xl"
+          initial={{ opacity: 0, y: reduce ? 0 : 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
+        >
+          {t("home.hero.titleMain")} <span className="italic text-green">{t("home.hero.titleAccent")}</span>
+        </motion.h1>
+        <motion.p
+          className="mx-auto mt-4 max-w-lg font-light leading-relaxed text-charcoal/70"
+          initial={{ opacity: 0, y: reduce ? 0 : 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
+        >
+          {t("home.hero.body")}
+        </motion.p>
+      </div>
 
       <motion.div
-        className="mx-auto w-full max-w-[2000px] px-4 pt-4 lg:pt-6"
+        className="mx-auto w-full max-w-[2000px] px-4 pt-6 lg:pt-8"
         initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.4, ease: EASE }}
@@ -116,7 +137,7 @@ export function Hero() {
             <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
           <Link
-            href="/contact"
+            href="/request-a-quote"
             className="label-caps inline-flex items-center gap-2 rounded-full border border-blue/30 bg-cream/70 px-7 py-3.5 text-[13px] text-blue backdrop-blur transition-colors duration-300 hover:border-blue"
           >
             {t("home.hero.cta2")}

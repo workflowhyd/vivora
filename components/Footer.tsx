@@ -5,7 +5,7 @@ import { contactEmail } from "@/data/content";
 
 const companyLinks = [
   { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Request a Quote", href: "/request-a-quote" },
 ];
 
 export function Footer() {
