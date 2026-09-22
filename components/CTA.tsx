@@ -25,7 +25,7 @@ export function CTA() {
       await createInquiry({
         name: String(form.get("name") ?? ""),
         email: String(form.get("email") ?? ""),
-        phone: form.get("phone") ? String(form.get("phone")) : undefined,
+        phone: String(form.get("phone") ?? ""),
         productInterest: form.get("productInterest")
           ? String(form.get("productInterest"))
           : undefined,
@@ -108,9 +108,9 @@ export function CTA() {
                   </div>
                   <div className="sm:col-span-1">
                     <label className="label-caps text-[10px] text-blue/70" htmlFor="phone">
-                      Phone <span className="text-charcoal/40 normal-case">(optional)</span>
+                      Phone
                     </label>
-                    <input id="phone" name="phone" className={cn(inputClasses, "mt-2")} />
+                    <input id="phone" name="phone" type="tel" required className={cn(inputClasses, "mt-2")} />
                   </div>
                   <div className="sm:col-span-1">
                     <label

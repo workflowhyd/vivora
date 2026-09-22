@@ -57,7 +57,7 @@ export default defineSchema({
   inquiries: defineTable({
     name: v.string(),
     email: v.string(),
-    phone: v.optional(v.string()),
+    phone: v.string(),
     message: v.string(),
     productInterest: v.optional(v.string()),
     status: v.union(v.literal("new"), v.literal("contacted"), v.literal("closed")),

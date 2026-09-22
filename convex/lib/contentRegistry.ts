@@ -68,29 +68,21 @@ add(
 add("home", "Hero", "home.hero.image", "Hero image (optional — shown below the logo and text)", "image");
 add("home", "Hero", "home.hero.video", "Hero video (optional — shown below the logo and text; takes priority over the image)", "video");
 
-// Two image-and-text rows showcasing the product range. Each image has a
-// real default (an admin can still replace it from /admin/pages).
-heading("home", "Product showcase, row 1", "home.showcase1", "Our Range", "Pure ingredients,", "real goodness.");
+// A single image-and-text row showcasing the product range. Two different
+// photos are set as the defaults — a portrait crop for phones/tablets, a
+// landscape one for desktop — swapped by screen width, each replaceable on
+// its own from /admin/pages.
+heading("home", "Product showcase", "home.showcase", "Our Range", "Pure ingredients,", "real goodness.");
 add(
   "home",
-  "Product showcase, row 1",
-  "home.showcase1.body",
+  "Product showcase",
+  "home.showcase.body",
   "Paragraph",
   "textarea",
   "Every Vivora pack is made from carefully sourced vegetables and spices, dried and milled to hold on to their natural colour, flavour and nutrition — with no added preservatives."
 );
-add("home", "Product showcase, row 1", "home.showcase1.image", "Image", "image", "/images/showcase-1.jpg");
-
-heading("home", "Product showcase, row 2", "home.showcase2", "Why Vivora", "From nature,", "to your kitchen.");
-add(
-  "home",
-  "Product showcase, row 2",
-  "home.showcase2.body",
-  "Paragraph",
-  "textarea",
-  "100% natural, free from preservatives and rich in nutrition — our dehydrated vegetables, fruits and spice powders bring export-grade quality to every kitchen, every day."
-);
-add("home", "Product showcase, row 2", "home.showcase2.image", "Image", "image", "/images/showcase-2.jpg");
+add("home", "Product showcase", "home.showcase.imageMobile", "Image (phones/tablets)", "image", "/images/showcase-1.jpg");
+add("home", "Product showcase", "home.showcase.imageDesktop", "Image (desktop)", "image", "/images/showcase-2.jpg");
 
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
@@ -122,7 +114,7 @@ add("about", "One-line highlights", "about.applications.line", "Applications —
 add("about", "One-line highlights", "about.quality.label", "Quality — label", "text", "Quality");
 add("about", "One-line highlights", "about.quality.line", "Quality — line", "text", "Carefully sourced, rigorously graded, hygienically packed and export ready.");
 add("about", "One-line highlights", "about.reach.label", "Global Reach — label", "text", "Global Reach");
-add("about", "One-line highlights", "about.reach.line", "Global Reach — line", "text", "Exporting from India to the world — UAE, Saudi Arabia, UK, Europe, USA, Canada and Australia.");
+add("about", "One-line highlights", "about.reach.line", "Global Reach — line", "text", "We proudly provide service and export to customers in every country around the world — including the UAE, Saudi Arabia, UK, Europe, USA, Canada and Australia.");
 
 // Certifications: up to six cards on the About page. A card is hidden when its
 // name is empty, so extra ones can be added (or removed) from the admin panel.
