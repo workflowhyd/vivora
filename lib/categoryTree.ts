@@ -32,6 +32,21 @@ export function ancestorsOf<T extends CategoryNode>(categories: T[], id: string)
   return chain;
 }
 
+// Flattens the tree into display order (a parent immediately followed by its
+// children, depth-first), each row carrying its depth for indentation —
+// what a nav dropdown or an admin list renders top to bottom.
+export function flattenTree<T extends CategoryNode>(categories: T[]): { category: T; depth: number }[] {
+  const rows: { category: T; depth: number }[] = [];
+  const walk = (nodes: T[], depth: number) => {
+    for (const node of nodes) {
+      rows.push({ category: node, depth });
+      walk(childrenOf(categories, node._id), depth + 1);
+    }
+  };
+  walk(topLevel(categories), 0);
+  return rows;
+}
+
 // All descendant ids (children, grandchildren, …) of `id`, not including `id`
 // itself. Used to reject a parent choice that would create a cycle.
 export function descendantIdsOf<T extends CategoryNode>(categories: T[], id: string): Set<string> {

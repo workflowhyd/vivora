@@ -4,22 +4,8 @@ import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { api } from "@/convex/_generated/api";
-import { Id, Doc } from "@/convex/_generated/dataModel";
-import { childrenOf, topLevel } from "@/lib/categoryTree";
-
-// Flattens the tree into rows in display order (parent immediately followed
-// by its children), each carrying its depth for indentation.
-function flattenTree(categories: Doc<"categories">[]): { category: Doc<"categories">; depth: number }[] {
-  const rows: { category: Doc<"categories">; depth: number }[] = [];
-  const walk = (parents: Doc<"categories">[], depth: number) => {
-    for (const category of parents) {
-      rows.push({ category, depth });
-      walk(childrenOf(categories, category._id), depth + 1);
-    }
-  };
-  walk(topLevel(categories), 0);
-  return rows;
-}
+import { Id } from "@/convex/_generated/dataModel";
+import { flattenTree } from "@/lib/categoryTree";
 
 export default function AdminCategoriesPage() {
   const categories = useQuery(api.categories.list, { activeOnly: false });

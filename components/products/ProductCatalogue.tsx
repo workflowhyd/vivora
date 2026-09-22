@@ -7,7 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { ProductGrid } from "./ProductGrid";
 import { ProductFilters, type SortOption } from "./ProductFilters";
 import { Pagination } from "./Pagination";
-import { descendantIdsOf, topLevel } from "@/lib/categoryTree";
+import { descendantIdsOf } from "@/lib/categoryTree";
 import type { ActiveCategories, ProductCards } from "@/lib/types";
 
 const PAGE_SIZE = 12;
@@ -87,7 +87,7 @@ export function ProductCatalogue({
   return (
     <div>
       <ProductFilters
-        categories={topLevel(categories).map((c) => ({ slug: c.slug, name: c.name }))}
+        categories={categories}
         activeCategory={activeCategory}
         search={search}
         sort={sort}
