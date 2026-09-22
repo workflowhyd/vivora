@@ -2,25 +2,36 @@
 
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { Doc } from "@/convex/_generated/dataModel";
+import { Doc, Id } from "@/convex/_generated/dataModel";
+import { descendantIdsOf } from "@/lib/categoryTree";
 
 const fieldClasses =
   "w-full border border-charcoal/15 rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200";
 
 export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
   const router = useRouter();
+  const allCategories = useQuery(api.categories.list, { activeOnly: false });
   const createCategory = useMutation(api.categories.create);
   const updateCategory = useMutation(api.categories.update);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  // A category can't become its own parent, or the parent of one of its own
+  // sub-categories (that would make the tree circular).
+  const parentOptions = (allCategories ?? []).filter((c) => {
+    if (!category) return true;
+    if (c._id === category._id) return false;
+    return !descendantIdsOf(allCategories ?? [], category._id).has(c._id);
+  });
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSubmitting(true);
     setError(null);
     const form = new FormData(event.currentTarget);
+    const parentValue = String(form.get("parentId") ?? "");
     const fields = {
       name: String(form.get("name")),
       slug: String(form.get("slug")),
@@ -28,6 +39,7 @@ export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
       image: String(form.get("image")),
       active: form.get("active") === "on",
       sortOrder: Number(form.get("sortOrder")),
+      parentId: parentValue ? (parentValue as Id<"categories">) : undefined,
     };
     try {
       if (category) {
@@ -72,17 +84,40 @@ export function CategoryForm({ category }: { category?: Doc<"categories"> }) {
         </div>
       </div>
 
-      <div>
-        <label className="text-sm font-medium" htmlFor="slug">
-          Slug
-        </label>
-        <input
-          id="slug"
-          name="slug"
-          required
-          defaultValue={category?.slug}
-          className={`${fieldClasses} mt-1.5`}
-        />
+      <div className="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label className="text-sm font-medium" htmlFor="slug">
+            Slug
+          </label>
+          <input
+            id="slug"
+            name="slug"
+            required
+            defaultValue={category?.slug}
+            className={`${fieldClasses} mt-1.5`}
+          />
+        </div>
+        <div>
+          <label className="text-sm font-medium" htmlFor="parentId">
+            Parent category
+          </label>
+          <select
+            id="parentId"
+            name="parentId"
+            defaultValue={category?.parentId ?? ""}
+            className={`${fieldClasses} mt-1.5`}
+          >
+            <option value="">None — top-level category</option>
+            {parentOptions.map((c) => (
+              <option key={c._id} value={c._id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-charcoal/50 mt-1.5">
+            A category with sub-categories shows them as a browsing page instead of products.
+          </p>
+        </div>
       </div>
 
       <div>

@@ -16,6 +16,7 @@ import type * as http from "../http.js";
 import type * as inquiries from "../inquiries.js";
 import type * as lib_authz from "../lib/authz.js";
 import type * as lib_contentRegistry from "../lib/contentRegistry.js";
+import type * as migrations from "../migrations.js";
 import type * as products from "../products.js";
 import type * as seed from "../seed.js";
 import type * as seedData_categories from "../seedData/categories.js";
@@ -37,6 +38,7 @@ declare const fullApi: ApiFromModules<{
   inquiries: typeof inquiries;
   "lib/authz": typeof lib_authz;
   "lib/contentRegistry": typeof lib_contentRegistry;
+  migrations: typeof migrations;
   products: typeof products;
   seed: typeof seed;
   "seedData/categories": typeof seedData_categories;

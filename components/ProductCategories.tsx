@@ -5,11 +5,14 @@ import { Reveal } from "./Reveal";
 import { CategoryCard } from "./products/CategoryCard";
 import { api } from "@/convex/_generated/api";
 import { useContent } from "@/lib/useContent";
+import { topLevel } from "@/lib/categoryTree";
 import type { ActiveCategories } from "@/lib/types";
 
 export function ProductCategories({ initial }: { initial: ActiveCategories }) {
   const { t } = useContent();
-  const categories = useQuery(api.categories.list, { activeOnly: true }) ?? initial;
+  // Only the top-level groups — Dehydrated Products' own sub-categories (and
+  // theirs) show once a visitor drills into that category's page.
+  const categories = topLevel(useQuery(api.categories.list, { activeOnly: true }) ?? initial);
 
   return (
     <section className="bg-cream py-16 md:py-24">

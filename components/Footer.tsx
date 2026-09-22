@@ -46,13 +46,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/categories/dehydrated-vegetables" className="text-cream-light/75 hover:text-gold transition-colors duration-300 font-light">
-                  Dehydrated Vegetables
+                <Link href="/categories/dehydrated-products" className="text-cream-light/75 hover:text-gold transition-colors duration-300 font-light">
+                  Dehydrated Products
                 </Link>
               </li>
               <li>
-                <Link href="/categories/spice-ingredient-powders" className="text-cream-light/75 hover:text-gold transition-colors duration-300 font-light">
-                  Spice Powders
+                <Link href="/categories/ready-to-cook" className="text-cream-light/75 hover:text-gold transition-colors duration-300 font-light">
+                  Ready-to-Cook
                 </Link>
               </li>
             </ul>

@@ -4,7 +4,22 @@ import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import { Id, Doc } from "@/convex/_generated/dataModel";
+import { childrenOf, topLevel } from "@/lib/categoryTree";
+
+// Flattens the tree into rows in display order (parent immediately followed
+// by its children), each carrying its depth for indentation.
+function flattenTree(categories: Doc<"categories">[]): { category: Doc<"categories">; depth: number }[] {
+  const rows: { category: Doc<"categories">; depth: number }[] = [];
+  const walk = (parents: Doc<"categories">[], depth: number) => {
+    for (const category of parents) {
+      rows.push({ category, depth });
+      walk(childrenOf(categories, category._id), depth + 1);
+    }
+  };
+  walk(topLevel(categories), 0);
+  return rows;
+}
 
 export default function AdminCategoriesPage() {
   const categories = useQuery(api.categories.list, { activeOnly: false });
@@ -19,12 +34,17 @@ export default function AdminCategoriesPage() {
     }
   };
 
+  const rows = categories ? flattenTree(categories) : [];
+
   return (
     <div>
       <div className="flex items-center justify-between">
         <div>
           <h1 className="font-display text-3xl">Categories</h1>
-          <p className="text-charcoal/60 mt-1">The category cards shown on the public site.</p>
+          <p className="text-charcoal/60 mt-1">
+            The category tree shown on the public site. A category with sub-categories becomes a
+            browsing page instead of a product list.
+          </p>
         </div>
         <Link
           href="/admin/categories/new"
@@ -46,9 +66,12 @@ export default function AdminCategoriesPage() {
             </tr>
           </thead>
           <tbody>
-            {categories?.map((category) => (
+            {rows.map(({ category, depth }) => (
               <tr key={category._id} className="border-b border-charcoal/5 last:border-0">
-                <td className="px-5 py-3.5">{category.name}</td>
+                <td className="px-5 py-3.5" style={{ paddingLeft: `${20 + depth * 24}px` }}>
+                  {depth > 0 && <span className="text-charcoal/30 mr-2">└</span>}
+                  {category.name}
+                </td>
                 <td className="px-5 py-3.5 text-charcoal/60">
                   {category.active ? "Active" : "Inactive"}
                 </td>

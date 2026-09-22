@@ -7,6 +7,7 @@ import { api } from "@/convex/_generated/api";
 import { ProductGrid } from "./ProductGrid";
 import { ProductFilters, type SortOption } from "./ProductFilters";
 import { Pagination } from "./Pagination";
+import { descendantIdsOf, topLevel } from "@/lib/categoryTree";
 import type { ActiveCategories, ProductCards } from "@/lib/types";
 
 const PAGE_SIZE = 12;
@@ -55,7 +56,12 @@ export function ProductCatalogue({
 
     if (activeCategory) {
       const category = categories?.find((c) => c.slug === activeCategory);
-      if (category) result = result.filter((p) => p.categoryId === category._id);
+      if (category) {
+        // A group category (e.g. "Dehydrated Products") has no products of its
+        // own — matching its whole sub-tree is what makes its filter pill work.
+        const matchIds = new Set([category._id, ...descendantIdsOf(categories, category._id)]);
+        result = result.filter((p) => matchIds.has(p.categoryId));
+      }
     }
     if (featuredOnly) {
       result = result.filter((p) => p.featured);
@@ -85,7 +91,7 @@ export function ProductCatalogue({
   return (
     <div>
       <ProductFilters
-        categories={categories.map((c) => ({ slug: c.slug, name: c.name }))}
+        categories={topLevel(categories).map((c) => ({ slug: c.slug, name: c.name }))}
         activeCategory={activeCategory}
         search={search}
         sort={sort}

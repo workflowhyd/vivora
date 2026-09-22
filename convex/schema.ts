@@ -12,12 +12,16 @@ export default defineSchema({
     image: v.string(),
     active: v.boolean(),
     sortOrder: v.number(),
+    // Absent = top-level. A category with children is a pure group page (its
+    // products, if any, still show — see categories.children / the category page).
+    parentId: v.optional(v.id("categories")),
     seoTitle: v.optional(v.string()),
     seoDescription: v.optional(v.string()),
   })
     .index("by_slug", ["slug"])
     .index("by_sortOrder", ["sortOrder"])
-    .index("by_active", ["active", "sortOrder"]),
+    .index("by_active", ["active", "sortOrder"])
+    .index("by_parent", ["parentId", "sortOrder"]),
 
   products: defineTable({
     name: v.string(),
