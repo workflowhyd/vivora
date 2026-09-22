@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { Logo } from "./Logo";
-import { contactEmail } from "@/data/content";
+import { contactEmail, contactPhone, contactPhoneDigits } from "@/data/content";
 
 const companyLinks = [
   { label: "About", href: "/about" },
@@ -69,7 +69,9 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
                 <Phone size={15} className="text-gold shrink-0" />
-                +91 00000 00000
+                <a href={`tel:+${contactPhoneDigits}`} className="transition-colors duration-300 hover:text-gold">
+                  {contactPhone}
+                </a>
               </li>
               <li className="flex items-start gap-2.5 text-cream-light/75 font-light">
                 <MapPin size={15} className="text-gold shrink-0 mt-0.5" />
@@ -81,7 +83,14 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2.5 text-cream-light/75 font-light">
                 <MessageCircle size={15} className="text-gold shrink-0" />
-                WhatsApp
+                <a
+                  href={`https://wa.me/${contactPhoneDigits}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-300 hover:text-gold"
+                >
+                  WhatsApp
+                </a>
               </li>
             </ul>
           </div>

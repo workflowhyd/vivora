@@ -8,6 +8,7 @@ import { api } from "@/convex/_generated/api";
 import { NavDock } from "@/components/NavDock";
 import { Footer } from "@/components/Footer";
 import { ProductGrid } from "@/components/products/ProductGrid";
+import { contactPhoneDigits } from "@/data/content";
 
 export const revalidate = 3600;
 
@@ -99,7 +100,7 @@ export default async function ProductDetailPage({
                   <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </Link>
                 <a
-                  href={`https://wa.me/910000000000?text=${whatsappMessage}`}
+                  href={`https://wa.me/${contactPhoneDigits}?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-[13px] label-caps text-blue border border-blue/30 px-7 py-4 rounded-full hover:border-blue transition-colors duration-300"

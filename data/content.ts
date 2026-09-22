@@ -1,4 +1,6 @@
 export const contactEmail = "vivorafoodspvtltd@gmail.com";
+export const contactPhone = "+91 96665 51127";
+export const contactPhoneDigits = "919666551127";
 
 export const navLinks = [
   { label: "Home", href: "/" },

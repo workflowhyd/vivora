@@ -1,3 +1,4 @@
+import { v } from "convex/values";
 import { internalMutation } from "./_generated/server";
 
 // One-time restructure of the flat category list into a tree: Dehydrated
@@ -117,5 +118,21 @@ export const removeFeaturedField = internalMutation({
       }
     }
     return `cleared "featured" from ${cleared} of ${products.length} products`;
+  },
+});
+
+// Sets the WhatsApp button's number (the "site.whatsapp" admin field on the
+// Request a Quote page) once, from outside the admin panel. Safe to re-run —
+// it always overwrites with the given number.
+export const setWhatsappNumber = internalMutation({
+  args: { digits: v.string() },
+  handler: async (ctx, { digits }) => {
+    const existing = await ctx.db
+      .query("pageContent")
+      .withIndex("by_key", (q) => q.eq("key", "site.whatsapp"))
+      .unique();
+    const fields = { key: "site.whatsapp", kind: "text" as const, text: digits, updatedAt: Date.now() };
+    if (existing) await ctx.db.replace(existing._id, fields);
+    else await ctx.db.insert("pageContent", fields);
   },
 });
