@@ -22,7 +22,11 @@ export function useContent() {
     return {
       t: (key: string): string =>
         overrides.get(key)?.text ?? slotByKey.get(key)?.default ?? "",
-      media: (key: string): string | undefined => overrides.get(key)?.url ?? undefined,
+      // Image/video slots default to "" (see contentRegistry's `add`), so a
+      // slot with a real default path (a starting photo the admin can later
+      // replace) falls through to it; one with no default stays unset.
+      media: (key: string): string | undefined =>
+        overrides.get(key)?.url || slotByKey.get(key)?.default || undefined,
     };
   }, [rows]);
 }

@@ -1,6 +1,7 @@
 import { NavDock } from "@/components/NavDock";
 import { Hero } from "@/components/Hero";
 import { ProductCategories } from "@/components/ProductCategories";
+import { ProductShowcase } from "@/components/ProductShowcase";
 import { Statistics } from "@/components/Statistics";
 import { ExploreLinks } from "@/components/ExploreLinks";
 import { ContactBanner } from "@/components/ContactBanner";
@@ -18,6 +19,7 @@ export default async function Home() {
       <main>
         <Hero />
         <ProductCategories initial={categories} />
+        <ProductShowcase />
         <Statistics />
         <ExploreLinks />
         <PageBlocks page="home" />

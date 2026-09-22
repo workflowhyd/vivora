@@ -67,6 +67,31 @@ add(
 );
 add("home", "Hero", "home.hero.image", "Hero image (optional — shown below the logo and text)", "image");
 add("home", "Hero", "home.hero.video", "Hero video (optional — shown below the logo and text; takes priority over the image)", "video");
+
+// Two image-and-text rows showcasing the product range. Each image has a
+// real default (an admin can still replace it from /admin/pages).
+heading("home", "Product showcase, row 1", "home.showcase1", "Our Range", "Pure ingredients,", "real goodness.");
+add(
+  "home",
+  "Product showcase, row 1",
+  "home.showcase1.body",
+  "Paragraph",
+  "textarea",
+  "Every Vivora pack is made from carefully sourced vegetables and spices, dried and milled to hold on to their natural colour, flavour and nutrition — with no added preservatives."
+);
+add("home", "Product showcase, row 1", "home.showcase1.image", "Image", "image", "/images/showcase-1.jpg");
+
+heading("home", "Product showcase, row 2", "home.showcase2", "Why Vivora", "From nature,", "to your kitchen.");
+add(
+  "home",
+  "Product showcase, row 2",
+  "home.showcase2.body",
+  "Paragraph",
+  "textarea",
+  "100% natural, free from preservatives and rich in nutrition — our dehydrated vegetables, fruits and spice powders bring export-grade quality to every kitchen, every day."
+);
+add("home", "Product showcase, row 2", "home.showcase2.image", "Image", "image", "/images/showcase-2.jpg");
+
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
 add("home", "Contact banner", "home.banner.title", "Heading", "text", "Looking for reliable, export-grade supply?");
