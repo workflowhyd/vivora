@@ -19,8 +19,8 @@ const links = [
   },
   {
     href: "/request-a-quote",
-    title: "Contact",
-    description: "Request a quote or talk to our team.",
+    title: "Request a Quote",
+    description: "Tell us what you're looking for and our team will get back to you.",
   },
 ];
 

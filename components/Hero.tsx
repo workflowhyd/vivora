@@ -51,52 +51,68 @@ export function Hero() {
   });
 
   return (
-    <section id="home" className="relative isolate w-full overflow-hidden bg-cream">
-      {usingPoster && (
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 scale-125 opacity-60 blur-2xl"
-          style={{
-            backgroundImage: `url(${POSTER_BLUR})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-      )}
-
-      <div className="mx-auto max-w-2xl px-6 pt-8 text-center md:pt-12">
+    <section id="home" className="relative w-full bg-cream">
+      {/* Plain, flat opening — no imagery behind the text, so it reads as its
+          own quiet page before the product photography begins below. */}
+      <div className="mx-auto max-w-2xl px-6 pb-4 pt-14 text-center md:pb-6 md:pt-24">
         <motion.span
-          className="label-caps block text-[12px] text-green"
+          className="label-caps block text-[11px] text-green tracking-[0.32em]"
           initial={{ opacity: 0, y: reduce ? 0 : 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: EASE }}
         >
           {t("home.hero.eyebrow")}
         </motion.span>
+
+        <motion.span
+          aria-hidden
+          className="mx-auto mt-5 block h-px w-10 origin-center bg-gold/60"
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+        />
+
         <motion.h1
-          className="font-display mt-3 text-3xl leading-[1.1] text-blue-dark md:text-5xl"
-          initial={{ opacity: 0, y: reduce ? 0 : 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
-        >
-          {t("home.hero.titleMain")} <span className="italic text-green">{t("home.hero.titleAccent")}</span>
-        </motion.h1>
-        <motion.p
-          className="mx-auto mt-4 max-w-lg font-light leading-relaxed text-charcoal/70"
-          initial={{ opacity: 0, y: reduce ? 0 : 14 }}
+          className="font-display mt-6 text-4xl leading-[1.08] tracking-tight text-blue-dark md:text-6xl"
+          initial={{ opacity: 0, y: reduce ? 0 : 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: EASE }}
+        >
+          {t("home.hero.titleMain")}
+          <br className="hidden sm:block" />{" "}
+          <span className="italic text-green">{t("home.hero.titleAccent")}</span>
+        </motion.h1>
+
+        <motion.p
+          className="mx-auto mt-6 max-w-md text-[15px] font-light leading-relaxed text-charcoal/65 md:text-base"
+          initial={{ opacity: 0, y: reduce ? 0 : 14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
         >
           {t("home.hero.body")}
         </motion.p>
       </div>
 
-      <motion.div
-        className="mx-auto w-full max-w-[2000px] px-4 pt-6 lg:pt-8"
-        initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.4, ease: EASE }}
-      >
+      {/* The decorative blur only frames the photography, not the text above. */}
+      <div className="relative isolate w-full overflow-hidden">
+        {usingPoster && (
+          <div
+            aria-hidden
+            className="absolute inset-0 -z-10 scale-125 opacity-60 blur-2xl"
+            style={{
+              backgroundImage: `url(${POSTER_BLUR})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        )}
+
+        <motion.div
+          className="mx-auto w-full max-w-[2000px] px-4 pt-6 lg:pt-8"
+          initial={{ opacity: 0, scale: reduce ? 1 : 0.97 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4, ease: EASE }}
+        >
         {video ? (
           <div className="mx-auto max-w-[1440px] md:px-10 md:pt-6">
             <HeroBanner video={video} image={customImage} />
@@ -120,7 +136,8 @@ export function Hero() {
             <img src={customImage} alt="" className={customSize} />
           </div>
         )}
-      </motion.div>
+        </motion.div>
+      </div>
 
       <div className="mx-auto flex max-w-[1440px] flex-col items-center px-4 pb-8 md:px-10">
         <motion.div
