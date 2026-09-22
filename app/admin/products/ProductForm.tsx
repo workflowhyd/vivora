@@ -26,6 +26,7 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
   const updateProduct = useMutation(api.products.update);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [thumbnail, setThumbnail] = useState(product?.thumbnail ?? "");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,7 +49,6 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
       shelfLife: form.get("shelfLife") ? String(form.get("shelfLife")) : undefined,
       storage: form.get("storage") ? String(form.get("storage")) : undefined,
       moq: form.get("moq") ? String(form.get("moq")) : undefined,
-      featured: form.get("featured") === "on",
       active: form.get("active") === "on",
       sortOrder: Number(form.get("sortOrder")),
     };
@@ -161,14 +161,31 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
           <label className="text-sm font-medium" htmlFor="thumbnail">
             Thumbnail image URL
           </label>
-          <input
-            id="thumbnail"
-            name="thumbnail"
-            type="url"
-            required
-            defaultValue={product?.thumbnail}
-            className={`${fieldClasses} mt-1.5`}
-          />
+          <div className="mt-1.5 flex items-start gap-3">
+            {thumbnail && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={thumbnail}
+                alt=""
+                className="h-16 w-16 shrink-0 rounded-md border border-charcoal/10 object-cover"
+                onError={(e) => (e.currentTarget.style.visibility = "hidden")}
+                onLoad={(e) => (e.currentTarget.style.visibility = "visible")}
+              />
+            )}
+            <input
+              id="thumbnail"
+              name="thumbnail"
+              type="url"
+              required
+              defaultValue={product?.thumbnail}
+              onChange={(e) => setThumbnail(e.target.value)}
+              className={`${fieldClasses} flex-1`}
+            />
+          </div>
+          <p className="text-xs text-charcoal/50 mt-1.5">
+            Shown on the product cards across the site. Paste a link to an image (e.g. from your
+            phone via a photo host, or a URL your web host gives you).
+          </p>
         </div>
         <div>
           <label className="text-sm font-medium" htmlFor="images">
@@ -273,16 +290,10 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
         />
       </div>
 
-      <div className="flex items-center gap-6">
-        <label className="flex items-center gap-2 text-sm font-medium">
-          <input type="checkbox" name="featured" defaultChecked={product?.featured ?? false} />
-          Featured
-        </label>
-        <label className="flex items-center gap-2 text-sm font-medium">
-          <input type="checkbox" name="active" defaultChecked={product?.active ?? true} />
-          Active
-        </label>
-      </div>
+      <label className="flex items-center gap-2 text-sm font-medium">
+        <input type="checkbox" name="active" defaultChecked={product?.active ?? true} />
+        Active
+      </label>
 
       {error && <p className="text-crimson text-sm">{error}</p>}
 

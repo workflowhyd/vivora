@@ -55,7 +55,6 @@ function heading(
 }
 
 // ── Home ──────────────────────────────────────────────────────────────
-add("home", "Hero", "home.hero.eyebrow", "Small label above the heading", "text", "VIVORA FOODS");
 add("home", "Hero", "home.hero.titleMain", "Heading, first part", "text", "Dehydrated Foods, Powders");
 add("home", "Hero", "home.hero.titleAccent", "Heading, second part (highlighted)", "text", "& Ready-to-Cook");
 add(
@@ -66,10 +65,8 @@ add(
   "textarea",
   "Vivora Foods supplies premium dehydrated vegetables, fruits, powders and ready-to-cook products from India — sourced, processed and packed for B2B buyers, distributors and retailers worldwide."
 );
-add("home", "Hero", "home.hero.cta1", "Primary button text", "text", "View Products");
-add("home", "Hero", "home.hero.cta2", "Secondary button text", "text", "Request a Quote");
-add("home", "Hero", "home.hero.image", "Hero image (optional — replaces the default poster)", "image");
-add("home", "Hero", "home.hero.video", "Hero video (optional — replaces the image)", "video");
+add("home", "Hero", "home.hero.image", "Hero image (optional — shown below the logo and text)", "image");
+add("home", "Hero", "home.hero.video", "Hero video (optional — shown below the logo and text; takes priority over the image)", "video");
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
 add("home", "Contact banner", "home.banner.title", "Heading", "text", "Looking for reliable, export-grade supply?");

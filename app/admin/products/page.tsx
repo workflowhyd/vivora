@@ -46,12 +46,15 @@ export default function AdminProductsPage() {
             {products?.map((product) => (
               <tr key={product._id} className="border-b border-charcoal/5 last:border-0">
                 <td className="px-5 py-3.5">
-                  {product.name}
-                  {product.featured && (
-                    <span className="ml-2 label-caps text-[9px] text-gold bg-green rounded-full px-2 py-0.5">
-                      Featured
-                    </span>
-                  )}
+                  <div className="flex items-center gap-3">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={product.thumbnail}
+                      alt=""
+                      className="h-9 w-9 shrink-0 rounded-md border border-charcoal/10 object-cover bg-cream"
+                    />
+                    {product.name}
+                  </div>
                 </td>
                 <td className="px-5 py-3.5 text-charcoal/60">{product.categoryName}</td>
                 <td className="px-5 py-3.5 text-charcoal/60">

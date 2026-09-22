@@ -1,20 +1,37 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Leaf } from "lucide-react";
 
 export interface ProductCardData {
   slug: string;
   name: string;
   shortDescription: string;
   categoryName?: string;
+  thumbnail?: string;
 }
 
 export function ProductCard({ product }: { product: ProductCardData }) {
   return (
     <Link
       href={`/products/${product.slug}`}
-      className="group block rounded-md border border-charcoal/10 hover:border-green/40 transition-colors duration-300"
+      className="group block overflow-hidden rounded-md border border-charcoal/10 transition-colors duration-300 hover:border-green/40"
     >
-      <div className="p-5 flex items-start justify-between gap-3">
+      <div className="aspect-square w-full overflow-hidden bg-cream-light">
+        {product.thumbnail ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={product.thumbnail}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <Leaf size={28} strokeWidth={1.25} className="text-green/25" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-start justify-between gap-3 p-5">
         <div>
           {product.categoryName && (
             <span className="label-caps text-[10px] text-green">{product.categoryName}</span>

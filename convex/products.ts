@@ -21,7 +21,6 @@ const productFields = {
   storage: v.optional(v.string()),
   moq: v.optional(v.string()),
   specifications: v.optional(v.array(specification)),
-  featured: v.boolean(),
   active: v.boolean(),
   sortOrder: v.number(),
   seoTitle: v.optional(v.string()),
@@ -32,21 +31,14 @@ const productFields = {
 export const list = query({
   args: {
     categoryId: v.optional(v.id("categories")),
-    featured: v.optional(v.boolean()),
     activeOnly: v.optional(v.boolean()),
   },
-  handler: async (ctx, { categoryId, featured, activeOnly }) => {
+  handler: async (ctx, { categoryId, activeOnly }) => {
     let results: Doc<"products">[];
     if (categoryId) {
       results = await ctx.db
         .query("products")
         .withIndex("by_category", (q) => q.eq("categoryId", categoryId))
-        .order("asc")
-        .collect();
-    } else if (featured !== undefined) {
-      results = await ctx.db
-        .query("products")
-        .withIndex("by_featured", (q) => q.eq("featured", featured))
         .order("asc")
         .collect();
     } else if (activeOnly) {
@@ -59,10 +51,7 @@ export const list = query({
       results = await ctx.db.query("products").withIndex("by_sortOrder").order("asc").collect();
     }
 
-    if (categoryId && featured !== undefined) {
-      results = results.filter((p) => p.featured === featured);
-    }
-    if (activeOnly && (categoryId || featured !== undefined)) {
+    if (activeOnly && categoryId) {
       results = results.filter((p) => p.active);
     }
     return results;
@@ -92,7 +81,7 @@ export const listCards = query({
         name: p.name,
         shortDescription: p.shortDescription,
         categoryId: p.categoryId,
-        featured: p.featured,
+        thumbnail: p.thumbnail,
         sortOrder: p.sortOrder,
         createdAt: p.createdAt,
       }));

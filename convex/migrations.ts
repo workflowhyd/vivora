@@ -98,3 +98,24 @@ export const groupDehydratedCategories = internalMutation({
     return "done";
   },
 });
+
+// The "featured" flag was dropped from the products schema/UI (there was no
+// use for it — the catalogue has no featured section). Patching a field to
+// `undefined` removes it from the document, so this clears the stale value
+// left on documents written under the old schema. Safe to re-run.
+export const removeFeaturedField = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const products = await ctx.db.query("products").collect();
+    let cleared = 0;
+    for (const product of products) {
+      if ("featured" in product) {
+        // `featured` no longer exists in the schema, so it's typed as excess
+        // here on purpose — this cast is only to unset that stale field.
+        await ctx.db.patch(product._id, { featured: undefined } as Partial<typeof product>);
+        cleared++;
+      }
+    }
+    return `cleared "featured" from ${cleared} of ${products.length} products`;
+  },
+});

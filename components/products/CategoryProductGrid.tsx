@@ -52,6 +52,7 @@ export function CategoryProductGrid({
           slug: p.slug,
           name: p.name,
           shortDescription: p.shortDescription,
+          thumbnail: p.thumbnail,
         }))}
         emptyState="No products in this category yet."
       />

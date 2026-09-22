@@ -41,7 +41,6 @@ export default defineSchema({
     specifications: v.optional(
       v.array(v.object({ label: v.string(), value: v.string() }))
     ),
-    featured: v.boolean(),
     active: v.boolean(),
     sortOrder: v.number(),
     seoTitle: v.optional(v.string()),
@@ -53,7 +52,6 @@ export default defineSchema({
     .index("by_slug", ["slug"])
     .index("by_sortOrder", ["sortOrder"])
     .index("by_category", ["categoryId", "sortOrder"])
-    .index("by_featured", ["featured", "sortOrder"])
     .index("by_active", ["active", "sortOrder"]),
 
   inquiries: defineTable({

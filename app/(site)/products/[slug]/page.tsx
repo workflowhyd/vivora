@@ -74,7 +74,15 @@ export default async function ProductDetailPage({
           )}
 
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 mt-4">
-            <div className="md:col-span-10 lg:col-span-8">
+            {product.thumbnail && (
+              <div className="md:col-span-5 lg:col-span-4 md:order-2">
+                <div className="aspect-square overflow-hidden rounded-md bg-cream-light">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={product.thumbnail} alt={product.name} className="h-full w-full object-cover" />
+                </div>
+              </div>
+            )}
+            <div className={product.thumbnail ? "md:col-span-7 lg:col-span-8 md:order-1" : "md:col-span-10 lg:col-span-8"}>
               <h1 className="font-display text-3xl md:text-5xl leading-[1.05] text-blue-dark">
                 {product.name}
               </h1>
@@ -183,6 +191,7 @@ export default async function ProductDetailPage({
                   slug: p.slug,
                   name: p.name,
                   shortDescription: p.shortDescription,
+                  thumbnail: p.thumbnail,
                 }))}
               />
             </div>

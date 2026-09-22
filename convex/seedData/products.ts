@@ -16,7 +16,6 @@ export interface SeedProduct {
   storage?: string;
   moq?: string;
   specifications?: { label: string; value: string }[];
-  featured: boolean;
   sortOrder: number;
 }
 
@@ -47,7 +46,6 @@ export const products: SeedProduct[] = [
       { label: "Rehydration ratio", value: "1:8" },
       { label: "Form", value: "Flakes, 8-10mm" },
     ],
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -70,7 +68,6 @@ export const products: SeedProduct[] = [
       { label: "Moisture content", value: "≤ 6%" },
       { label: "Pungency", value: "High" },
     ],
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -88,7 +85,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 3,
   },
   {
@@ -106,7 +102,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 4,
   },
 
@@ -131,7 +126,6 @@ export const products: SeedProduct[] = [
       { label: "Moisture content", value: "≤ 12%" },
       { label: "Sugar added", value: "None" },
     ],
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -149,7 +143,6 @@ export const products: SeedProduct[] = [
     shelfLife: "9 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -166,7 +159,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 3,
   },
 
@@ -187,7 +179,6 @@ export const products: SeedProduct[] = [
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
     specifications: [{ label: "Mesh size", value: "80-100 mesh" }],
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -205,7 +196,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -222,7 +212,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 3,
   },
 
@@ -242,7 +231,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -259,7 +247,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 2,
   },
 
@@ -280,7 +267,6 @@ export const products: SeedProduct[] = [
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
     specifications: [{ label: "Mesh size", value: "100 mesh" }],
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -297,7 +283,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -314,7 +299,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 3,
   },
 
@@ -334,7 +318,6 @@ export const products: SeedProduct[] = [
     shelfLife: "9 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "500 units (mixed pack sizes available)",
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -351,7 +334,6 @@ export const products: SeedProduct[] = [
     shelfLife: "9 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "500 units (mixed pack sizes available)",
-    featured: false,
     sortOrder: 2,
   },
 
@@ -371,7 +353,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "1,000 units",
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -388,7 +369,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "1,000 units",
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -405,7 +385,6 @@ export const products: SeedProduct[] = [
     shelfLife: "6 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "1,000 units",
-    featured: false,
     sortOrder: 3,
   },
 
@@ -426,7 +405,6 @@ export const products: SeedProduct[] = [
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
     specifications: [{ label: "Curcumin content", value: "≥ 3%" }],
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -444,7 +422,6 @@ export const products: SeedProduct[] = [
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
     specifications: [{ label: "Scoville heat units", value: "15,000 - 30,000 SHU" }],
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -461,7 +438,6 @@ export const products: SeedProduct[] = [
     shelfLife: "24 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 3,
   },
   {
@@ -478,7 +454,6 @@ export const products: SeedProduct[] = [
     shelfLife: "24 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: STANDARD_MOQ,
-    featured: false,
     sortOrder: 4,
   },
 
@@ -497,7 +472,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "50 units",
-    featured: true,
     sortOrder: 1,
   },
   {
@@ -514,7 +488,6 @@ export const products: SeedProduct[] = [
     shelfLife: "12 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "1,000 units",
-    featured: false,
     sortOrder: 2,
   },
   {
@@ -531,7 +504,6 @@ export const products: SeedProduct[] = [
     shelfLife: "18 months from date of manufacture",
     storage: STANDARD_STORAGE,
     moq: "50 units",
-    featured: false,
     sortOrder: 3,
   },
 ];

@@ -8,10 +8,10 @@ export interface FilterCategory {
   name: string;
 }
 
-export type SortOption = "featured" | "name-asc" | "newest";
+export type SortOption = "default" | "name-asc" | "newest";
 
 const SORT_OPTIONS: { value: SortOption; label: string }[] = [
-  { value: "featured", label: "Featured" },
+  { value: "default", label: "Our order" },
   { value: "name-asc", label: "Name (A–Z)" },
   { value: "newest", label: "Newest" },
 ];
@@ -21,21 +21,17 @@ export function ProductFilters({
   activeCategory,
   search,
   sort,
-  featuredOnly,
   onCategoryChange,
   onSearchChange,
   onSortChange,
-  onFeaturedOnlyChange,
 }: {
   categories: FilterCategory[];
   activeCategory: string | null;
   search: string;
   sort: SortOption;
-  featuredOnly: boolean;
   onCategoryChange: (slug: string | null) => void;
   onSearchChange: (value: string) => void;
   onSortChange: (value: SortOption) => void;
-  onFeaturedOnlyChange: (value: boolean) => void;
 }) {
   return (
     <div className="flex flex-col gap-5">
@@ -52,14 +48,6 @@ export function ProductFilters({
         </div>
 
         <div className="flex items-center gap-4 sm:ml-auto">
-          <label className="flex items-center gap-2 text-sm text-charcoal/70 shrink-0">
-            <input
-              type="checkbox"
-              checked={featuredOnly}
-              onChange={(e) => onFeaturedOnlyChange(e.target.checked)}
-            />
-            Featured only
-          </label>
           <select
             value={sort}
             onChange={(e) => onSortChange(e.target.value as SortOption)}

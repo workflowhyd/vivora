@@ -27,8 +27,7 @@ export function ProductCatalogue({
 
   const activeCategory = searchParams.get("category");
   const search = searchParams.get("q") ?? "";
-  const sort = (searchParams.get("sort") as SortOption) || "featured";
-  const featuredOnly = searchParams.get("featured") === "1";
+  const sort = (searchParams.get("sort") as SortOption) || "default";
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10) || 1);
 
   const updateParams = (updates: Record<string, string | null>, resetPage = false) => {
@@ -63,9 +62,6 @@ export function ProductCatalogue({
         result = result.filter((p) => matchIds.has(p.categoryId));
       }
     }
-    if (featuredOnly) {
-      result = result.filter((p) => p.featured);
-    }
     if (search.trim()) {
       const q = search.trim().toLowerCase();
       result = result.filter(
@@ -79,10 +75,10 @@ export function ProductCatalogue({
     } else if (sort === "newest") {
       sorted.sort((a, b) => b.createdAt - a.createdAt);
     } else {
-      sorted.sort((a, b) => Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder);
+      sorted.sort((a, b) => a.sortOrder - b.sortOrder);
     }
     return sorted;
-  }, [products, categories, activeCategory, featuredOnly, search, sort]);
+  }, [products, categories, activeCategory, search, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);
@@ -95,11 +91,9 @@ export function ProductCatalogue({
         activeCategory={activeCategory}
         search={search}
         sort={sort}
-        featuredOnly={featuredOnly}
         onCategoryChange={(slug) => updateParams({ category: slug }, true)}
         onSearchChange={(value) => updateParams({ q: value || null }, true)}
-        onSortChange={(value) => updateParams({ sort: value === "featured" ? null : value }, true)}
-        onFeaturedOnlyChange={(value) => updateParams({ featured: value ? "1" : null }, true)}
+        onSortChange={(value) => updateParams({ sort: value === "default" ? null : value }, true)}
       />
 
       <p className="text-charcoal/50 text-sm mt-6 mb-6">
@@ -112,6 +106,7 @@ export function ProductCatalogue({
           name: p.name,
           shortDescription: p.shortDescription,
           categoryName: categoryNameById.get(p.categoryId),
+          thumbnail: p.thumbnail,
         }))}
         emptyState="No products match your filters — try clearing the search or category."
       />
