@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { ArrowRight, Check } from "lucide-react";
 import { Reveal } from "./Reveal";
+import { Spinner } from "./Spinner";
 import { api } from "@/convex/_generated/api";
 import { cn } from "@/lib/utils";
 import { useContent } from "@/lib/useContent";
@@ -152,11 +153,19 @@ export function CTA() {
                       disabled={status === "submitting"}
                       className="group inline-flex items-center gap-2 bg-green text-cream-light text-[13px] label-caps px-7 py-4 rounded-full hover:bg-green-dark transition-colors duration-300 disabled:opacity-60"
                     >
-                      {status === "submitting" ? "Sending…" : "Request a Quote"}
-                      <ArrowRight
-                        size={15}
-                        className="transition-transform duration-300 group-hover:translate-x-1"
-                      />
+                      {status === "submitting" ? (
+                        <>
+                          <Spinner /> Sending…
+                        </>
+                      ) : (
+                        <>
+                          Request a Quote
+                          <ArrowRight
+                            size={15}
+                            className="transition-transform duration-300 group-hover:translate-x-1"
+                          />
+                        </>
+                      )}
                     </button>
                     {status === "error" && (
                       <span className="text-crimson text-sm">

@@ -8,6 +8,7 @@ import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { MediaUpload } from "@/components/admin/MediaUpload";
 import { fieldClasses } from "./SlotEditor";
 import { youtubeId } from "@/lib/youtube";
+import { Spinner } from "@/components/Spinner";
 
 type Kind = "text" | "image" | "video";
 type Block = Doc<"pageBlocks"> & { mediaUrl: string | null };
@@ -225,8 +226,9 @@ function BlockCard({ block, isFirst, isLast }: { block: Block; isFirst: boolean;
             type="button"
             disabled={!dirty || status === "saving"}
             onClick={() => save()}
-            className="bg-green text-cream-light text-sm font-medium px-4 py-2 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-40"
+            className="inline-flex items-center gap-2 bg-green text-cream-light text-sm font-medium px-4 py-2 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-40"
           >
+            {status === "saving" && <Spinner />}
             {status === "saving" ? "Saving…" : "Save"}
           </button>
           {status === "saved" && !dirty && <span className="text-xs text-green">Saved</span>}

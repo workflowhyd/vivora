@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Doc, Id } from "@/convex/_generated/dataModel";
+import { Spinner } from "@/components/Spinner";
 
 const fieldClasses =
   "w-full border border-charcoal/15 rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200";
@@ -301,8 +302,9 @@ export function ProductForm({ product }: { product?: Doc<"products"> }) {
         <button
           type="submit"
           disabled={submitting}
-          className="bg-green text-cream-light text-sm font-medium px-5 py-2.5 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-60"
+          className="inline-flex items-center gap-2 bg-green text-cream-light text-sm font-medium px-5 py-2.5 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-60"
         >
+          {submitting && <Spinner />}
           {submitting ? "Saving…" : product ? "Save changes" : "Create product"}
         </button>
         <button

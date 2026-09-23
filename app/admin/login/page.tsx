@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { Spinner } from "@/components/Spinner";
 
 // Sign-in only, by username. Admin accounts are created by the developer
 // (and must be on the allowlist in convex/adminAllowlist.ts); there is no
@@ -72,8 +73,9 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-2 bg-green text-cream-light text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-green-dark transition-colors duration-300 disabled:opacity-60"
+            className="mt-2 inline-flex items-center justify-center gap-2 bg-green text-cream-light text-[13px] label-caps px-6 py-3.5 rounded-full hover:bg-green-dark transition-colors duration-300 disabled:opacity-60"
           >
+            {submitting && <Spinner />}
             {submitting ? "Please wait…" : "Sign in"}
           </button>
         </form>

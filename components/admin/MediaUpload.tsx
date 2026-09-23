@@ -5,6 +5,7 @@ import { useMutation } from "convex/react";
 import { Upload } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import { Spinner } from "@/components/Spinner";
 
 const LIMITS = { image: 10, video: 100 } as const;
 const ACCEPT = {
@@ -74,7 +75,7 @@ export function MediaUpload({
         onClick={() => inputRef.current?.click()}
         className="inline-flex items-center gap-2 border border-charcoal/15 rounded-md px-3.5 py-2 text-sm hover:border-blue transition-colors duration-200 disabled:opacity-50"
       >
-        <Upload size={14} />
+        {busy ? <Spinner /> : <Upload size={14} />}
         {busy ? "Uploading…" : (label ?? `Upload ${kind}`)}
       </button>
       <p className="text-xs text-charcoal/45 mt-1.5">

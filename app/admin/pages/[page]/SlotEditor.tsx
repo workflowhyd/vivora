@@ -5,6 +5,7 @@ import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Slot } from "@/convex/lib/contentRegistry";
 import { MediaUpload } from "@/components/admin/MediaUpload";
+import { Spinner } from "@/components/Spinner";
 
 export const fieldClasses =
   "w-full border border-charcoal/15 rounded-md px-3.5 py-2.5 text-sm focus:outline-none focus:border-blue transition-colors duration-200";
@@ -92,8 +93,9 @@ export function SlotEditor({ slot }: { slot: Slot }) {
               type="button"
               disabled={!dirty || status === "saving"}
               onClick={() => run(() => setContent({ key: slot.key, text: value }))}
-              className="bg-green text-cream-light text-sm font-medium px-4 py-2 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-40"
+              className="inline-flex items-center gap-2 bg-green text-cream-light text-sm font-medium px-4 py-2 rounded-md hover:bg-green-dark transition-colors duration-200 disabled:opacity-40"
             >
+              {status === "saving" && <Spinner />}
               {status === "saving" ? "Saving…" : "Save"}
             </button>
             {status === "saved" && !dirty && <span className="text-xs text-green">Saved</span>}
