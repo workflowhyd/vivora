@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Leaf } from "lucide-react";
 
 export interface CategoryCardData {
@@ -12,33 +13,38 @@ export function CategoryCard({ category }: { category: CategoryCardData }) {
   return (
     <Link
       href={`/categories/${category.slug}`}
-      className="group block rounded-md overflow-hidden border border-charcoal/10 hover:border-green/40 transition-colors duration-300"
+      className="group block overflow-hidden rounded-md border border-charcoal/10 transition-colors duration-300 hover:border-green/40"
     >
-      <div className="p-5 flex items-start gap-4">
-        <div className="h-14 w-14 shrink-0 overflow-hidden rounded-md bg-cream-light">
-          {category.image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={category.image} alt="" loading="lazy" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center">
-              <Leaf size={18} strokeWidth={1.25} className="text-green/25" />
-            </div>
-          )}
-        </div>
-        <div className="flex flex-1 items-start justify-between gap-3">
-          <div>
-            <h3 className="font-display text-lg md:text-xl text-blue-dark leading-snug">
-              {category.name}
-            </h3>
-            <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
-              {category.description}
-            </p>
-          </div>
-          <ArrowUpRight
-            size={18}
-            className="text-green shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-cream-light">
+        {category.image ? (
+          <Image
+            src={category.image}
+            alt=""
+            fill
+            loading="lazy"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 400px"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
           />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center">
+            <Leaf size={28} strokeWidth={1.25} className="text-green/25" />
+          </div>
+        )}
+      </div>
+
+      <div className="flex items-start justify-between gap-3 p-5">
+        <div>
+          <h3 className="font-display text-lg md:text-xl text-blue-dark leading-snug">
+            {category.name}
+          </h3>
+          <p className="text-charcoal/60 text-sm mt-1.5 font-light leading-relaxed line-clamp-2">
+            {category.description}
+          </p>
         </div>
+        <ArrowUpRight
+          size={18}
+          className="text-green shrink-0 mt-1 transition-transform duration-300 group-hover:rotate-45"
+        />
       </div>
     </Link>
   );

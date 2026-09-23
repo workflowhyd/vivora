@@ -11,7 +11,7 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 // plain background — no default banner photography. An admin can still add a
 // video or image under Home → Hero in /admin/pages; when set, it shows below
 // the text instead of nothing.
-const LOGO = "/images/vivora-logo-full.jpg";
+const LOGO = "/images/vivora-logo-full.webp";
 
 // Custom (admin-uploaded) images keep their own proportions.
 const mediaSize =
