@@ -81,8 +81,8 @@ add(
   "textarea",
   "Every Vivora pack is made from carefully sourced vegetables and spices, dried and milled to hold on to their natural colour, flavour and nutrition — with no added preservatives."
 );
-add("home", "Product showcase", "home.showcase.imageMobile", "Image (phones/tablets)", "image", "/images/showcase-1.jpg");
-add("home", "Product showcase", "home.showcase.imageDesktop", "Image (desktop)", "image", "/images/showcase-2.jpg");
+add("home", "Product showcase", "home.showcase.imageMobile", "Image (phones/tablets)", "image", "/images/products/turmeric-powder.webp");
+add("home", "Product showcase", "home.showcase.imageDesktop", "Image (desktop)", "image", "/images/products/turmeric-powder.webp");
 
 heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
