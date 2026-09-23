@@ -1105,3 +1105,39 @@ export const setPhotosForSetOne = internalMutation({
     return `updated ${updated} of ${slugs.length} products`;
   },
 });
+
+// Every category still used a generic Wikipedia stock photo as its
+// thumbnail (several duplicated across unrelated categories — e.g.
+// "Flowers" showed a moringa LEAF photo). Now that every product has a real
+// branded photo, point each category at one of its own. Safe to re-run.
+export const useRealPhotosForCategoryThumbnails = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const setImage: [string, string][] = [
+      // Top-level (shown on the home page)
+      ["dehydrated-products", "/images/products/tomato-powder.webp"],
+      ["spice-ingredient-powders", "/images/products/turmeric-powder.webp"],
+      ["ready-to-cook", "/images/products/instant-khichdi-mix.webp"],
+      ["leaf-powders", "/images/products/moringa-powder.webp"],
+      // Sub-categories (shown once a visitor drills into Dehydrated Products)
+      ["vegetables", "/images/products/carrot-powder.webp"],
+      ["fruits", "/images/products/banana-powder.webp"],
+      ["flowers", "/images/products/hibiscus-powder.webp"],
+      ["vegetable-powders", "/images/products/beetroot-powder.webp"],
+      ["fruit-powders", "/images/products/papaya-powder.webp"],
+    ];
+
+    let updated = 0;
+    for (const [slug, image] of setImage) {
+      const category = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (category) {
+        await ctx.db.patch(category._id, { image });
+        updated++;
+      }
+    }
+    return `updated ${updated} of ${setImage.length} category thumbnails`;
+  },
+});
