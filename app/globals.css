@@ -61,9 +61,10 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* No in-page anchor links use this, and an animated scroll made Next's
+   scroll-to-top-on-navigation land somewhere other than the top when it got
+   interrupted by content still loading in. Default (instant) scroll snaps
+   every new page straight to the top. */
 
 body {
   background: var(--background);
