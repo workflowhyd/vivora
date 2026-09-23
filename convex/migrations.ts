@@ -1340,3 +1340,37 @@ export const setTomatoPowderPhotoFromPackPoster = internalMutation({
     return "updated";
   },
 });
+
+// On closer side-by-side comparison, the Set 1 collage's logo was in fact
+// consistent with the rest of the catalogue - the "Dry Delicious" tagline
+// color already varies between brown and green across already-accepted
+// photos (papaya-powder is brown too), so that was never a real signal.
+// Finishes Set 1 with all 6 from that collage, including replacing Tomato
+// Powder's pack-poster crop for full visual consistency with the other 5.
+// Safe to re-run.
+export const finishSetOnePhotos = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const slugs = [
+      "moringa-powder",
+      "tomato-powder",
+      "banana-powder",
+      "carrot-powder",
+      "beetroot-powder",
+      "onion-powder",
+    ];
+    let updated = 0;
+    for (const slug of slugs) {
+      const product = await ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      const url = `/images/products/${slug}.webp`;
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+    return `updated ${updated} of ${slugs.length} products`;
+  },
+});
