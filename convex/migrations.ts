@@ -598,3 +598,412 @@ export const addFlowerAndMethiPowderProducts = internalMutation({
     return `updated ${updated} photos, added ${added} of ${toAdd.length} products`;
   },
 });
+
+// The business wants exactly the 47 products on its master list (29 powders
+// + 18 Ready-to-Cook items) — nothing else. This:
+// 1. Deletes 7 products that aren't on that list.
+// 2. Renames+re-slugs 6 products that ARE on the list but were seeded under
+//    a different name (2 of which also move from Dehydrated Vegetables into
+//    Ready-to-Cook, matching where the list puts them).
+// 3. Deletes the now-empty Dehydrated Vegetables and Dehydrated Fruits
+//    categories (every product that was in them got deleted or moved above).
+// 4. Adds the 24 list items that don't exist under any name yet, as
+//    placeholders (no photo — backfill via setProductPhoto once supplied).
+// Safe to re-run — every step is a no-op once already applied.
+export const reconcileTo47ProductList = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+    const categoryBySlug = async (slug: string) => {
+      const c = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (!c) throw new Error(`Category not found: ${slug}`);
+      return c;
+    };
+
+    const deleteSlugs = [
+      "sun-dried-mango-cubes",
+      "dehydrated-banana-chips",
+      "dehydrated-mango-slices",
+      "dehydrated-green-peas",
+      "dehydrated-tomato-flakes",
+      "mango-powder-amchur",
+      "instant-vermicelli-upma-mix",
+    ];
+    let deleted = 0;
+    for (const slug of deleteSlugs) {
+      const product = await bySlug(slug);
+      if (product) {
+        await ctx.db.delete(product._id);
+        deleted++;
+      }
+    }
+
+    const readyToCook = await categoryBySlug("ready-to-cook");
+    const renames: {
+      slug: string;
+      name: string;
+      newSlug: string;
+      categoryId?: (typeof readyToCook)["_id"];
+    }[] = [
+      { slug: "moringa-leaf-powder", name: "Moringa Powder", newSlug: "moringa-powder" },
+      { slug: "banana-fruit-powder", name: "Banana Powder", newSlug: "banana-powder" },
+      { slug: "mint-leaf-powder", name: "Mint Powder", newSlug: "mint-powder" },
+      { slug: "red-chilli-powder", name: "Chilli Flakes / Powder", newSlug: "chilli-flakes-powder" },
+      {
+        slug: "dehydrated-onion-flakes",
+        name: "Onion Flakes",
+        newSlug: "onion-flakes",
+        categoryId: readyToCook._id,
+      },
+      {
+        slug: "mixed-vegetable-flakes",
+        name: "Mixed Vegetable Dehydrated Pack",
+        newSlug: "mixed-vegetable-dehydrated-pack",
+        categoryId: readyToCook._id,
+      },
+    ];
+    let renamed = 0;
+    for (const r of renames) {
+      const product = await bySlug(r.slug);
+      if (product) {
+        await ctx.db.patch(product._id, {
+          name: r.name,
+          slug: r.newSlug,
+          ...(r.categoryId ? { categoryId: r.categoryId } : {}),
+          updatedAt: Date.now(),
+        });
+        renamed++;
+      }
+    }
+
+    let categoriesDeleted = 0;
+    for (const slug of ["dehydrated-vegetables", "dehydrated-fruits"]) {
+      const category = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (!category) continue;
+      const remaining = await ctx.db
+        .query("products")
+        .withIndex("by_category", (q) => q.eq("categoryId", category._id))
+        .collect();
+      if (remaining.length > 0) {
+        throw new Error(`Category ${slug} still has ${remaining.length} products — not deleting`);
+      }
+      await ctx.db.delete(category._id);
+      categoriesDeleted++;
+    }
+
+    const vegetablePowders = await categoryBySlug("vegetable-powders");
+    const fruitPowders = await categoryBySlug("fruit-powders");
+    const spicePowders = await categoryBySlug("spice-ingredient-powders");
+    const flowers = await categoryBySlug("flowers");
+
+    type NewProduct = {
+      slug: string;
+      name: string;
+      categoryId: (typeof vegetablePowders)["_id"];
+      shortDescription: string;
+      description: string;
+      benefits: string[];
+      applications: string[];
+      packSizes?: string[];
+      moq?: string;
+      shelfLife?: string;
+      storage?: string;
+    };
+
+    const now = Date.now();
+    const toAdd: NewProduct[] = [
+      // Missing powders
+      {
+        slug: "sweet-potato-powder",
+        name: "Sweet Potato Powder",
+        categoryId: vegetablePowders._id,
+        shortDescription: "Naturally sweet, vibrant orange sweet potato powder.",
+        description:
+          "Made from sun-dried, finely milled sweet potato, this powder brings natural sweetness, colour and everyday nutrition to bakery, beverage and health food formulations.",
+        benefits: ["Naturally sweet", "Rich in beta-carotene", "Long shelf life"],
+        applications: ["Bakery and snacks", "Health mixes", "Beverages"],
+      },
+      {
+        slug: "vegetable-powder",
+        name: "Vegetable Powder",
+        categoryId: vegetablePowders._id,
+        shortDescription: "A balanced blend of dehydrated vegetables milled into one convenient powder.",
+        description:
+          "A blend of dehydrated vegetables, dried and milled together into a single convenient powder for soups, seasoning blends and instant meal bases.",
+        benefits: ["One SKU, multiple vegetables", "Consistent blend", "Long shelf life"],
+        applications: ["Soups and sauces", "Seasoning blends", "Instant meal bases"],
+      },
+      {
+        slug: "jackfruit-powder",
+        name: "Jackfruit Powder",
+        categoryId: fruitPowders._id,
+        shortDescription: "Naturally sweet jackfruit powder for bakery and health food use.",
+        description:
+          "Made from dehydrated ripe jackfruit, finely milled to carry its distinctive sweet, tropical flavour into bakery, beverage and health food formulations.",
+        benefits: ["Naturally sweet", "Rich in fibre", "Distinctive tropical flavour"],
+        applications: ["Bakery inclusions", "Smoothies and beverages", "Health mixes"],
+      },
+      {
+        slug: "coriander-powder",
+        name: "Coriander Powder",
+        categoryId: spicePowders._id,
+        shortDescription: "Aromatic ground coriander for everyday cooking and spice blends.",
+        description:
+          "Ground from sun-dried coriander seed, this powder delivers the warm, citrusy aroma that forms the base of countless Indian spice blends and curries.",
+        benefits: ["Aromatic and consistent", "Export-grade purity", "Long shelf life"],
+        applications: ["Spice blends", "Curries", "Snack seasoning"],
+      },
+      {
+        slug: "marigold-powder",
+        name: "Marigold Powder",
+        categoryId: flowers._id,
+        shortDescription: "Vibrant marigold flower powder for natural care and wellness.",
+        description:
+          "Sun-dried marigold petals milled into a fine powder, valued for their vivid natural colour and traditional use in skincare and wellness formulations.",
+        benefits: ["Supports eye health", "Rich in antioxidants", "Boosts immunity"],
+        applications: ["Natural cosmetics", "Wellness blends", "Natural colouring"],
+      },
+      {
+        slug: "chrysanthemum-powder",
+        name: "Chrysanthemum Powder",
+        categoryId: flowers._id,
+        shortDescription: "Pure floral chrysanthemum powder for calming tea blends.",
+        description:
+          "Dried chrysanthemum flowers ground into a fine powder, traditionally used in calming tea blends and natural wellness formulations.",
+        benefits: ["Supports relaxation", "Rich in antioxidants", "Promotes better sleep"],
+        applications: ["Tea blends", "Wellness formulations", "Natural cosmetics"],
+      },
+      {
+        slug: "lotus-petal-powder",
+        name: "Lotus Petal Powder",
+        categoryId: flowers._id,
+        shortDescription: "Delicate lotus petal powder for natural beauty and wellness.",
+        description:
+          "Shade-dried lotus petals milled into a fine powder, prized in natural beauty and wellness formulations for their gentle, calming character.",
+        benefits: ["Supports healthy skin", "Promotes inner calm", "Rich in antioxidants"],
+        applications: ["Natural cosmetics", "Skincare formulations", "Wellness blends"],
+      },
+      {
+        slug: "blue-tea-powder",
+        name: "Blue Tea Powder",
+        categoryId: flowers._id,
+        shortDescription: "Vibrant butterfly pea flower powder, a natural blue colourant.",
+        description:
+          "Dried butterfly pea flowers milled into a vivid blue powder, popular as a natural colourant and as the base for colour-changing herbal tea blends.",
+        benefits: ["Supports brain health", "Rich in antioxidants", "Natural detox support"],
+        applications: ["Herbal tea blends", "Natural food colouring", "Wellness formulations"],
+      },
+      {
+        slug: "lavender-powder",
+        name: "Lavender Powder",
+        categoryId: flowers._id,
+        shortDescription: "Soothing lavender powder for calming wellness formulations.",
+        description:
+          "Dried lavender buds milled into a fine powder, carrying the plant's characteristic calming aroma into wellness blends and natural cosmetics.",
+        benefits: ["Promotes relaxation", "Supports better sleep", "Natural stress relief"],
+        applications: ["Wellness formulations", "Natural cosmetics", "Aromatic blends"],
+      },
+      // Missing Ready-to-Cook items
+      {
+        slug: "sabudana-sago-vadiyalu",
+        name: "Sabudana (Sago) Vadiyalu",
+        categoryId: readyToCook._id,
+        shortDescription: "Traditional sun-dried sago vadiyalu, crispy and light when fried.",
+        description:
+          "Made using a traditional recipe, our sabudana vadiyalu are sun-dried and ready to fry into a light, crispy accompaniment.",
+        benefits: ["Traditional recipe", "Sun-dried", "No preservatives"],
+        applications: ["Retail snacking", "HoReCa accompaniments"],
+      },
+      {
+        slug: "dried-brinjal-slices",
+        name: "Dried Brinjal Slices",
+        categoryId: readyToCook._id,
+        shortDescription: "Farm-fresh brinjal, sun-dried into ready-to-cook slices.",
+        description:
+          "Farm-fresh brinjal sliced and sun-dried to lock in flavour, ready to rehydrate for curries and traditional preparations.",
+        benefits: ["Farm fresh", "Sun-dried", "No preservatives"],
+        applications: ["Curries", "Traditional preparations"],
+      },
+      {
+        slug: "ginger-chips-dry",
+        name: "Ginger Chips (Dry)",
+        categoryId: readyToCook._id,
+        shortDescription: "Spicy, aromatic dried ginger chips, naturally healthy.",
+        description:
+          "Sliced ginger, sun-dried to preserve its natural pungency and aroma — ready to use in cooking or as a snack base.",
+        benefits: ["Rich in gingerols", "Sun-dried", "No preservatives"],
+        applications: ["Cooking", "Snack bases", "Traditional formulations"],
+      },
+      {
+        slug: "dried-bitter-gourd-chips",
+        name: "Dried Bitter Gourd Chips",
+        categoryId: readyToCook._id,
+        shortDescription: "Crispy, nutritious bitter gourd chips, naturally dried.",
+        description:
+          "Sliced bitter gourd, sun-dried into crispy chips that rehydrate easily for traditional preparations.",
+        benefits: ["Supports healthy living", "Sun-dried", "No preservatives"],
+        applications: ["Traditional preparations", "Retail snacking"],
+      },
+      {
+        slug: "tomato-vadiyalu-tomato-chips",
+        name: "Tomato Vadiyalu / Tomato Chips",
+        categoryId: readyToCook._id,
+        shortDescription: "Tangy, flavourful sun-dried tomato vadiyalu.",
+        description:
+          "Sun-dried tomato, tangy and flavourful, ready to cook into traditional accompaniments.",
+        benefits: ["Rich in lycopene", "Sun-dried", "No preservatives"],
+        applications: ["Retail snacking", "Traditional preparations"],
+      },
+      {
+        slug: "dried-dondakaya-ivy-gourd",
+        name: "Dried Dondakaya (Ivy Gourd)",
+        categoryId: readyToCook._id,
+        shortDescription: "Naturally dried ivy gourd with a unique, traditional taste.",
+        description:
+          "Sliced ivy gourd (dondakaya), sun-dried to preserve its distinctive taste and texture for traditional South Indian preparations.",
+        benefits: ["Supports digestion", "Sun-dried", "No preservatives"],
+        applications: ["Traditional preparations", "Retail snacking"],
+      },
+      {
+        slug: "garlic-flakes-fry-use",
+        name: "Garlic Flakes (Fry Use)",
+        categoryId: readyToCook._id,
+        shortDescription: "Crispy, aromatic garlic flakes, ready for frying.",
+        description:
+          "Sliced garlic, dried to a crisp, ready-to-fry flake that enhances flavour across cooking and garnishing applications.",
+        benefits: ["Enhances flavour", "Longer shelf life", "100% natural"],
+        applications: ["Cooking", "Garnishing", "Snack coatings"],
+      },
+      {
+        slug: "garlic-granules",
+        name: "Garlic Granules",
+        categoryId: readyToCook._id,
+        shortDescription: "Fine, pure garlic granules — a versatile kitchen essential.",
+        description:
+          "Dehydrated garlic milled into fine granules, an easy-to-use, versatile kitchen essential for everyday cooking.",
+        benefits: ["Easy to use", "Longer shelf life", "100% natural"],
+        applications: ["Everyday cooking", "Seasoning blends"],
+      },
+      {
+        slug: "sambar-vegetable-mix",
+        name: "Sambar Vegetable Mix",
+        categoryId: readyToCook._id,
+        shortDescription: "An authentic, nutritious vegetable mix ready for sambar in minutes.",
+        description:
+          "A traditional blend of dehydrated vegetables sized for sambar, ready to rehydrate for an authentic, nutritious South Indian preparation in minutes.",
+        benefits: ["Traditional recipe", "Rich in fibre", "100% natural"],
+        applications: ["Sambar", "South Indian cooking"],
+        packSizes: ["500 g pouch", "1 kg pouch", "10 kg foodservice pack"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+      {
+        slug: "potato-cubes-dehydrated",
+        name: "Potato Cubes (Dehydrated)",
+        categoryId: readyToCook._id,
+        shortDescription: "Convenient, versatile dehydrated potato cubes for any recipe.",
+        description:
+          "Diced potato, dehydrated for convenience and a long shelf life — perfect for curries, soups and ready-to-cook meal kits.",
+        benefits: ["Easy to cook", "Longer shelf life", "100% natural"],
+        applications: ["Curries", "Soups", "Ready-to-cook meal kits"],
+      },
+      {
+        slug: "soup-vegetable-mix",
+        name: "Soup Vegetable Mix",
+        categoryId: readyToCook._id,
+        shortDescription: "A wholesome, nutritious vegetable mix, ready for soup in minutes.",
+        description:
+          "A blend of dehydrated vegetables sized for soup, rehydrating quickly into a wholesome, nutritious bowl.",
+        benefits: ["Easy to cook", "High nutrition", "Real ingredients"],
+        applications: ["Soups", "Instant meal bases"],
+        packSizes: ["500 g pouch", "1 kg pouch", "10 kg foodservice pack"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+      {
+        slug: "vegetable-upma-mix",
+        name: "Vegetable Upma Mix",
+        categoryId: readyToCook._id,
+        shortDescription: "A wholesome vegetable upma base ready in minutes.",
+        description:
+          "A pre-mixed blend of semolina, dehydrated vegetables and seasoning — a wholesome, quick-preparation start to the day.",
+        benefits: ["Ready in minutes", "Nutritious and tasty", "100% natural"],
+        applications: ["Breakfast meal kits", "Retail ready-meals"],
+        packSizes: ["500 g pouch", "1 kg pouch", "10 kg foodservice pack"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+      {
+        slug: "tomato-soup-premix",
+        name: "Tomato Soup Premix",
+        categoryId: readyToCook._id,
+        shortDescription: "Warm, nourishing tomato soup, ready with real tomatoes.",
+        description:
+          "A convenient tomato soup premix made with real dehydrated tomato — just add water for a warm, nourishing bowl of soup.",
+        benefits: ["Real tomatoes", "No preservatives", "Rich in antioxidants"],
+        applications: ["Instant soups", "Retail ready-meals"],
+        packSizes: ["500 g pouch", "1 kg pouch"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+      {
+        slug: "dal-fry-mix",
+        name: "Dal Fry Mix",
+        categoryId: readyToCook._id,
+        shortDescription: "Authentic dal fry, ready in minutes.",
+        description:
+          "A pre-mixed blend of lentils and traditional spices for an authentic dal fry, ready in minutes with a good source of protein.",
+        benefits: ["Good source of protein", "No preservatives", "Rich in fibre"],
+        applications: ["Retail ready-meals", "Institutional catering"],
+        packSizes: ["500 g pouch", "1 kg pouch"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+      {
+        slug: "rasam-mix",
+        name: "Rasam Mix",
+        categoryId: readyToCook._id,
+        shortDescription: "Spicy, tangy South Indian rasam, ready in every sip.",
+        description:
+          "A traditional South Indian rasam premix carrying authentic spice and tang — just add water for a comforting, digestion-supporting bowl.",
+        benefits: ["Natural ingredients", "Authentic taste", "Supports digestion"],
+        applications: ["South Indian cooking", "Retail ready-meals"],
+        packSizes: ["500 g pouch", "1 kg pouch"],
+        moq: "500 units (mixed pack sizes available)",
+      },
+    ];
+
+    let added = 0;
+    for (let i = 0; i < toAdd.length; i++) {
+      const p = toAdd[i];
+      if (await bySlug(p.slug)) continue;
+      await ctx.db.insert("products", {
+        name: p.name,
+        slug: p.slug,
+        categoryId: p.categoryId,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        images: [],
+        thumbnail: "",
+        benefits: p.benefits,
+        applications: p.applications,
+        packSizes: p.packSizes ?? STANDARD_PACK_SIZES,
+        shelfLife: p.shelfLife ?? STANDARD_SHELF_LIFE,
+        storage: p.storage ?? STANDARD_STORAGE,
+        moq: p.moq ?? STANDARD_MOQ,
+        active: true,
+        sortOrder: 100 + i,
+        createdAt: now,
+        updatedAt: now,
+      });
+      added++;
+    }
+
+    return `deleted ${deleted} products, renamed ${renamed}, deleted ${categoriesDeleted} empty categories, added ${added} of ${toAdd.length} placeholder products`;
+  },
+});
