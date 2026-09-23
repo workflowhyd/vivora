@@ -1007,3 +1007,64 @@ export const reconcileTo47ProductList = internalMutation({
     return `deleted ${deleted} products, renamed ${renamed}, deleted ${categoriesDeleted} empty categories, added ${added} of ${toAdd.length} placeholder products`;
   },
 });
+
+// Sets photos for the 29 products backfilled from 5 collages dropped into
+// assets/incoming (Marigold/Chrysanthemum/Lotus Petal/Blue Tea/Lavender;
+// Sabudana/Brinjal/Ginger Chips/Bitter Gourd/Tomato Vadiyalu/Dondakaya;
+// Garlic Flakes/Mixed Veg/Onion Flakes/Garlic Granules/Sambar/Potato Cubes;
+// Soup Veg Mix/Khichdi/Upma/Tomato Soup/Dal Fry/Rasam; Chilli/Mint/Sweet
+// Potato/Vegetable/Jackfruit/Coriander). Every panel was extracted at native
+// aspect ratio (no cropping). Safe to re-run.
+export const setPhotosForFiveMoreCollages = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const slugs = [
+      "marigold-powder",
+      "chrysanthemum-powder",
+      "lotus-petal-powder",
+      "blue-tea-powder",
+      "lavender-powder",
+      "sabudana-sago-vadiyalu",
+      "dried-brinjal-slices",
+      "ginger-chips-dry",
+      "dried-bitter-gourd-chips",
+      "tomato-vadiyalu-tomato-chips",
+      "dried-dondakaya-ivy-gourd",
+      "garlic-flakes-fry-use",
+      "mixed-vegetable-dehydrated-pack",
+      "onion-flakes",
+      "garlic-granules",
+      "sambar-vegetable-mix",
+      "potato-cubes-dehydrated",
+      "soup-vegetable-mix",
+      "instant-khichdi-mix",
+      "vegetable-upma-mix",
+      "tomato-soup-premix",
+      "dal-fry-mix",
+      "rasam-mix",
+      "chilli-flakes-powder",
+      "mint-powder",
+      "sweet-potato-powder",
+      "vegetable-powder",
+      "jackfruit-powder",
+      "coriander-powder",
+    ];
+
+    let updated = 0;
+    for (const slug of slugs) {
+      const product = await bySlug(slug);
+      const url = `/images/products/${slug}.webp`;
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+    return `updated ${updated} of ${slugs.length} products`;
+  },
+});

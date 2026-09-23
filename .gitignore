@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw collage images dropped in for cropping into product photos — not
+# meant to be committed, only the processed output under public/ and
+# assets/product-masters/ is
+/assets/incoming/

@@ -40,11 +40,16 @@ async function main() {
       top = Math.round(cellTop + (rh - side) / 2);
       extractW = extractH = Math.round(side);
     } else {
+      // Round each edge independently (not width/height separately) so
+      // adjacent cells tile exactly and the last row/col never overflows
+      // the source image by a rounding pixel.
       left = Math.round(cellLeft);
       top = Math.round(cellTop);
-      extractW = Math.round(cw);
-      extractH = Math.round(rh);
+      extractW = Math.round(cellLeft + cw) - left;
+      extractH = Math.round(cellTop + rh) - top;
     }
+    extractW = Math.min(extractW, w - left);
+    extractH = Math.min(extractH, h - top);
 
     const name = names[i];
     const cropped = sharp(src).extract({ left, top, width: extractW, height: extractH });
