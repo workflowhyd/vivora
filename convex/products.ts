@@ -139,6 +139,16 @@ export const update = mutation({
   },
 });
 
+// A lighter-weight toggle than `update` — that one requires the whole
+// product shape, which is overkill for the list page's show/hide switch.
+export const setActive = mutation({
+  args: { id: v.id("products"), active: v.boolean() },
+  handler: async (ctx, { id, active }) => {
+    await requireAdmin(ctx);
+    await ctx.db.patch(id, { active, updatedAt: Date.now() });
+  },
+});
+
 export const remove = mutation({
   args: { id: v.id("products") },
   handler: async (ctx, { id }) => {

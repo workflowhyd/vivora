@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
-import { Plus, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Eye, EyeOff } from "lucide-react";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 
 export default function AdminProductsPage() {
   const products = useQuery(api.products.listAdmin);
   const removeProduct = useMutation(api.products.remove);
+  const setActive = useMutation(api.products.setActive);
 
   const handleDelete = async (id: Id<"products">, name: string) => {
     if (!confirm(`Delete "${name}"? This can't be undone.`)) return;
@@ -57,8 +58,19 @@ export default function AdminProductsPage() {
                   </div>
                 </td>
                 <td className="px-5 py-3.5 text-charcoal/60">{product.categoryName}</td>
-                <td className="px-5 py-3.5 text-charcoal/60">
-                  {product.active ? "Active" : "Inactive"}
+                <td className="px-5 py-3.5">
+                  <button
+                    onClick={() => setActive({ id: product._id, active: !product.active })}
+                    aria-label={product.active ? `Deactivate ${product.name}` : `Activate ${product.name}`}
+                    className={
+                      product.active
+                        ? "inline-flex items-center gap-1.5 text-green hover:text-green-dark"
+                        : "inline-flex items-center gap-1.5 text-charcoal/40 hover:text-charcoal/70"
+                    }
+                  >
+                    {product.active ? <Eye size={15} /> : <EyeOff size={15} />}
+                    {product.active ? "Active" : "Inactive"}
+                  </button>
                 </td>
                 <td className="px-5 py-3.5 text-charcoal/60">{product.sortOrder}</td>
                 <td className="px-5 py-3.5">
