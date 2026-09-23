@@ -1169,3 +1169,38 @@ export const addHomeYoutubeVideoBlock = internalMutation({
     return "added";
   },
 });
+
+// A reference poster for Tomato Powder showed the actual retail pack-size
+// lineup — 100g/250g/500g/1kg pouches — replacing the generic bulk sizing
+// (25kg bag / 10kg carton / 1kg pouch) every powder product was seeded
+// with. Applies it to all products in the 5 powder categories (Vegetable,
+// Fruit, Leaf, Spice & Ingredient, Flowers). Ready-to-Cook items are left
+// untouched — their pack sizes were already retail-appropriate and this
+// poster was specifically for a powder. Safe to re-run.
+export const useRetailPackSizesForPowders = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const powderCategorySlugs = [
+      "vegetable-powders",
+      "fruit-powders",
+      "leaf-powders",
+      "spice-ingredient-powders",
+      "flowers",
+    ];
+    const categories = await ctx.db.query("categories").collect();
+    const powderCategoryIds = new Set(
+      categories.filter((c) => powderCategorySlugs.includes(c.slug)).map((c) => c._id)
+    );
+
+    const retailPackSizes = ["100 g pouch", "250 g pouch", "500 g pouch", "1 kg pouch"];
+    const products = await ctx.db.query("products").collect();
+    let updated = 0;
+    for (const product of products) {
+      if (powderCategoryIds.has(product.categoryId)) {
+        await ctx.db.patch(product._id, { packSizes: retailPackSizes, updatedAt: Date.now() });
+        updated++;
+      }
+    }
+    return `updated pack sizes on ${updated} powder products`;
+  },
+});
