@@ -1320,3 +1320,23 @@ export const clearSetOnePhotos = internalMutation({
     return `cleared ${cleared} of ${slugs.length} products`;
   },
 });
+
+// Tomato Powder's photo is cropped from the pack-size reference poster (the
+// single 1kg pouch) rather than a dedicated single-product collage - its
+// logo is a much closer match to the standard (only the "Dry Delicious"
+// tagline color differs) than the rejected Set 1 redo. Moringa/Banana/
+// Carrot/Beetroot/Onion Powder are still pending a correctly-logo'd photo.
+// Safe to re-run.
+export const setTomatoPowderPhotoFromPackPoster = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const product = await ctx.db
+      .query("products")
+      .withIndex("by_slug", (q) => q.eq("slug", "tomato-powder"))
+      .unique();
+    if (!product) return "product not found";
+    const url = "/images/products/tomato-powder.webp";
+    await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+    return "updated";
+  },
+});
