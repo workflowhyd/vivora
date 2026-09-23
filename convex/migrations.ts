@@ -472,3 +472,129 @@ export const removeUnstockedCategories = internalMutation({
     return `removed ${removedCategories} categories and ${removedProducts} products`;
   },
 });
+
+// A banner collage supplied Papaya, ABC, Methi, Rose Petal, Jasmine
+// Tea/Fragrance and Hibiscus Powder photos (each panel taller than wide, so
+// unlike the earlier grids these were extracted at native aspect ratio with
+// no cropping — object-contain on the site letterboxes them cleanly). Sets
+// the photo on Papaya/ABC (already existed), and adds Methi Powder under
+// Spice & Ingredient Powders and the three flower powders under the (so far
+// empty) Flowers category. Safe to re-run.
+export const addFlowerAndMethiPowderProducts = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+    const categoryBySlug = async (slug: string) => {
+      const c = await ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (!c) throw new Error(`Category not found: ${slug}`);
+      return c;
+    };
+
+    const setPhoto: [string, string][] = [
+      ["papaya-powder", "/images/products/papaya-powder.webp"],
+      ["abc-powder", "/images/products/abc-powder.webp"],
+    ];
+    let updated = 0;
+    for (const [slug, url] of setPhoto) {
+      const product = await bySlug(slug);
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+
+    const spicePowders = await categoryBySlug("spice-ingredient-powders");
+    const flowers = await categoryBySlug("flowers");
+    const now = Date.now();
+
+    const toAdd = [
+      {
+        slug: "methi-powder",
+        name: "Methi Powder",
+        categoryId: spicePowders._id,
+        sortOrder: 5,
+        shortDescription: "Traditional fenugreek powder for digestion and everyday wellness.",
+        description:
+          "Ground from sun-dried fenugreek, our methi powder carries the characteristic slightly bitter, nutty flavour used across Indian spice blends, pickles and traditional wellness formulations.",
+        benefits: ["Supports digestion", "Helps maintain healthy blood sugar", "Rich in fibre"],
+        applications: ["Spice blends", "Pickles", "Traditional formulations"],
+        ingredients: ["100% dehydrated fenugreek"],
+        image: "/images/products/methi-powder.webp",
+      },
+      {
+        slug: "rose-petal-powder",
+        name: "Rose Petal Powder",
+        categoryId: flowers._id,
+        sortOrder: 1,
+        shortDescription: "Delicately dried rose petal powder for natural skin and beauty care.",
+        description:
+          "Shade-dried and finely milled rose petals, prized for their natural fragrance and gentle astringent properties across skincare, natural cosmetics and wellness formulations.",
+        benefits: ["Supports healthy skin", "Rich in antioxidants", "Promotes a natural glow"],
+        applications: ["Natural cosmetics", "Skincare formulations", "Wellness blends"],
+        ingredients: ["100% dehydrated rose petals"],
+        image: "/images/products/rose-petal-powder.webp",
+      },
+      {
+        slug: "jasmine-tea-fragrance-powder",
+        name: "Jasmine Tea / Fragrance Powder",
+        categoryId: flowers._id,
+        sortOrder: 2,
+        shortDescription: "Fragrant jasmine flower powder for tea blends and aromatic formulations.",
+        description:
+          "Dried jasmine flowers milled into a fine powder, carrying a soothing natural fragrance suited to tea blends, potpourri and aromatic wellness products.",
+        benefits: ["Promotes relaxation", "Natural fragrance", "Supports overall wellness"],
+        applications: ["Tea blends", "Potpourri and fragrance", "Aromatic wellness products"],
+        ingredients: ["100% dehydrated jasmine flowers"],
+        image: "/images/products/jasmine-tea-fragrance-powder.webp",
+      },
+      {
+        slug: "hibiscus-powder",
+        name: "Hibiscus Powder",
+        categoryId: flowers._id,
+        sortOrder: 3,
+        shortDescription: "Vibrant hibiscus flower powder for hair, skin and wellness use.",
+        description:
+          "Sun-dried hibiscus flowers ground into a rich red powder, a traditional ingredient for hair and skin care as well as tart herbal tea blends.",
+        benefits: ["Supports hair health", "Promotes healthy skin", "Rich in antioxidants"],
+        applications: ["Hair and skin care", "Herbal tea blends", "Natural cosmetics"],
+        ingredients: ["100% dehydrated hibiscus flowers"],
+        image: "/images/products/hibiscus-powder.webp",
+      },
+    ];
+
+    let added = 0;
+    for (const p of toAdd) {
+      if (await bySlug(p.slug)) continue;
+      await ctx.db.insert("products", {
+        name: p.name,
+        slug: p.slug,
+        categoryId: p.categoryId,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        images: [p.image],
+        thumbnail: p.image,
+        ingredients: p.ingredients,
+        benefits: p.benefits,
+        applications: p.applications,
+        packSizes: STANDARD_PACK_SIZES,
+        shelfLife: STANDARD_SHELF_LIFE,
+        storage: STANDARD_STORAGE,
+        moq: STANDARD_MOQ,
+        active: true,
+        sortOrder: p.sortOrder,
+        createdAt: now,
+        updatedAt: now,
+      });
+      added++;
+    }
+
+    return `updated ${updated} photos, added ${added} of ${toAdd.length} products`;
+  },
+});
