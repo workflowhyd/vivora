@@ -1289,3 +1289,34 @@ export const splitPowdersAndSlices = internalMutation({
     return `renamed 2 powder categories, added Slices under Vegetables/Fruits, moved ${moved} of ${moveToSlices.length} products into Vegetables > Slices`;
   },
 });
+
+// "Set 1" (Moringa/Tomato/Banana/Carrot/Beetroot/Onion Powder) turned out to
+// use a visibly different Vivora logo rendering than the other 41 products
+// (thinner VIVORA wordmark, brown "Dry Delicious" instead of green) even
+// after the first redo. Clears their photos back to the plain placeholder
+// until a matching-logo version is supplied. Safe to re-run.
+export const clearSetOnePhotos = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const slugs = [
+      "moringa-powder",
+      "tomato-powder",
+      "banana-powder",
+      "carrot-powder",
+      "beetroot-powder",
+      "onion-powder",
+    ];
+    let cleared = 0;
+    for (const slug of slugs) {
+      const product = await ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: "", images: [] });
+        cleared++;
+      }
+    }
+    return `cleared ${cleared} of ${slugs.length} products`;
+  },
+});
