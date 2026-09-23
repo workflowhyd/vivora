@@ -1068,3 +1068,40 @@ export const setPhotosForFiveMoreCollages = internalMutation({
     return `updated ${updated} of ${slugs.length} products`;
   },
 });
+
+// Sets photos for the final 6 products — Moringa/Tomato/Banana/Carrot/
+// Beetroot/Onion Powder ("Set 1"), the last collage of the 47-item list.
+// Replaces the older jar photo on Tomato Powder. Note this collage uses a
+// different Vivora logo render (script wordmark, no leaf/V icon) than the
+// other 41 photographed products — a branding inconsistency to reconcile
+// later, not something to fix here. Safe to re-run.
+export const setPhotosForSetOne = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const slugs = [
+      "moringa-powder",
+      "tomato-powder",
+      "banana-powder",
+      "carrot-powder",
+      "beetroot-powder",
+      "onion-powder",
+    ];
+
+    let updated = 0;
+    for (const slug of slugs) {
+      const product = await bySlug(slug);
+      const url = `/images/products/${slug}.webp`;
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+    return `updated ${updated} of ${slugs.length} products`;
+  },
+});
