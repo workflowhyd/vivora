@@ -1204,3 +1204,88 @@ export const useRetailPackSizesForPowders = internalMutation({
     return `updated pack sizes on ${updated} powder products`;
   },
 });
+
+// Renames "Vegetable Powders"/"Fruit Powders" to plain "Powders" (they're
+// already nested under "Vegetables"/"Fruits", so the repeated word was
+// redundant in the dropdown: "Vegetables > Vegetable Powders"), and adds a
+// sibling "Slices" category under each. The 9 sliced/diced items that were
+// sitting in the flat "Ready-to-Cook" bucket are actually dehydrated
+// vegetable pieces, not cooked-meal mixes, so they move into
+// "Vegetables > Slices". No fruit-slice products exist in the current
+// 47-item list, so "Fruits > Slices" is added empty, ready for future
+// stock. Safe to re-run.
+export const splitPowdersAndSlices = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("categories")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const vegetablePowders = await bySlug("vegetable-powders");
+    const fruitPowders = await bySlug("fruit-powders");
+    const vegetables = await bySlug("vegetables");
+    const fruits = await bySlug("fruits");
+    if (!vegetablePowders || !fruitPowders || !vegetables || !fruits) {
+      throw new Error("Expected categories not found");
+    }
+
+    if (vegetablePowders.name !== "Powders") {
+      await ctx.db.patch(vegetablePowders._id, { name: "Powders" });
+    }
+    if (fruitPowders.name !== "Powders") {
+      await ctx.db.patch(fruitPowders._id, { name: "Powders" });
+    }
+
+    const ensureSlices = async (
+      slug: string,
+      parent: NonNullable<typeof vegetables>,
+      image: string
+    ) => {
+      const existing = await bySlug(slug);
+      if (existing) return existing._id;
+      return ctx.db.insert("categories", {
+        name: "Slices",
+        slug,
+        description: `Sun- and machine-dried ${parent.name.toLowerCase()} pieces and slices.`,
+        image,
+        active: true,
+        sortOrder: 2,
+        parentId: parent._id,
+      });
+    };
+
+    const vegSlicesId = await ensureSlices(
+      "vegetable-slices",
+      vegetables,
+      "/images/products/potato-cubes-dehydrated.webp"
+    );
+    await ensureSlices("fruit-slices", fruits, "/images/products/banana-powder.webp");
+
+    const moveToSlices = [
+      "dried-brinjal-slices",
+      "ginger-chips-dry",
+      "dried-bitter-gourd-chips",
+      "dried-dondakaya-ivy-gourd",
+      "potato-cubes-dehydrated",
+      "onion-flakes",
+      "garlic-flakes-fry-use",
+      "tomato-vadiyalu-tomato-chips",
+      "sabudana-sago-vadiyalu",
+    ];
+    let moved = 0;
+    for (const slug of moveToSlices) {
+      const product = await ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (product && product.categoryId !== vegSlicesId) {
+        await ctx.db.patch(product._id, { categoryId: vegSlicesId, updatedAt: Date.now() });
+        moved++;
+      }
+    }
+
+    return `renamed 2 powder categories, added Slices under Vegetables/Fruits, moved ${moved} of ${moveToSlices.length} products into Vegetables > Slices`;
+  },
+});
