@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cache } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { fetchCachedQuery } from "@/lib/convexServer";
 import { ArrowRight, MessageCircle } from "lucide-react";
@@ -77,9 +78,15 @@ export default async function ProductDetailPage({
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 mt-4">
             {product.thumbnail && (
               <div className="md:col-span-5 lg:col-span-4 md:order-2">
-                <div className="aspect-square overflow-hidden rounded-md bg-cream-light">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={product.thumbnail} alt={product.name} className="h-full w-full object-cover" />
+                <div className="relative aspect-square overflow-hidden rounded-md bg-cream-light">
+                  <Image
+                    src={product.thumbnail}
+                    alt={product.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-contain"
+                    priority
+                  />
                 </div>
               </div>
             )}

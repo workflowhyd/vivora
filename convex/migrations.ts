@@ -311,6 +311,137 @@ export const fixMoreProductPhotos = internalMutation({
   },
 });
 
+// A single supplied banner image contained 6 branded product photos in a 2x3
+// grid (Curry Leaf, Turmeric, Spinach, Ginger, Pumpkin, Garlic Powder), each
+// cropped to its own file under public/images/products/. Sets the photo on
+// the four existing products that match, and adds Spinach Powder and Pumpkin
+// Powder (new SKUs, no existing entry) under Vegetable Powders. Safe to
+// re-run — patches existing products every time, skips inserts whose slug
+// already exists.
+export const addSixPowderPhotosFromBannerGrid = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const setPhoto: [string, string][] = [
+      ["curry-leaf-powder", "/images/products/curry-leaf-powder.jpg"],
+      ["turmeric-powder", "/images/products/turmeric-powder.jpg"],
+      ["ginger-powder", "/images/products/ginger-powder.jpg"],
+      ["garlic-powder", "/images/products/garlic-powder.jpg"],
+    ];
+    let updated = 0;
+    for (const [slug, url] of setPhoto) {
+      const product = await bySlug(slug);
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+
+    const vegetablePowders = await ctx.db
+      .query("categories")
+      .withIndex("by_slug", (q) => q.eq("slug", "vegetable-powders"))
+      .unique();
+    if (!vegetablePowders) throw new Error("Category not found: vegetable-powders");
+
+    const now = Date.now();
+    const toAdd = [
+      {
+        slug: "spinach-powder",
+        name: "Spinach Powder",
+        sortOrder: 6,
+        shortDescription: "Vibrant green spinach powder, rich in iron and natural nutrition.",
+        description:
+          "Made from shade-dried, finely milled spinach leaves, our spinach powder brings natural green colour and iron-rich nutrition to health foods, bakery, and beverage formulations.",
+        benefits: ["Rich in iron", "Natural green colour", "Long shelf life"],
+        applications: ["Health and wellness mixes", "Bakery inclusions", "Natural food colouring"],
+        ingredients: ["100% dehydrated spinach"],
+        specifications: [{ label: "Mesh size", value: "80-100 mesh" }],
+        image: "/images/products/spinach-powder.jpg",
+      },
+      {
+        slug: "pumpkin-powder",
+        name: "Pumpkin Powder",
+        sortOrder: 7,
+        shortDescription: "Naturally sweet pumpkin powder, rich in vitamins A and C.",
+        description:
+          "Made from sun-dried, finely milled pumpkin, our pumpkin powder brings natural sweetness, colour, and everyday nutrition to soups, bakery, and health food formulations.",
+        benefits: ["Rich in vitamins A & C", "Natural orange colour", "Long shelf life"],
+        applications: ["Soups and sauces", "Bakery and snacks", "Nutrition fortification"],
+        ingredients: ["100% dehydrated pumpkin"],
+        specifications: [{ label: "Mesh size", value: "80-100 mesh" }],
+        image: "/images/products/pumpkin-powder.jpg",
+      },
+    ];
+
+    let added = 0;
+    for (const p of toAdd) {
+      if (await bySlug(p.slug)) continue;
+      await ctx.db.insert("products", {
+        name: p.name,
+        slug: p.slug,
+        categoryId: vegetablePowders._id,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        images: [p.image],
+        thumbnail: p.image,
+        ingredients: p.ingredients,
+        benefits: p.benefits,
+        applications: p.applications,
+        packSizes: STANDARD_PACK_SIZES,
+        shelfLife: STANDARD_SHELF_LIFE,
+        storage: STANDARD_STORAGE,
+        moq: STANDARD_MOQ,
+        specifications: p.specifications,
+        active: true,
+        sortOrder: p.sortOrder,
+        createdAt: now,
+        updatedAt: now,
+      });
+      added++;
+    }
+
+    return `updated photos on ${updated} products, added ${added} new products`;
+  },
+});
+
+// The 6 banner-grid photos were re-cropped as lossless squares straight from
+// the source collage (no JPEG re-compression), upscaled to 1200x1200 with
+// Lanczos resampling, and re-encoded as WebP — replacing the JPEG crops from
+// addSixPowderPhotosFromBannerGrid. Safe to re-run.
+export const upgradeSixPowderPhotosToWebp = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const bySlug = async (slug: string) =>
+      ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+
+    const setPhoto: [string, string][] = [
+      ["curry-leaf-powder", "/images/products/curry-leaf-powder.webp"],
+      ["turmeric-powder", "/images/products/turmeric-powder.webp"],
+      ["spinach-powder", "/images/products/spinach-powder.webp"],
+      ["ginger-powder", "/images/products/ginger-powder.webp"],
+      ["pumpkin-powder", "/images/products/pumpkin-powder.webp"],
+      ["garlic-powder", "/images/products/garlic-powder.webp"],
+    ];
+    let updated = 0;
+    for (const [slug, url] of setPhoto) {
+      const product = await bySlug(slug);
+      if (product) {
+        await ctx.db.patch(product._id, { thumbnail: url, images: [url] });
+        updated++;
+      }
+    }
+    return `updated ${updated} of ${setPhoto.length} products to WebP photos`;
+  },
+});
+
 // Removes categories (and their products) the business doesn't actually
 // stock: Ready-to-Fry and Specialty Products. A category can't be deleted
 // while it still has products (see categories.remove), so its products go

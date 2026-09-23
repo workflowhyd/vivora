@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight, Leaf } from "lucide-react";
 
 export interface ProductCardData {
@@ -15,14 +16,15 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       href={`/products/${product.slug}`}
       className="group block overflow-hidden rounded-md border border-charcoal/10 transition-colors duration-300 hover:border-green/40"
     >
-      <div className="aspect-square w-full overflow-hidden bg-cream-light">
+      <div className="relative aspect-square w-full overflow-hidden bg-cream-light">
         {product.thumbnail ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={product.thumbnail}
-            alt=""
+            alt={product.name}
+            fill
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 400px"
+            className="object-contain transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">
