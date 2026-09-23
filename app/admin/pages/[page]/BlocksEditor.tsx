@@ -7,6 +7,7 @@ import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { MediaUpload } from "@/components/admin/MediaUpload";
 import { fieldClasses } from "./SlotEditor";
+import { youtubeId } from "@/lib/youtube";
 
 type Kind = "text" | "image" | "video";
 type Block = Doc<"pageBlocks"> & { mediaUrl: string | null };
@@ -78,6 +79,7 @@ function BlockCard({ block, isFirst, isLast }: { block: Block; isFirst: boolean;
   const [heading, setHeading] = useState(block.heading ?? "");
   const [body, setBody] = useState(block.body ?? "");
   const [caption, setCaption] = useState(block.caption ?? "");
+  const [url, setUrl] = useState(block.url ?? "");
   const [status, setStatus] = useState<"idle" | "saving" | "saved">("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -85,7 +87,8 @@ function BlockCard({ block, isFirst, isLast }: { block: Block; isFirst: boolean;
   const dirty =
     heading !== (block.heading ?? "") ||
     body !== (block.body ?? "") ||
-    caption !== (block.caption ?? "");
+    caption !== (block.caption ?? "") ||
+    url !== (block.url ?? "");
 
   const save = async (patch: Partial<{ active: boolean; storageId: Id<"_storage"> }> = {}) => {
     setStatus("saving");
@@ -97,7 +100,7 @@ function BlockCard({ block, isFirst, isLast }: { block: Block; isFirst: boolean;
         body: body || undefined,
         caption: caption || undefined,
         storageId: patch.storageId ?? block.storageId,
-        url: block.url,
+        url: url || undefined,
         active: patch.active ?? block.active,
       });
       setStatus("saved");
@@ -170,9 +173,40 @@ function BlockCard({ block, isFirst, isLast }: { block: Block; isFirst: boolean;
               (block.kind === "image" ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={block.mediaUrl} alt="" className="max-h-56 rounded-md border border-charcoal/10 self-start" />
+              ) : youtubeId(block.mediaUrl) ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${youtubeId(block.mediaUrl)}`}
+                  className="aspect-[9/16] max-h-56 rounded-md self-start"
+                  allowFullScreen
+                />
               ) : (
                 <video src={block.mediaUrl} controls className="max-h-56 rounded-md self-start" />
               ))}
+            {block.kind === "video" && (
+              <input
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="YouTube (or other video) link — leave blank if uploading a file below"
+                className={fieldClasses}
+              />
+            )}
+            {block.kind === "video" && (
+              <>
+                <input
+                  value={heading}
+                  onChange={(e) => setHeading(e.target.value)}
+                  placeholder="Heading (optional — shows beside the video)"
+                  className={fieldClasses}
+                />
+                <textarea
+                  value={body}
+                  onChange={(e) => setBody(e.target.value)}
+                  rows={4}
+                  placeholder="Description (optional — shows beside the video)"
+                  className={`${fieldClasses} resize-y`}
+                />
+              </>
+            )}
             <input
               value={caption}
               onChange={(e) => setCaption(e.target.value)}

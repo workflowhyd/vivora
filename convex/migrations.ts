@@ -1141,3 +1141,31 @@ export const useRealPhotosForCategoryThumbnails = internalMutation({
     return `updated ${updated} of ${setImage.length} category thumbnails`;
   },
 });
+
+// Adds the requested YouTube Short as a video block on the home page, with
+// a description alongside it (PageBlocks renders a YouTube link + heading/
+// body as a side-by-side row — see components/PageBlocks.tsx). Safe to
+// re-run — skips if a block with this exact URL already exists on the page.
+export const addHomeYoutubeVideoBlock = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const url = "https://youtube.com/shorts/P_tFt5QgCDI?feature=share";
+    const existing = await ctx.db
+      .query("pageBlocks")
+      .withIndex("by_page", (q) => q.eq("page", "home"))
+      .collect();
+    if (existing.some((b) => b.url === url)) return "already added — no changes made";
+
+    const last = existing.sort((a, b) => b.sortOrder - a.sortOrder)[0];
+    await ctx.db.insert("pageBlocks", {
+      page: "home",
+      kind: "video",
+      url,
+      heading: "See Vivora Foods in Action",
+      body: "From farm-fresh produce to carefully dehydrated, export-ready powders and ready-to-cook packs — take a quick look at how Vivora Foods brings natural goodness to your kitchen, one batch at a time.",
+      active: true,
+      sortOrder: (last?.sortOrder ?? 0) + 1,
+    });
+    return "added";
+  },
+});
