@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
       href={`/products/${product.slug}`}
       className="group block overflow-hidden rounded-md border border-charcoal/10 transition-colors duration-300 hover:border-green/40"
     >
-      <div className="relative aspect-square w-full overflow-hidden bg-cream-light">
+      <div className="relative aspect-[4/5] w-full overflow-hidden bg-cream-light">
         {product.thumbnail ? (
           <Image
             src={product.thumbnail}
