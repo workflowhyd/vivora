@@ -18,8 +18,8 @@ export function ProductShowcase() {
 
   return (
     <section className="bg-cream py-16 md:py-24">
-      <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-6 md:grid-cols-2 md:gap-16 md:px-10">
-        <Reveal>
+      <div className="mx-auto grid max-w-[1440px] items-center gap-10 px-6 md:grid-cols-4 md:gap-16 md:px-10">
+        <Reveal className="md:col-span-1">
           <picture>
             {desktopImage && <source media="(min-width: 768px)" srcSet={desktopImage} />}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,7 +31,7 @@ export function ProductShowcase() {
             />
           </picture>
         </Reveal>
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} className="md:col-span-3">
           <span className="label-caps text-[12px] text-green">{t("home.showcase.eyebrow")}</span>
           <h2 className="font-display mt-4 text-3xl leading-[1.1] text-blue-dark md:text-4xl">
             {t("home.showcase.titleMain")} <span className="italic text-green">{t("home.showcase.titleAccent")}</span>
