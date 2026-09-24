@@ -35,7 +35,7 @@ export function Hero() {
       ref={sectionRef}
       className={
         hasBackground
-          ? "relative w-full overflow-hidden bg-blue-dark"
+          ? "relative h-[100svh] w-full overflow-hidden bg-blue-dark"
           : "relative w-full bg-cream"
       }
     >
@@ -82,7 +82,7 @@ export function Hero() {
       <div
         className={
           hasBackground
-            ? "relative z-10 mx-auto flex min-h-[85svh] max-w-2xl flex-col items-center justify-center px-6 py-24 text-center md:min-h-[90svh]"
+            ? "relative z-10 mx-auto flex h-full max-w-2xl flex-col items-center justify-center px-6 text-center"
             : "mx-auto max-w-2xl px-6 pb-8 pt-24 text-center md:pb-12 md:pt-28"
         }
       >
