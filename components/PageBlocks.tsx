@@ -3,7 +3,31 @@
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Reveal } from "./Reveal";
+import { ReelCard } from "./ReelCard";
 import { youtubeId } from "@/lib/youtube";
+
+type Block = NonNullable<ReturnType<typeof useQuery<typeof api.content.blocksForPage>>>[number];
+
+// A bare YouTube link with no heading/body is a "reel" — plain video blocks
+// (with a heading/body, or an uploaded file) keep the existing one-per-row
+// treatment; grouping only applies to this specific, caption-only shape.
+function isReel(block: Block) {
+  return block.kind === "video" && !block.heading && !block.body && Boolean(youtubeId(block.mediaUrl ?? ""));
+}
+
+// Runs of adjacent blocks are grouped so consecutive reels render as one
+// grid instead of one full-width row each; anything else passes through
+// as its own single-item group, keeping the original render order.
+function groupBlocks(blocks: Block[]) {
+  const groups: { reel: boolean; items: Block[] }[] = [];
+  for (const block of blocks) {
+    const reel = isReel(block);
+    const last = groups[groups.length - 1];
+    if (last && last.reel === reel && reel) last.items.push(block);
+    else groups.push({ reel, items: [block] });
+  }
+  return groups;
+}
 
 // Extra text / image / video blocks that an admin adds to a page from
 // /admin/pages. Renders nothing when a page has none.
@@ -15,7 +39,23 @@ export function PageBlocks({ page }: { page: string }) {
   return (
     <section className="bg-cream py-16 md:py-24">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10 flex flex-col gap-14 md:gap-20">
-        {blocks.map((block) => {
+        {groupBlocks(blocks).map((group) => {
+          if (group.reel) {
+            return (
+              <Reveal key={group.items[0]._id} className="mx-auto w-full">
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 md:gap-6">
+                  {group.items.map((block) => (
+                    <ReelCard
+                      key={block._id}
+                      youtubeId={youtubeId(block.mediaUrl ?? "")!}
+                      caption={block.caption}
+                    />
+                  ))}
+                </div>
+              </Reveal>
+            );
+          }
+          const block = group.items[0];
           const ytId = block.kind === "video" && block.mediaUrl ? youtubeId(block.mediaUrl) : null;
           const hasSideText = Boolean(block.heading || block.body);
 
