@@ -1,6 +1,8 @@
 "use client";
 
+import { useRef } from "react";
 import { motion, useReducedMotion } from "motion/react";
+import { ChevronDown } from "lucide-react";
 import { useContent } from "@/lib/useContent";
 import { Logo } from "./Logo";
 import { HeroBackgroundVideo } from "./HeroBackgroundVideo";
@@ -18,10 +20,19 @@ export function Hero() {
   const video = media("home.hero.video");
   const customImage = media("home.hero.image");
   const hasBackground = Boolean(video || customImage);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const scrollToNext = () => {
+    sectionRef.current?.nextElementSibling?.scrollIntoView({
+      behavior: reduce ? "auto" : "smooth",
+      block: "start",
+    });
+  };
 
   return (
     <section
       id="home"
+      ref={sectionRef}
       className={
         hasBackground
           ? "relative w-full overflow-hidden bg-blue-dark"
@@ -31,6 +42,25 @@ export function Hero() {
       <div className="absolute left-4 top-4 z-20 md:left-6 md:top-6">
         <Logo className="h-12 md:h-14" />
       </div>
+
+      <button
+        type="button"
+        onClick={scrollToNext}
+        aria-label="Scroll to next section"
+        className={
+          hasBackground
+            ? "absolute bottom-5 right-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-cream-light/15 text-cream-light backdrop-blur transition-colors duration-300 hover:bg-cream-light/25 md:bottom-8 md:right-8 md:h-12 md:w-12"
+            : "absolute bottom-5 right-4 z-20 flex h-11 w-11 items-center justify-center rounded-full border border-blue/15 text-blue transition-colors duration-300 hover:bg-blue/5 md:bottom-8 md:right-8 md:h-12 md:w-12"
+        }
+      >
+        <motion.span
+          animate={reduce ? undefined : { y: [0, 4, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="flex"
+        >
+          <ChevronDown size={20} />
+        </motion.span>
+      </button>
 
       {hasBackground && (
         <>
@@ -56,11 +86,21 @@ export function Hero() {
             : "mx-auto max-w-2xl px-6 pb-8 pt-24 text-center md:pb-12 md:pt-28"
         }
       >
+        <motion.p
+          className="font-display text-lg font-semibold tracking-wide md:text-xl"
+          initial={{ opacity: 0, y: reduce ? 0 : 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE }}
+        >
+          <span className={hasBackground ? "text-cream-light" : "text-blue-dark"}>Vivora</span>{" "}
+          <span className="text-gold">Foods</span>
+        </motion.p>
+
         <motion.h1
           className={
             hasBackground
-              ? "font-display text-4xl leading-[1.08] tracking-tight text-cream-light md:text-6xl"
-              : "font-display text-4xl leading-[1.08] tracking-tight text-blue-dark md:text-6xl"
+              ? "font-display mt-3 text-4xl leading-[1.08] tracking-tight text-cream-light md:text-6xl"
+              : "font-display mt-3 text-4xl leading-[1.08] tracking-tight text-blue-dark md:text-6xl"
           }
           initial={{ opacity: 0, y: reduce ? 0 : 18 }}
           animate={{ opacity: 1, y: 0 }}
