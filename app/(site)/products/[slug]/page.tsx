@@ -78,7 +78,7 @@ export default async function ProductDetailPage({
           <div className="grid md:grid-cols-12 gap-10 md:gap-14 mt-4">
             {product.thumbnail && (
               <div className="md:col-span-5 lg:col-span-4 md:order-2">
-                <div className="relative aspect-[4/5] overflow-hidden rounded-md bg-cream-light">
+                <div className="relative aspect-square overflow-hidden rounded-md bg-cream-light">
                   <Image
                     src={product.thumbnail}
                     alt={product.name}
