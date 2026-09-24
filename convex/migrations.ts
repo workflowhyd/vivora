@@ -1427,3 +1427,23 @@ export const reconcileTo37ProductList = internalMutation({
     return `removed ${removed} of ${slugsToRemove.length} products, ${remaining.length} remain`;
   },
 });
+
+// Standardizes MOQ, pack sizes and shelf life across every product (they'd
+// drifted - Ready-to-Cook items had their own pack sizes and shorter shelf
+// lives, a few spice powders had 24 months): bulk orders start at 10kg,
+// retail packs are 100g/250g/500g/1kg for everything, shelf life is 18
+// months across the board. Safe to re-run.
+export const standardizeMoqPackSizesShelfLife = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const moq = "10 kg (bulk orders start here; higher quantities available on request)";
+    const packSizes = ["100 g pouch", "250 g pouch", "500 g pouch", "1 kg pouch"];
+    const shelfLife = "18 months from date of manufacture";
+
+    const products = await ctx.db.query("products").collect();
+    for (const product of products) {
+      await ctx.db.patch(product._id, { moq, packSizes, shelfLife, updatedAt: Date.now() });
+    }
+    return `updated ${products.length} products`;
+  },
+});
