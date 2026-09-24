@@ -1374,3 +1374,21 @@ export const finishSetOnePhotos = internalMutation({
     return `updated ${updated} of ${slugs.length} products`;
   },
 });
+
+// The first home page video block had a heading/body, which put it in
+// PageBlocks' side-by-side "video with description" layout instead of the
+// bare-reel grouping the other videos use. Clearing them joins it into the
+// same hover-to-play reel slider as the rest. Safe to re-run.
+export const clearFirstHomeVideoDescription = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const blocks = await ctx.db
+      .query("pageBlocks")
+      .withIndex("by_page", (q) => q.eq("page", "home"))
+      .collect();
+    const target = blocks.find((b) => b.kind === "video" && b.heading);
+    if (!target) return "no matching block found";
+    await ctx.db.patch(target._id, { heading: undefined, body: undefined });
+    return "cleared";
+  },
+});
