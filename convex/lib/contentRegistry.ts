@@ -84,7 +84,7 @@ add(
 add("home", "Product showcase", "home.showcase.imageMobile", "Image (phones/tablets)", "image", "/images/products/turmeric-powder.webp");
 add("home", "Product showcase", "home.showcase.imageDesktop", "Image (desktop)", "image", "/images/products/turmeric-powder.webp");
 
-heading("home", "Categories section", "home.categories", null, "From harvest", "to dry delicious.");
+heading("home", "Categories section", "home.categories", null, "Explore our", "product range.");
 heading("home", "More about Vivora section", "home.explore", null, "More about", "Vivora.");
 add("home", "Contact banner", "home.banner.title", "Heading", "text", "Looking for reliable, export-grade supply?");
 add("home", "Contact banner", "home.banner.cta", "Button text", "text", "Request a Quote");
