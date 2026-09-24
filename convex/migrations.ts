@@ -1392,3 +1392,38 @@ export const clearFirstHomeVideoDescription = internalMutation({
     return "cleared";
   },
 });
+
+// The business re-verified its product list against the source images and
+// confirmed 37 products (24 powders + 13 Ready-to-Cook), dropping these 10
+// - including Curry Leaf and Turmeric Powder, confirmed intentional even
+// though both were already correctly photographed. Safe to re-run.
+export const reconcileTo37ProductList = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const slugsToRemove = [
+      "curry-leaf-powder",
+      "turmeric-powder",
+      "jackfruit-powder",
+      "chrysanthemum-powder",
+      "lavender-powder",
+      "sambar-vegetable-mix",
+      "tomato-soup-premix",
+      "dal-fry-mix",
+      "rasam-mix",
+      "garlic-flakes-fry-use",
+    ];
+    let removed = 0;
+    for (const slug of slugsToRemove) {
+      const product = await ctx.db
+        .query("products")
+        .withIndex("by_slug", (q) => q.eq("slug", slug))
+        .unique();
+      if (product) {
+        await ctx.db.delete(product._id);
+        removed++;
+      }
+    }
+    const remaining = await ctx.db.query("products").collect();
+    return `removed ${removed} of ${slugsToRemove.length} products, ${remaining.length} remain`;
+  },
+});
